@@ -196,53 +196,62 @@
     <nav class="my-4">
       <a href="https://notes.musayev.com/" class="text-muted">Alex Musayev Notes</a>
     </nav>
-    <main class="my-4">
-  <p class="my-4">Tags:</p>
-  <ul class="list-inline my-4">
-    
-      <li class="list-inline-item">
-        <a href="/tags/ruby" class="btn btn-sm btn-outline-secondary">ruby</a>
-      </li>
-    
-      <li class="list-inline-item">
-        <a href="/tags/git" class="btn btn-sm btn-outline-secondary">git</a>
-      </li>
-    
-      <li class="list-inline-item">
-        <a href="/tags/rails" class="btn btn-sm btn-outline-secondary">rails</a>
-      </li>
-    
-      <li class="list-inline-item">
-        <a href="/tags/code" class="btn btn-sm btn-outline-secondary">code</a>
-      </li>
-    
-      <li class="list-inline-item">
-        <a href="/tags/postgresql" class="btn btn-sm btn-outline-secondary">postgresql</a>
-      </li>
-    
-      <li class="list-inline-item">
-        <a href="/tags/sublime text" class="btn btn-sm btn-dark">sublime text</a>
-      </li>
-    
-      <li class="list-inline-item">
-        <a href="/tags/deployment" class="btn btn-sm btn-outline-secondary">deployment</a>
-      </li>
-    
-  </ul>
-  <p class="my-4">Tagged with <a href="/tags/sublime text">sublime text</a>:</p>
-  <ul>
-    
-      <li class="my-2">
-        <a href="/20230713_4251/rspec-snippet-for-sublime-text">RSpec snippet for Sublime Text</a>
-        
-          <small class="text-muted"><time datetime="2023-07-13 00:00:00 +0200">2023/07/13</time></small>
-        
-      </li>
-    
-  </ul>
+    <header class="my-4">
+  <h1 class="h3"><a href="/20230720_4288/honeybadger-deployment-notification">Honeybadger deployment notification with curl</a></h1>
+</header>
+
+<main class="my-4">
+  <p>Shell command to tell Honeybadger about a new deployment:</p>
+<div class="highlight"><pre class="highlight shell"><code>curl <span class="nt">--data</span> <span class="s2">"deploy[revision]=</span><span class="si">$(</span><span class="nb">date</span> <span class="nt">-u</span> +%Y%m%d%H%M%S<span class="si">)</span><span class="s2">_</span><span class="si">$(</span>git rev-parse <span class="nt">--short</span> HEAD<span class="si">)</span><span class="s2">&amp;api_key=</span><span class="nv">$HONEYBADGER_API_KEY</span><span class="s2">"</span> <span class="s2">"https://api.honeybadger.io/v1/deploys"</span>
+</code></pre></div>
+<p>Params:</p>
+
+<ul>
+<li><code>$REVISION</code> - revision id. can be an arbitrary string value. In this example revision id is based on current timestamp (presumable date and time of deployment) and head revision id for the current working copy. Example: <code>20230723092717_00a9703</code>.</li>
+<li><code>$HONEYBADGER_API_KEY</code> - Honeybadger API key.</li>
+</ul>
+
+<p>Getting Honeybadger API key:</p>
+
+<p>Project page → Settings → API keys</p>
+
+<p><a href="https://share.cleanshot.com/Yp166HDZ">https://share.cleanshot.com/Yp166HDZ</a></p>
+
+<p>Ansible task:</p>
+<div class="highlight"><pre class="highlight yaml"><code><span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">clone or update sources</span>
+  <span class="na">ansible.builtin.git</span><span class="pi">:</span>
+    <span class="c1"># ...</span>
+  <span class="na">register</span><span class="pi">:</span> <span class="s">git_result</span>
+
+<span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">notify honeybadger.io about the deployment</span>
+  <span class="na">community.general.honeybadger_deployment</span><span class="pi">:</span>
+    <span class="na">token</span><span class="pi">:</span> <span class="s2">"</span><span class="s">{{lookup('env',</span><span class="nv"> </span><span class="s">'HONEYBADGER_API_KEY')}}"</span>
+    <span class="na">environment</span><span class="pi">:</span> <span class="s2">"</span><span class="s">production"</span>
+    <span class="na">user</span><span class="pi">:</span> <span class="s2">"</span><span class="s">ansible"</span>
+    <span class="na">revision</span><span class="pi">:</span> <span class="s2">"</span><span class="s">{{git_result.after}}"</span>
+    <span class="na">repo</span><span class="pi">:</span> <span class="s2">"</span><span class="s">{{git_url}}"</span>
+</code></pre></div>
+<p>References:</p>
+
+<ul>
+<li><a href="https://docs.honeybadger.io/api/reporting-deployments/">Honeybadger docs</a></li>
+</ul>
+
+
+  
+    <ul class="list-inline my-4">
+      
+        <li class="list-inline-item"><a href="/tags/deployment" class="btn btn-sm btn-outline-secondary">deployment</a></li>
+      
+    </ul>
+  
+
+  
 </main>
 
     <footer class="my-4 text-muted">
+      
+        <small>20 Jul 2023</small>
       
     </footer>
   </div>
