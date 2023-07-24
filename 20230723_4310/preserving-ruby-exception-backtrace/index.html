@@ -222,19 +222,19 @@
 <span class="k">end</span>
 </code></pre></div>
 <p>Output (the cause of the original error is lost):</p>
-<div class="highlight"><pre class="highlight plaintext"><code># #&lt;CustomError: Error message&gt;
-# preserve_error_backtrace.rb:10:in `rescue in call_the_error_raiser'
-# preserve_error_backtrace.rb:7:in `call_the_error_raiser'
-# preserve_error_backtrace.rb:14:in `&lt;main&gt;'
+<div class="highlight"><pre class="highlight plaintext"><code>#&lt;CustomError: Error message&gt;
+preserve_error_backtrace.rb:10:in `rescue in call_the_error_raiser'
+preserve_error_backtrace.rb:7:in `call_the_error_raiser'
+preserve_error_backtrace.rb:14:in `&lt;main&gt;'
 </code></pre></div>
 <p>You can still access the &quot;Original error&quot; backtrace via <a href="https://ruby-doc.org/3.2.2/Exception.html#method-i-cause"><code>Exception#cause</code></a>, but it may be better to preserve the original while raising the custom error, instead of generating a new non-helpful backtrace:</p>
 <div class="highlight"><pre class="highlight ruby"><code><span class="k">raise</span> <span class="no">CustomError</span><span class="p">,</span> <span class="s2">"Error message"</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="nf">backtrace</span>
 </code></pre></div>
 <p>Output (the cause of the original error is on the first line):</p>
-<div class="highlight"><pre class="highlight plaintext"><code># #&lt;CustomError: Error message&gt;
-# preserve_error_backtrace.rb:4:in `raise_error' ← The cause of the error
-# preserve_error_backtrace.rb:8:in `call_the_error_raiser'
-# preserve_error_backtrace.rb:14:in `&lt;main&gt;'
+<div class="highlight"><pre class="highlight plaintext"><code>#&lt;CustomError: Error message&gt;
+preserve_error_backtrace.rb:4:in `raise_error' ← The cause of the error
+preserve_error_backtrace.rb:8:in `call_the_error_raiser'
+preserve_error_backtrace.rb:14:in `&lt;main&gt;'
 </code></pre></div>
 <p>References:</p>
 
