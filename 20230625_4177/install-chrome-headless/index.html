@@ -196,57 +196,48 @@
     <nav class="my-4">
       <a href="https://notes.musayev.com/" class="text-muted">Alex Musayev Notes</a>
     </nav>
-    <main class="my-4">
-  <p class="my-4">Tags:</p>
-  <ul class="list-inline my-4">
-    
-      <li class="list-inline-item">
-        <a href="/tags/ruby" class="btn btn-sm btn-outline-secondary">ruby</a>
-      </li>
-    
-      <li class="list-inline-item">
-        <a href="/tags/git" class="btn btn-sm btn-outline-secondary">git</a>
-      </li>
-    
-      <li class="list-inline-item">
-        <a href="/tags/rails" class="btn btn-sm btn-outline-secondary">rails</a>
-      </li>
-    
-      <li class="list-inline-item">
-        <a href="/tags/ops" class="btn btn-sm btn-outline-secondary">ops</a>
-      </li>
-    
-      <li class="list-inline-item">
-        <a href="/tags/postgresql" class="btn btn-sm btn-outline-secondary">postgresql</a>
-      </li>
-    
-      <li class="list-inline-item">
-        <a href="/tags/sublime text" class="btn btn-sm btn-outline-secondary">sublime text</a>
-      </li>
-    
-      <li class="list-inline-item">
-        <a href="/tags/deployment" class="btn btn-sm btn-dark">deployment</a>
-      </li>
-    
-      <li class="list-inline-item">
-        <a href="/tags/books" class="btn btn-sm btn-outline-secondary">books</a>
-      </li>
-    
-  </ul>
-  <p class="my-4">Tagged with <a href="/tags/deployment">deployment</a>:</p>
-  <ul>
-    
-      <li class="my-2">
-        <a href="/20230720_4288/honeybadger-deployment-notification">Honeybadger deployment notification with curl</a>
-        
-          <small class="text-muted"><time datetime="2023-07-20 00:00:00 +0200">2023/07/20</time></small>
-        
-      </li>
-    
-  </ul>
+    <header class="my-4">
+  <h1 class="h3"><a href="/20230625_4177/install-chrome-headless">Installing headless Chrome on Ubuntu</a></h1>
+</header>
+
+<main class="my-4">
+  <p>Install Chromium (headless Chrome) on Ubuntru</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="nb">sudo </span>apt-get update
+<span class="nb">sudo </span>apt-get <span class="nb">install </span>software-properties-common
+<span class="nb">sudo </span>add-apt-repository ppa:canonical-chromium-builds/stage
+<span class="nb">sudo </span>apt-get update
+<span class="nb">sudo </span>apt-get <span class="nb">install </span>chromium-browser
+</code></pre></div>
+<p>Creating screenshot:</p>
+<div class="highlight"><pre class="highlight shell"><code>chromium-browser <span class="nt">--headless</span> <span class="nt">--hide-scrollbars</span> <span class="nt">--no-sandbox</span> <span class="nt">--window-size</span><span class="o">=</span>1280,1024 <span class="nt">--screenshot</span><span class="o">=</span>screenshot.pdf http://example.org/
+</code></pre></div>
+<p>Saving a page to PDF:</p>
+<div class="highlight"><pre class="highlight shell"><code>chromium-browser <span class="nt">--headless</span> <span class="nt">--hide-scrollbars</span> <span class="nt">--print-to-pdf</span><span class="o">=</span>page.pdf https://example.com/
+</code></pre></div>
+<p>References:</p>
+
+<ul>
+<li><a href="https://chromium.woolyss.com/">https://chromium.woolyss.com/</a></li>
+<li><a href="https://gist.github.com/addyosmani/5336747">https://gist.github.com/addyosmani/5336747</a></li>
+<li><a href="https://askubuntu.com/questions/79280/how-to-install-chrome-browser-properly-via-command-line">https://askubuntu.com/questions/79280/how-to-install-chrome-browser-properly-via-command-line</a></li>
+<li><a href="https://chromium.googlesource.com/chromium/src/+/lkgr/headless/README.md">https://chromium.googlesource.com/chromium/src/+/lkgr/headless/README.md</a></li>
+</ul>
+
+
+  
+    <ul class="list-inline my-4">
+      
+        <li class="list-inline-item"><a href="/tags/ops" class="btn btn-sm btn-outline-secondary">ops</a></li>
+      
+    </ul>
+  
+
+  
 </main>
 
     <footer class="my-4 text-muted">
+      
+        <small>25 Jun 2023</small>
       
     </footer>
   </div>
