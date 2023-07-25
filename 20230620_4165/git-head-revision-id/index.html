@@ -196,57 +196,38 @@
     <nav class="my-4">
       <a href="https://notes.musayev.com/" class="text-muted">Alex Musayev Notes</a>
     </nav>
-    <main class="my-4">
-  <p class="my-4">Tags:</p>
-  <ul class="list-inline my-4">
-    
-      <li class="list-inline-item">
-        <a href="/tags/ruby" class="btn btn-sm btn-outline-secondary">ruby</a>
-      </li>
-    
-      <li class="list-inline-item">
-        <a href="/tags/git" class="btn btn-sm btn-dark">git</a>
-      </li>
-    
-      <li class="list-inline-item">
-        <a href="/tags/rails" class="btn btn-sm btn-outline-secondary">rails</a>
-      </li>
-    
-      <li class="list-inline-item">
-        <a href="/tags/ops" class="btn btn-sm btn-outline-secondary">ops</a>
-      </li>
-    
-      <li class="list-inline-item">
-        <a href="/tags/postgresql" class="btn btn-sm btn-outline-secondary">postgresql</a>
-      </li>
-    
-      <li class="list-inline-item">
-        <a href="/tags/sublime text" class="btn btn-sm btn-outline-secondary">sublime text</a>
-      </li>
-    
-      <li class="list-inline-item">
-        <a href="/tags/deployment" class="btn btn-sm btn-outline-secondary">deployment</a>
-      </li>
-    
-      <li class="list-inline-item">
-        <a href="/tags/books" class="btn btn-sm btn-outline-secondary">books</a>
-      </li>
-    
-  </ul>
-  <p class="my-4">Tagged with <a href="/tags/git">git</a>:</p>
-  <ul>
-    
-      <li class="my-2">
-        <a href="/20230620_4165/git-head-revision-id">Getting head revision id from Git</a>
-        
-          <small class="text-muted"><time datetime="2023-06-20 00:00:00 +0200">2023/06/20</time></small>
-        
-      </li>
-    
-  </ul>
+    <header class="my-4">
+  <h1 class="h3"><a href="/20230620_4165/git-head-revision-id">Getting head revision id from Git</a></h1>
+</header>
+
+<main class="my-4">
+  <p>Getting git commit id for the <code>HEAD</code> revision in a specific working directory, without changing current directory:</p>
+<div class="highlight"><pre class="highlight shell"><code>git <span class="nt">-C</span> ~/public_notes rev-parse HEAD
+</code></pre></div>
+<p>Output example:</p>
+<div class="highlight"><pre class="highlight shell"><code>bf27c74435e836ef3ef43ccc4e01d3e4fd708201
+</code></pre></div>
+<p>Short id:</p>
+<div class="highlight"><pre class="highlight shell"><code>git <span class="nt">-C</span> ~/public_notes rev-parse <span class="nt">--short</span> HEAD
+</code></pre></div>
+<p>Output example:</p>
+<div class="highlight"><pre class="highlight shell"><code>bf27c74
+</code></pre></div>
+
+  
+    <ul class="list-inline my-4">
+      
+        <li class="list-inline-item"><a href="/tags/git" class="btn btn-sm btn-outline-secondary">git</a></li>
+      
+    </ul>
+  
+
+  
 </main>
 
     <footer class="my-4 text-muted">
+      
+        <small>20 Jun 2023</small>
       
     </footer>
   </div>
