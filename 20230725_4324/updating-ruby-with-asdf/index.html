@@ -197,50 +197,22 @@
       <a href="https://notes.musayev.com/" class="text-muted">Alex Musayev Notes</a>
     </nav>
     <header class="my-4">
-  <h1 class="h3"><a href="/20230723_4310/preserving-ruby-exception-backtrace">Preserving exception backtrace during exceptions wrapping in Ruby</a></h1>
+  <h1 class="h3"><a href="/20230725_4324/updating-ruby-with-asdf">Updating Ruby with asdf</a></h1>
 </header>
 
 <main class="my-4">
-  <p>In this example raising a <code>CustomError</code> hides the original error backtrace.</p>
-<div class="highlight"><pre class="highlight ruby"><code><span class="no">CustomError</span> <span class="o">=</span> <span class="no">Class</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="no">StandardError</span><span class="p">)</span>
-
-<span class="k">def</span> <span class="nf">raise_error</span>
-  <span class="k">raise</span> <span class="no">StandardError</span><span class="p">,</span> <span class="s2">"Original error"</span> <span class="c1"># line 4</span>
-<span class="k">end</span>
-
-<span class="k">def</span> <span class="nf">call_the_error_raiser</span>
-  <span class="n">raise_error</span> <span class="c1"># line 8</span>
-<span class="k">rescue</span> <span class="o">=&gt;</span> <span class="n">e</span>
-  <span class="k">raise</span> <span class="no">CustomError</span><span class="p">,</span> <span class="s2">"Error message"</span>
-<span class="k">end</span>
-
-<span class="k">begin</span>
-  <span class="n">call_the_error_raiser</span> <span class="c1"># line 14</span>
-<span class="k">rescue</span> <span class="no">StandardError</span> <span class="o">=&gt;</span> <span class="n">e</span>
-  <span class="nb">puts</span> <span class="n">e</span><span class="p">.</span><span class="nf">inspect</span>
-  <span class="nb">puts</span> <span class="n">e</span><span class="p">.</span><span class="nf">backtrace</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
-<span class="k">end</span>
+  <p>Assuming, it is macOS, and <code>asdf</code> was installed with Homebrew.</p>
+<div class="highlight"><pre class="highlight shell"><code>brew update
+asdf plugin update ruby
+asdf <span class="nb">install </span>ruby 3.2.2
 </code></pre></div>
-<p>Output (the cause of the original error is lost):</p>
-<div class="highlight"><pre class="highlight plaintext"><code>#&lt;CustomError: Error message&gt;
-preserve_error_backtrace.rb:10:in `rescue in call_the_error_raiser'
-preserve_error_backtrace.rb:7:in `call_the_error_raiser'
-preserve_error_backtrace.rb:14:in `&lt;main&gt;'
-</code></pre></div>
-<p>You can still access the &quot;Original error&quot; backtrace via <a href="https://ruby-doc.org/3.2.2/Exception.html#method-i-cause"><code>Exception#cause</code></a>, but it may be better to preserve the original while raising the custom error, instead of generating a new non-helpful backtrace:</p>
-<div class="highlight"><pre class="highlight ruby"><code><span class="k">raise</span> <span class="no">CustomError</span><span class="p">,</span> <span class="s2">"Error message"</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="nf">backtrace</span>
-</code></pre></div>
-<p>Output (the cause of the original error is on the first line):</p>
-<div class="highlight"><pre class="highlight plaintext"><code>#&lt;CustomError: Error message&gt;
-preserve_error_backtrace.rb:4:in `raise_error' ← The cause of the error
-preserve_error_backtrace.rb:8:in `call_the_error_raiser'
-preserve_error_backtrace.rb:14:in `&lt;main&gt;'
+<p>In case <code>asdf</code> was installed manually, use this instead of the brew commend to update to the lates stable release:</p>
+<div class="highlight"><pre class="highlight shell"><code>asdf update
 </code></pre></div>
 <p>References:</p>
 
 <ul>
-<li><a href="https://www.honeybadger.io/blog/nested-errors-in-ruby-with-exception-cause/">Nested errors in Ruby with Exception#cause</a> at Honeybadger blog</li>
-<li><a href="https://ruby-doc.org/3.2.2/Exception.html#method-i-cause"><code>Exception#cause</code> docs</a></li>
+<li><a href="https://asdf-vm.com/"><code>asdf</code></a></li>
 </ul>
 
 
@@ -271,9 +243,9 @@ preserve_error_backtrace.rb:14:in `&lt;main&gt;'
         </li>
       
         <li class="my-2">
-          <a href="/20230725_4324/updating-ruby-with-asdf">Updating Ruby with asdf</a>
+          <a href="/20230723_4310/preserving-ruby-exception-backtrace">Preserving exception backtrace during exceptions wrapping in Ruby</a>
           
-            <small class="text-muted"><time datetime="2023-07-25 00:00:00 +0200">2023/07/25</time></small>
+            <small class="text-muted"><time datetime="2023-07-23 00:00:00 +0200">2023/07/23</time></small>
           
         </li>
       
@@ -283,7 +255,7 @@ preserve_error_backtrace.rb:14:in `&lt;main&gt;'
 
     <footer class="my-4 text-muted">
       
-        <small>23 Jul 2023</small>
+        <small>25 Jul 2023</small>
       
     </footer>
   </div>
