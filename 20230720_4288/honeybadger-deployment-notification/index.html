@@ -122,12 +122,12 @@
   </style>
 </head>
 <body>
-  <div class="prose prose-slate lg:prose-lg prose-h1:text-4xl prose-headings:font-semibold container mx-auto px-4 py-4">
-    <nav class="py-4">
+  <div class="prose prose-slate lg:prose-lg prose-h1:text-4xl prose-headings:font-semibold prose-a:text-sky-800 container mx-auto !px-4 !py-4">
+    <nav class="!my-8">
       <a href="/">Alex Musayev Notes</a>
     </nav>
     <main>
-      <h1><a href="/20230720_4288/honeybadger-deployment-notification">Honeybadger deployment notification with curl</a></h1>
+      <h1 class="!my-8"><a href="/20230720_4288/honeybadger-deployment-notification" class="no-underline">Honeybadger deployment notification with curl</a></h1>
 
 <p>Shell command to tell Honeybadger about a new deployment:</p>
 <div class="highlight"><pre class="highlight shell"><code>curl <span class="nt">--data</span> <span class="s2">"deploy[revision]=</span><span class="si">$(</span><span class="nb">date</span> <span class="nt">-u</span> +%Y%m%d%H%M%S<span class="si">)</span><span class="s2">_</span><span class="si">$(</span>git rev-parse <span class="nt">--short</span> HEAD<span class="si">)</span><span class="s2">&amp;api_key=</span><span class="nv">$HONEYBADGER_API_KEY</span><span class="s2">"</span> <span class="s2">"https://api.honeybadger.io/v1/deploys"</span>
@@ -167,10 +167,9 @@
 
 <hr class="!my-8">
 
-  <p>Tags:</p>
-  <div class="flex flex-row flex-wrap items-stretch">
+  <div class="flex flex-row flex-wrap items-stretch !my-8">
     
-      <a href="/tags/deployment" class="block border rounded-sm py-0 px-2 mb-2 mr-2 no-underline font-normal bg-slate-100 text-slate-800 border-slate-200">deployment</a>
+      <a href="/tags/deployment" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">deployment</a>
     
   </div>
 
