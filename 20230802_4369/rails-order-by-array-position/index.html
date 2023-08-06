@@ -136,12 +136,12 @@
 <div class="highlight"><pre class="highlight sql"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">accounts</span> <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">array_position</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="s1">'enabled'</span><span class="p">,</span> <span class="s1">'suspended'</span><span class="p">,</span> <span class="s1">'disabled'</span><span class="p">],</span> <span class="n">accounts</span><span class="p">.</span><span class="k">state</span><span class="p">)</span>
 </code></pre></div>
 <p>The same query in Rails:</p>
-<div class="highlight"><pre class="highlight ruby"><code><span class="no">Account</span><span class="p">.</span><span class="nf">order</span><span class="p">(</span><span class="no">Arel</span><span class="p">.</span><span class="nf">sql</span><span class="p">(</span><span class="s2">"array_position(ARRAY['enabled' 'suspended', 'disabled'], accounts.state::text)"</span><span class="p">))</span>
+<div class="highlight"><pre class="highlight ruby"><code><span class="no">Account</span><span class="p">.</span><span class="nf">order</span><span class="p">(</span><span class="no">Arel</span><span class="p">.</span><span class="nf">sql</span><span class="p">(</span><span class="s2">"array_position(ARRAY['enabled' 'suspended', 'disabled'], state::text)"</span><span class="p">))</span>
 
-<span class="no">ServiceInstance</span><span class="p">.</span><span class="nf">pluck</span><span class="p">(</span><span class="ss">:state</span><span class="p">).</span><span class="nf">tally</span>
+<span class="no">Account</span><span class="p">.</span><span class="nf">pluck</span><span class="p">(</span><span class="ss">:state</span><span class="p">).</span><span class="nf">tally</span>
 <span class="c1"># =&gt; {"enabled"=&gt;45, "disabled"=&gt;21, "suspended"=&gt;5}</span>
 
-<span class="no">ServiceInstance</span><span class="p">.</span><span class="nf">order</span><span class="p">(</span><span class="no">Arel</span><span class="p">.</span><span class="nf">sql</span><span class="p">(</span><span class="s2">"array_position(ARRAY['disabled', 'suspended'], state::text)"</span><span class="p">)).</span><span class="nf">pluck</span><span class="p">(</span><span class="ss">:state</span><span class="p">)</span>
+<span class="no">Account</span><span class="p">.</span><span class="nf">order</span><span class="p">(</span><span class="no">Arel</span><span class="p">.</span><span class="nf">sql</span><span class="p">(</span><span class="s2">"array_position(ARRAY['disabled', 'suspended'], state::text)"</span><span class="p">)).</span><span class="nf">pluck</span><span class="p">(</span><span class="ss">:state</span><span class="p">)</span>
 </code></pre></div>
 <p>References:</p>
 
