@@ -127,45 +127,33 @@
       <a href="/">Alex Musayev Notes</a>
     </nav>
     <main>
-      <main>
+      <h1 class="!my-8"><a href="/20230806_4380/bash-kill-process-by-port" class="no-underline">Kill a process that occupies a port</a></h1>
+
+<p>This command lists process ids listening on a specified port:</p>
+<div class="highlight"><pre class="highlight shell"><code>lsof <span class="nt">-t</span> <span class="nt">-i</span>:PORT_NUMBER
+</code></pre></div>
+<p>You can use it to kill processes:</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="nb">kill</span> <span class="nt">-9</span> <span class="o">(</span>lsof <span class="nt">-t</span> <span class="nt">-i</span>:PORT_NUMBER<span class="o">)</span>
+</code></pre></div>
+<p>Here is a Bash function making this command easier to use:</p>
+<div class="highlight"><pre class="highlight shell"><code>killport<span class="o">()</span> <span class="o">{</span> <span class="nb">kill</span> <span class="nt">-9</span> <span class="si">$(</span>lsof <span class="nt">-t</span> <span class="nt">-i</span>:<span class="nv">$1</span><span class="si">)</span> <span class="o">}</span>
+</code></pre></div>
+<p>Usage example:</p>
+<div class="highlight"><pre class="highlight shell"><code>killport 3000
+</code></pre></div>
+<hr class="!my-8">
+
   <div class="flex flex-row flex-wrap items-stretch !my-8">
     
-      <a href="/tags/ruby" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">ruby</a>
-    
-      <a href="/tags/git" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">git</a>
-    
-      <a href="/tags/rails" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">rails</a>
-    
-      <a href="/tags/ops" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">ops</a>
-    
-      <a href="/tags/postgresql" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">postgresql</a>
-    
-      <a href="/tags/sublime text" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">sublime text</a>
-    
-      <a href="/tags/deployment" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">deployment</a>
-    
-      <a href="/tags/books" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">books</a>
-    
-      <a href="/tags/bash" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-500 !text-slate-100 border-slate-600">bash</a>
-    
-      <a href="/tags/macos" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">macos</a>
+      <a href="/tags/bash" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">bash</a>
     
   </div>
-  <p>Tagged with <a href="/tags/bash">bash</a>:</p>
-  <ul>
-    
-      <li>
-        <a href="/20230806_4380/bash-kill-process-by-port">Kill a process that occupies a port</a>
-        
-          <small><time datetime="2023-08-06 00:00:00 +0200">2023/08/06</time></small>
-        
-      </li>
-    
-  </ul>
-</main>
+
 
     </main>
     <footer>
+      
+        <small> 6 Aug 2023</small>
       
     </footer>
   </div>
