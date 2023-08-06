@@ -128,7 +128,7 @@
       <a href="/">Alex Musayev Notes</a>
     </nav>
     <main>
-      <h1 class="!my-8"><a href="/20230720_4288/honeybadger-deployment-notification" class="no-underline">Honeybadger deployment notification with curl</a></h1>
+      <h1 class="!my-8 !leading-tight"><a href="/20230720_4288/honeybadger-deployment-notification" class="no-underline">Honeybadger deployment notification with curl</a></h1>
 
 <p>Shell command to tell Honeybadger about a new deployment:</p>
 <div class="highlight"><pre class="highlight shell"><code>curl <span class="nt">--data</span> <span class="s2">"deploy[revision]=</span><span class="si">$(</span><span class="nb">date</span> <span class="nt">-u</span> +%Y%m%d%H%M%S<span class="si">)</span><span class="s2">_</span><span class="si">$(</span>git rev-parse <span class="nt">--short</span> HEAD<span class="si">)</span><span class="s2">&amp;api_key=</span><span class="nv">$HONEYBADGER_API_KEY</span><span class="s2">"</span> <span class="s2">"https://api.honeybadger.io/v1/deploys"</span>
