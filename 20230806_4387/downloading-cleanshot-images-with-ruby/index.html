@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="" />
+  <title>Downloading CleanShot images with Ruby - Alex Musayev Notes</title>
+  <link rel="icon" href="data:," />
+  <link href="/style.css" rel="stylesheet" type="text/css">
+  <style>
+    .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight, .highlight .w {
+  color: #24292f;
+  background-color: #f6f8fa;
+}
+.highlight .k, .highlight .kd, .highlight .kn, .highlight .kp, .highlight .kr, .highlight .kt, .highlight .kv {
+  color: #cf222e;
+}
+.highlight .gr {
+  color: #f6f8fa;
+}
+.highlight .gd {
+  color: #82071e;
+  background-color: #ffebe9;
+}
+.highlight .nb {
+  color: #953800;
+}
+.highlight .nc {
+  color: #953800;
+}
+.highlight .no {
+  color: #953800;
+}
+.highlight .nn {
+  color: #953800;
+}
+.highlight .sr {
+  color: #116329;
+}
+.highlight .na {
+  color: #116329;
+}
+.highlight .nt {
+  color: #116329;
+}
+.highlight .gi {
+  color: #116329;
+  background-color: #dafbe1;
+}
+.highlight .kc {
+  color: #0550ae;
+}
+.highlight .l, .highlight .ld, .highlight .m, .highlight .mb, .highlight .mf, .highlight .mh, .highlight .mi, .highlight .il, .highlight .mo, .highlight .mx {
+  color: #0550ae;
+}
+.highlight .sb {
+  color: #0550ae;
+}
+.highlight .bp {
+  color: #0550ae;
+}
+.highlight .ne {
+  color: #0550ae;
+}
+.highlight .nl {
+  color: #0550ae;
+}
+.highlight .py {
+  color: #0550ae;
+}
+.highlight .nv, .highlight .vc, .highlight .vg, .highlight .vi, .highlight .vm {
+  color: #0550ae;
+}
+.highlight .o, .highlight .ow {
+  color: #0550ae;
+}
+.highlight .gh {
+  color: #0550ae;
+  font-weight: bold;
+}
+.highlight .gu {
+  color: #0550ae;
+  font-weight: bold;
+}
+.highlight .s, .highlight .sa, .highlight .sc, .highlight .dl, .highlight .sd, .highlight .s2, .highlight .se, .highlight .sh, .highlight .sx, .highlight .s1, .highlight .ss {
+  color: #0a3069;
+}
+.highlight .nd {
+  color: #8250df;
+}
+.highlight .nf, .highlight .fm {
+  color: #8250df;
+}
+.highlight .err {
+  color: #f6f8fa;
+  background-color: #82071e;
+}
+.highlight .c, .highlight .ch, .highlight .cd, .highlight .cm, .highlight .cp, .highlight .cpf, .highlight .c1, .highlight .cs {
+  color: #6e7781;
+}
+.highlight .gl {
+  color: #6e7781;
+}
+.highlight .gt {
+  color: #6e7781;
+}
+.highlight .ni {
+  color: #24292f;
+}
+.highlight .si {
+  color: #24292f;
+}
+.highlight .ge {
+  color: #24292f;
+  font-style: italic;
+}
+.highlight .gs {
+  color: #24292f;
+  font-weight: bold;
+}
+  </style>
+</head>
+<body>
+  <div class="prose prose-slate lg:prose-lg prose-h1:text-4xl prose-headings:font-semibold prose-a:text-sky-800 container mx-auto !px-4 !py-4">
+    <nav class="!my-8">
+      <a href="/">Alex Musayev Notes</a>
+    </nav>
+    <main>
+      <h1 class="!my-8 !leading-tight"><a href="/20230806_4387/downloading-cleanshot-images-with-ruby" class="no-underline">Downloading CleanShot images with Ruby</a></h1>
+
+<p>In my opinion <a href="https://cleanshot.com/">CleanShot</a> is one of the best screenshot tools for macOS by 2023. I&#39;m using it pretty much every day.</p>
+
+<p>I&#39;m going to integrate CleanShot with my <a href="https://notes.musayev.com/">notes</a> publication script to embed screenshots to Markdown pages.</p>
+
+<p>My desired workflow is to plug CleanShot short URL into my notes using <a href="https://spec.commonmark.org/0.30/#images">Markdown image markup</a>, letting a script to extract actual image URL and do further processing.</p>
+
+<p>Here is a quick example on how to download image file from CleanShot URL:</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="nb">require</span> <span class="s2">"http"</span>
+<span class="nb">require</span> <span class="s2">"cgi"</span>
+
+<span class="n">cleanshot_url</span> <span class="o">=</span> <span class="s2">"https://share.cleanshot.com/35WJDTGz"</span>
+
+<span class="c1"># Fetch direct image URL</span>
+<span class="n">direct_image_url</span> <span class="o">=</span> <span class="no">HTTP</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="s2">"</span><span class="si">#{</span><span class="n">cleanshot_url</span><span class="si">}</span><span class="s2">+"</span><span class="p">).</span><span class="nf">headers</span><span class="p">[</span><span class="s2">"Location"</span><span class="p">]</span>
+
+<span class="c1"># Extract image file name from the CleanShot query string</span>
+<span class="n">query</span> <span class="o">=</span> <span class="no">URI</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">direct_image_url</span><span class="p">).</span><span class="nf">query</span>
+<span class="n">param</span> <span class="o">=</span> <span class="no">CGI</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">query</span><span class="p">).</span><span class="nf">fetch</span><span class="p">(</span><span class="s2">"response-content-disposition"</span><span class="p">).</span><span class="nf">first</span>
+<span class="n">file_name</span> <span class="o">=</span> <span class="no">CGI</span><span class="p">.</span><span class="nf">unescape</span><span class="p">(</span><span class="n">param</span><span class="p">.</span><span class="nf">split</span><span class="p">(</span><span class="s2">"="</span><span class="p">,</span> <span class="mi">2</span><span class="p">).</span><span class="nf">last</span><span class="p">)</span>
+
+<span class="c1"># Download the image to a file</span>
+<span class="n">image_contents</span> <span class="o">=</span> <span class="no">HTTP</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="n">direct_image_url</span><span class="p">).</span><span class="nf">body</span><span class="p">.</span><span class="nf">to_s</span>
+<span class="no">File</span><span class="p">.</span><span class="nf">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s2">"wb"</span><span class="p">)</span> <span class="p">{</span> <span class="n">_1</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="n">image_contents</span><span class="p">)</span> <span class="p">}</span>
+</code></pre></div>
+<p>(Yes, it is possible to avoid third party dependency here by using Ruby&#39;s native <code>Net::HTTP</code> instead of the <code>http</code> gem, but I don&#39;t enjoy pain.)</p>
+
+<p>Let&#39;s add some errors handling and refactor it into a service class:</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="nb">require</span> <span class="s2">"http"</span>
+<span class="nb">require</span> <span class="s2">"cgi"</span>
+
+<span class="k">class</span> <span class="nc">CleanshotDownloader</span>
+  <span class="nb">attr_reader</span> <span class="ss">:cleanshot_url</span>
+
+  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">cleanshot_url</span><span class="p">,</span> <span class="ss">file_name: </span><span class="kp">nil</span><span class="p">)</span>
+    <span class="vi">@cleanshot_url</span> <span class="o">=</span> <span class="n">cleanshot_url</span>
+    <span class="vi">@file_name</span> <span class="o">=</span> <span class="n">file_name</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">download</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="no">HTTP</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="n">direct_image_url</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="s2">"error downloading image"</span> <span class="k">unless</span> <span class="n">response</span><span class="p">.</span><span class="nf">status</span><span class="p">.</span><span class="nf">success?</span>
+    <span class="no">File</span><span class="p">.</span><span class="nf">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s2">"wb"</span><span class="p">)</span> <span class="p">{</span> <span class="n">_1</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="nf">body</span><span class="p">.</span><span class="nf">to_s</span><span class="p">)</span> <span class="p">}</span>
+    <span class="n">file_name</span>
+  <span class="k">end</span>
+
+  <span class="kp">private</span>
+
+  <span class="k">def</span> <span class="nf">direct_image_url</span>
+    <span class="vi">@direct_image_url</span> <span class="o">||=</span> <span class="k">begin</span>
+      <span class="n">response</span> <span class="o">=</span> <span class="no">HTTP</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="s2">"</span><span class="si">#{</span><span class="n">cleanshot_url</span><span class="si">}</span><span class="s2">+"</span><span class="p">)</span>
+      <span class="k">raise</span> <span class="s2">"error getting image URL"</span> <span class="k">unless</span> <span class="n">response</span><span class="p">.</span><span class="nf">status</span><span class="p">.</span><span class="nf">redirect?</span>
+      <span class="n">response</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="s2">"Location"</span><span class="p">]</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">file_name</span>
+    <span class="vi">@file_name</span> <span class="o">||=</span> <span class="k">begin</span>
+      <span class="n">query</span> <span class="o">=</span> <span class="no">URI</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">direct_image_url</span><span class="p">).</span><span class="nf">query</span>
+      <span class="n">param</span> <span class="o">=</span> <span class="no">CGI</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">query</span><span class="p">).</span><span class="nf">fetch</span><span class="p">(</span><span class="s2">"response-content-disposition"</span><span class="p">).</span><span class="nf">first</span>
+      <span class="no">CGI</span><span class="p">.</span><span class="nf">unescape</span><span class="p">(</span><span class="n">param</span><span class="p">.</span><span class="nf">split</span><span class="p">(</span><span class="s2">"="</span><span class="p">,</span> <span class="mi">2</span><span class="p">).</span><span class="nf">last</span><span class="p">)</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Usage example:</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="no">CleanshotDownloader</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s2">"https://share.cleanshot.com/35WJDTGz"</span><span class="p">).</span><span class="nf">download</span>
+<span class="c1"># =&gt; "CleanShot 2023-08-06 at 15.27.35.jpeg"</span>
+</code></pre></div>
+<p>And a spec with fancy <a href="https://rubygems.org/gems/webmock">WebMock</a> stubs:</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="no">RSpec</span><span class="p">.</span><span class="nf">describe</span> <span class="no">CleanshotDownloader</span> <span class="k">do</span>
+  <span class="n">subject</span><span class="p">(</span><span class="ss">:service_call</span><span class="p">)</span> <span class="p">{</span> <span class="n">described_class</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">cleanshot_url</span><span class="p">).</span><span class="nf">download</span> <span class="p">}</span>
+
+  <span class="n">let</span><span class="p">(</span><span class="ss">:cleanshot_url</span><span class="p">)</span> <span class="p">{</span> <span class="s2">"https://share.cleanshot.com/80085"</span> <span class="p">}</span>
+
+  <span class="n">let</span><span class="p">(</span><span class="ss">:direct_image_url</span><span class="p">)</span> <span class="k">do</span>
+    <span class="s2">"https://media.cleanshot.cloud/media/1334/itkYgfyMGKeaUT.jpeg?"</span> <span class="p">\</span>
+    <span class="s2">"response-content-disposition=attachment%3Bfilename%3DCleanShot"</span> <span class="p">\</span>
+    <span class="s2">"%25202023-08-06%2520at%252015.27.35.jpeg&amp;Expires=1691367016"</span>
+  <span class="k">end</span>
+
+  <span class="n">let</span><span class="p">(</span><span class="ss">:image_contents</span><span class="p">)</span> <span class="p">{</span> <span class="n">file_fixture</span><span class="p">(</span><span class="s2">"banana.jpg"</span><span class="p">).</span><span class="nf">read</span> <span class="p">}</span>
+
+  <span class="n">context</span> <span class="s2">"with explicit file name"</span> <span class="k">do</span>
+    <span class="n">subject</span><span class="p">(</span><span class="ss">:service_call</span><span class="p">)</span> <span class="p">{</span> <span class="n">described_class</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">cleanshot_url</span><span class="p">,</span> <span class="ss">file_name: </span><span class="n">file_name</span><span class="p">).</span><span class="nf">download</span> <span class="p">}</span>
+
+    <span class="n">let</span><span class="p">(</span><span class="ss">:file_name</span><span class="p">)</span> <span class="p">{</span> <span class="no">Tempfile</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">described_class</span><span class="p">.</span><span class="nf">name</span><span class="p">)</span> <span class="p">}</span>
+
+    <span class="n">before</span> <span class="k">do</span>
+      <span class="n">stub_cleanshot_url</span><span class="p">.</span><span class="nf">to_return</span><span class="p">(</span><span class="ss">status: </span><span class="mi">302</span><span class="p">,</span> <span class="ss">headers: </span><span class="p">{</span><span class="s2">"Location"</span> <span class="o">=&gt;</span> <span class="n">direct_image_url</span><span class="p">})</span>
+      <span class="n">stub_direct_image_url</span><span class="p">.</span><span class="nf">to_return</span><span class="p">(</span><span class="ss">headers: </span><span class="p">{</span><span class="s2">"Content-Type"</span> <span class="o">=&gt;</span> <span class="s2">"image/jpeg"</span><span class="p">},</span> <span class="ss">body: </span><span class="n">image_contents</span><span class="p">)</span>
+      <span class="n">service_call</span>
+    <span class="k">end</span>
+
+    <span class="n">it</span> <span class="p">{</span> <span class="n">expect</span><span class="p">(</span><span class="no">File</span><span class="p">.</span><span class="nf">read</span><span class="p">(</span><span class="n">file_name</span><span class="p">)).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="n">image_contents</span><span class="p">)</span> <span class="p">}</span>
+  <span class="k">end</span>
+
+  <span class="n">context</span> <span class="s2">"with implicit file name"</span> <span class="k">do</span>
+    <span class="n">before</span> <span class="k">do</span>
+      <span class="n">stub_cleanshot_url</span><span class="p">.</span><span class="nf">to_return</span><span class="p">(</span><span class="ss">status: </span><span class="mi">302</span><span class="p">,</span> <span class="ss">headers: </span><span class="p">{</span><span class="s2">"Location"</span> <span class="o">=&gt;</span> <span class="n">direct_image_url</span><span class="p">})</span>
+      <span class="n">stub_direct_image_url</span><span class="p">.</span><span class="nf">to_return</span><span class="p">(</span><span class="ss">headers: </span><span class="p">{</span><span class="s2">"Content-Type"</span> <span class="o">=&gt;</span> <span class="s2">"image/jpeg"</span><span class="p">},</span> <span class="ss">body: </span><span class="n">image_contents</span><span class="p">)</span>
+    <span class="k">end</span>
+
+    <span class="n">it</span> <span class="p">{</span> <span class="n">expect</span><span class="p">(</span><span class="n">service_call</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="s2">"CleanShot 2023-08-06 at 15.27.35.jpeg"</span><span class="p">)</span> <span class="p">}</span>
+  <span class="k">end</span>
+
+  <span class="n">context</span> <span class="s2">"with redirect error"</span> <span class="k">do</span>
+    <span class="n">before</span> <span class="k">do</span>
+      <span class="n">stub_cleanshot_url</span><span class="p">.</span><span class="nf">to_return</span><span class="p">(</span><span class="ss">status: </span><span class="mi">500</span><span class="p">)</span>
+    <span class="k">end</span>
+
+    <span class="n">it</span> <span class="p">{</span> <span class="n">expect</span> <span class="p">{</span> <span class="n">service_call</span> <span class="p">}.</span><span class="nf">to</span> <span class="n">raise_error</span><span class="p">(</span><span class="s2">"error getting image URL"</span><span class="p">)</span> <span class="p">}</span>
+  <span class="k">end</span>
+
+  <span class="n">context</span> <span class="s2">"with image downloading error"</span> <span class="k">do</span>
+    <span class="n">before</span> <span class="k">do</span>
+      <span class="n">stub_cleanshot_url</span><span class="p">.</span><span class="nf">to_return</span><span class="p">(</span><span class="ss">status: </span><span class="mi">302</span><span class="p">,</span> <span class="ss">headers: </span><span class="p">{</span><span class="s2">"Location"</span> <span class="o">=&gt;</span> <span class="n">direct_image_url</span><span class="p">})</span>
+      <span class="n">stub_direct_image_url</span><span class="p">.</span><span class="nf">to_return</span><span class="p">(</span><span class="ss">status: </span><span class="mi">500</span><span class="p">)</span>
+    <span class="k">end</span>
+
+    <span class="n">it</span> <span class="p">{</span> <span class="n">expect</span> <span class="p">{</span> <span class="n">service_call</span> <span class="p">}.</span><span class="nf">to</span> <span class="n">raise_error</span><span class="p">(</span><span class="s2">"error downloading image"</span><span class="p">)</span> <span class="p">}</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">stub_cleanshot_url</span>
+    <span class="n">stub_request</span><span class="p">(</span><span class="ss">:get</span><span class="p">,</span> <span class="s2">"</span><span class="si">#{</span><span class="n">cleanshot_url</span><span class="si">}</span><span class="s2">+"</span><span class="p">)</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">stub_direct_image_url</span>
+    <span class="n">stub_request</span><span class="p">(</span><span class="ss">:get</span><span class="p">,</span> <span class="n">direct_image_url</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>References:</p>
+
+<ul>
+<li>CleanShot: <a href="https://cleanshot.com">https://cleanshot.com</a></li>
+<li>Markdown reference (CommonMark): <a href="https://commonmark.org/help/">https://commonmark.org/help/</a></li>
+</ul>
+
+  <hr class="!my-8">
+  <div class="flex flex-row flex-wrap items-stretch !my-8">
+    
+      <a href="/tags/ruby" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">ruby</a>
+    
+  </div>
+
+  <hr class="!my-8">
+  <p>Somewhat related:</p>
+  <ul>
+    
+      <li>
+        <a href="/20230618_4153/updating-gems">Updating gems</a>
+        
+          <small><time datetime="2023-06-18 00:00:00 +0200" class="text-slate-400">2023/06/18</time></small>
+        
+      </li>
+    
+      <li>
+        <a href="/20230713_4251/rspec-snippet-for-sublime-text">RSpec snippet for Sublime Text</a>
+        
+          <small><time datetime="2023-07-13 00:00:00 +0200" class="text-slate-400">2023/07/13</time></small>
+        
+      </li>
+    
+      <li>
+        <a href="/20230723_4310/preserving-ruby-exception-backtrace">Preserving backtrace during exceptions wrapping in Ruby</a>
+        
+          <small><time datetime="2023-07-23 00:00:00 +0200" class="text-slate-400">2023/07/23</time></small>
+        
+      </li>
+    
+      <li>
+        <a href="/20230725_4324/updating-ruby-with-asdf">Updating Ruby with asdf</a>
+        
+          <small><time datetime="2023-07-25 00:00:00 +0200" class="text-slate-400">2023/07/25</time></small>
+        
+      </li>
+    
+  </ul>
+
+    </main>
+    
+      <footer>
+        <hr class="!my-8">
+        <p class="text-slate-400"> 6 Aug 2023</p>
+      </footer>
+    
+  </div>
+</body>
+</html>
