@@ -130,23 +130,23 @@
     <main>
       <h1 class="!my-8 !leading-tight"><a href="/20230625_4175/ansible-ping" class="no-underline">Check host connection with Ansible</a></h1>
 
-<p>Usage:</p>
+<p>A command line for the basic use case when you need to check connection for all hosts in a specified inventory file:</p>
 <div class="highlight"><pre class="highlight shell"><code>ansible all <span class="nt">--inventory</span> INVENTORY_FILE <span class="nt">--user</span> REMOTE_USER <span class="nt">--module-name</span> ping
 </code></pre></div>
 <p>Short version:</p>
 <div class="highlight"><pre class="highlight shell"><code>ansible all <span class="nt">-i</span> INVENTORY_FILE <span class="nt">-u</span> REMOTE_USER <span class="nt">-m</span> ping
 </code></pre></div>
-<p>You may drop <code>--user</code> if it present in the Ansible configuration file.</p>
+<p>Drop <code>--user</code> if it present in the Ansible configuration file.</p>
 
 <p>Example:</p>
 <div class="highlight"><pre class="highlight shell"><code>ansible all <span class="nt">-i</span> ./inventory/production <span class="nt">-m</span> ping
 </code></pre></div>
 <p>Sample output:</p>
-<div class="highlight"><pre class="highlight plaintext"><code>1.1.1.1 | SUCCESS =&gt; {
+<div class="highlight"><pre class="highlight plaintext"><code>X.X.X.X | SUCCESS =&gt; {
     "changed": false,
     "ping": "pong"
 }
-1.1.1.2 | SUCCESS =&gt; {
+Y.Y.Y.Y | SUCCESS =&gt; {
     "changed": false,
     "ping": "pong"
 }
