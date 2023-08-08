@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="description" content="" />
-  <title>Kill a process that occupies a port - Alex Musayev Notes</title>
+  <title>Check host connection with Ansible - Alex Musayev Notes</title>
   <link rel="icon" href="data:," />
   <link href="/style.css" rel="stylesheet" type="text/css">
   <style>
@@ -128,33 +128,62 @@
       <a href="/">Alex Musayev Notes</a>
     </nav>
     <main>
-      <h1 class="!my-8 !leading-tight"><a href="/20230806_4380/bash-kill-process-by-port" class="no-underline">Kill a process that occupies a port</a></h1>
+      <h1 class="!my-8 !leading-tight"><a href="/20230625_4175/ansible-ping" class="no-underline">Check host connection with Ansible</a></h1>
 
-<p>This command lists process ids listening on a specified port:</p>
-<div class="highlight"><pre class="highlight shell"><code>lsof <span class="nt">-t</span> <span class="nt">-i</span>:PORT_NUMBER
+<p>Usage:</p>
+<div class="highlight"><pre class="highlight shell"><code>ansible all <span class="nt">--inventory</span> INVENTORY_FILE <span class="nt">--user</span> REMOTE_USER <span class="nt">--module-name</span> ping
 </code></pre></div>
-<p>You can use it to kill processes:</p>
-<div class="highlight"><pre class="highlight shell"><code><span class="nb">kill</span> <span class="nt">-9</span> <span class="o">(</span>lsof <span class="nt">-t</span> <span class="nt">-i</span>:PORT_NUMBER<span class="o">)</span>
+<p>Short version:</p>
+<div class="highlight"><pre class="highlight shell"><code>ansible all <span class="nt">-i</span> INVENTORY_FILE <span class="nt">-u</span> REMOTE_USER <span class="nt">-m</span> ping
 </code></pre></div>
-<p>Here is a Bash function making this command easier to use:</p>
-<div class="highlight"><pre class="highlight shell"><code>killport<span class="o">()</span> <span class="o">{</span> <span class="nb">kill</span> <span class="nt">-9</span> <span class="si">$(</span>lsof <span class="nt">-t</span> <span class="nt">-i</span>:<span class="nv">$1</span><span class="si">)</span> <span class="o">}</span>
+<p>You may drop <code>--user</code> if it present in the Ansible configuration file.</p>
+
+<p>Example:</p>
+<div class="highlight"><pre class="highlight shell"><code>ansible all <span class="nt">-i</span> ./inventory/production <span class="nt">-m</span> ping
 </code></pre></div>
-<p>Usage example:</p>
-<div class="highlight"><pre class="highlight shell"><code>killport 3000
+<p>Sample output:</p>
+<div class="highlight"><pre class="highlight plaintext"><code>1.1.1.1 | SUCCESS =&gt; {
+    "changed": false,
+    "ping": "pong"
+}
+1.1.1.2 | SUCCESS =&gt; {
+    "changed": false,
+    "ping": "pong"
+}
 </code></pre></div>
+<p>References:</p>
+
+<ul>
+<li><a href="https://docs.ansible.com/ansible/latest/inventory_guide/intro_patterns.html#using-patterns">Using Ansible hosts pattern</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/inventory_guide/intro_inventory.html">Ansible inventory</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/collections/ansible/builtin/ping_module.html">Ansible Ping module</a></li>
+</ul>
+
   <hr class="!my-8">
   <div class="flex flex-row flex-wrap items-stretch !my-8">
     
-      <a href="/tags/bash" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">bash</a>
+      <a href="/tags/ops" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">ops</a>
     
   </div>
 
+  <hr class="!my-8">
+  <p>Somewhat related:</p>
+  <ul>
+    
+      <li>
+        <a href="/20230625_4177/install-chrome-headless">Installing headless Chrome on Ubuntu</a>
+        
+          <small><time datetime="2023-06-25 00:00:00 +0200" class="text-slate-400">2023/06/25</time></small>
+        
+      </li>
+    
+  </ul>
 
     </main>
     
       <footer>
         <hr class="!my-8">
-        <p class="text-slate-400"> 6 Aug 2023</p>
+        <p class="text-slate-400">25 Jun 2023</p>
       </footer>
     
   </div>

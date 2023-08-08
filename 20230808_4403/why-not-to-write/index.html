@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="description" content="" />
-  <title>Kill a process that occupies a port - Alex Musayev Notes</title>
+  <title>Why not to write things on the internet - Alex Musayev Notes</title>
   <link rel="icon" href="data:," />
   <link href="/style.css" rel="stylesheet" type="text/css">
   <style>
@@ -128,24 +128,21 @@
       <a href="/">Alex Musayev Notes</a>
     </nav>
     <main>
-      <h1 class="!my-8 !leading-tight"><a href="/20230806_4380/bash-kill-process-by-port" class="no-underline">Kill a process that occupies a port</a></h1>
+      <h1 class="!my-8 !leading-tight"><a href="/20230808_4403/why-not-to-write" class="no-underline">Why not to write things on the internet</a></h1>
 
-<p>This command lists process ids listening on a specified port:</p>
-<div class="highlight"><pre class="highlight shell"><code>lsof <span class="nt">-t</span> <span class="nt">-i</span>:PORT_NUMBER
-</code></pre></div>
-<p>You can use it to kill processes:</p>
-<div class="highlight"><pre class="highlight shell"><code><span class="nb">kill</span> <span class="nt">-9</span> <span class="o">(</span>lsof <span class="nt">-t</span> <span class="nt">-i</span>:PORT_NUMBER<span class="o">)</span>
-</code></pre></div>
-<p>Here is a Bash function making this command easier to use:</p>
-<div class="highlight"><pre class="highlight shell"><code>killport<span class="o">()</span> <span class="o">{</span> <span class="nb">kill</span> <span class="nt">-9</span> <span class="si">$(</span>lsof <span class="nt">-t</span> <span class="nt">-i</span>:<span class="nv">$1</span><span class="si">)</span> <span class="o">}</span>
-</code></pre></div>
-<p>Usage example:</p>
-<div class="highlight"><pre class="highlight shell"><code>killport 3000
-</code></pre></div>
+<p>Okay, let&#39;s delve into a thoughtful exploration of why one might consider refraining from online authorship. Here are some reasons not to write on the web:</p>
+
+<ul>
+<li>Over time, your writing will become outdated, just like your knowledge and opinions. It will start looking irrelevant and useless even to yourself.</li>
+<li>Writing likely won&#39;t bring you immediate rewards, especially if you don&#39;t already have an established following. And let&#39;s be honest. If you&#39;re considering reasons <em>not</em> to start, you probably don&#39;t have an audience yet.</li>
+<li>Someone with more expertise might read your post and make fun of you.</li>
+<li>Once you understand a topic well enough, writing about it will seem like a waste of time. You might think that most people who need the information already have it or that there are already good resources for learning about it, so why bother adding your take?</li>
+</ul>
+
   <hr class="!my-8">
   <div class="flex flex-row flex-wrap items-stretch !my-8">
     
-      <a href="/tags/bash" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">bash</a>
+      <a href="/tags/writing" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">writing</a>
     
   </div>
 
@@ -154,7 +151,7 @@
     
       <footer>
         <hr class="!my-8">
-        <p class="text-slate-400"> 6 Aug 2023</p>
+        <p class="text-slate-400"> 8 Aug 2023</p>
       </footer>
     
   </div>
