@@ -135,9 +135,9 @@
 
 <p>It is a quite often situation when an issue in new DB migration becomes apparent immediately after you just executed <code>db:migrate</code>.</p>
 
-<p>Before the migration finds it way to the integration branch, it&#39;s ok to fix it inplace. It is actually much better than creating more follow-up migrations turning some trivial DB table creation into a unreadable mess.</p>
+<p>Before the migration finds its way to the integration branch, fixing it in place is okay. It is much better than creating more follow-up migrations turning some trivial DB table creation into an unreadable mess.</p>
 
-<p>Here is a bash oneliner to re-apply the last migration. It will revert one most recent migration and than execute <code>db:migrate</code> again for development and test environments:</p>
+<p>Here is a bash oneliner to re-apply the last migration. It will revert one most recent migration and then execute <code>db:migrate</code> again for development and test environments:</p>
 <div class="highlight"><pre class="highlight shell"><code>rails db:rollback db:migrate <span class="o">&amp;&amp;</span> <span class="nv">RAILS_ENV</span><span class="o">=</span><span class="nb">test </span>rails db:rollback db:migrate
 </code></pre></div>
 <p>It can live in <code>bin/reapply_last_migration</code> and occasionally save you a minute.</p>
