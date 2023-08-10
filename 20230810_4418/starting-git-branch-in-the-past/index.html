@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="author" content="Alex Musayev">
   <meta name="description" content="" />
-  <title>Getting head revision id from Git - Alex Musayev Notes</title>
+  <title>Starting a new git branch in the past - Alex Musayev Notes</title>
   <link rel="alternate" type="application/rss+xml" title="Alex Musayev Notes" href="https://notes.musayev.com/feed.xml">
   <link rel="icon" href="data:," />
   <link href="/style.css" rel="stylesheet" type="text/css">
@@ -131,20 +131,30 @@
       <a href="/">Alex Musayev Notes</a>
     </nav>
     <main>
-      <h1 class="!my-8 !leading-tight"><a href="/20230620_4165/git-head-revision-id" class="no-underline">Getting head revision id from Git</a></h1>
+      <h1 class="!my-8 !leading-tight"><a href="/20230810_4418/starting-git-branch-in-the-past" class="no-underline">Starting a new git branch in the past</a></h1>
 
-<p>Getting git commit id for the <code>HEAD</code> revision in a specific working directory, without changing current directory:</p>
-<div class="highlight"><pre class="highlight shell"><code>git <span class="nt">-C</span> ~/public_notes rev-parse HEAD
+<p>Imagine you started working on a new feature and realized you didn&#39;t start a new branch, so all your recent commits accidentally went to <code>main</code>. I do this all the time.</p>
+
+<p>If you didn&#39;t push your working branch to the upstream, there is an easy fix.</p>
+
+<p>First, create a new feature branch from the <code>HEAD</code>:</p>
+<div class="highlight"><pre class="highlight shell"><code>git checkout <span class="nt">-b</span> new-branch-name
 </code></pre></div>
-<p>Output example:</p>
-<div class="highlight"><pre class="highlight shell"><code>bf27c74435e836ef3ef43ccc4e01d3e4fd708201
+<p>Then move your integration branch to the past (assuming the branch name is <code>main</code>, and you want to start <code>new-branch-name</code> 3 commits ago from the <code>HEAD</code>):</p>
+<div class="highlight"><pre class="highlight shell"><code>git branch <span class="nt">-f</span> main HEAD~3
 </code></pre></div>
-<p>Short id:</p>
-<div class="highlight"><pre class="highlight shell"><code>git <span class="nt">-C</span> ~/public_notes rev-parse <span class="nt">--short</span> HEAD
-</code></pre></div>
-<p>Output example:</p>
-<div class="highlight"><pre class="highlight shell"><code>bf27c74
-</code></pre></div>
+<p><code>HEAD~3</code> means &quot;third last commit from the HEAD&quot; (if <code>HEAD</code> is your current checked-out commit, HEAD~1 is the previous one, etc.).</p>
+
+<p>The alternative syntax for this example is <code>HEAD~~~</code>. It can be easier to type unless you must go too deep into the past.</p>
+
+<p>It becomes more tricky if you merge something in the recent commit history. Git provides a <code>^</code> (caret) shortcut for ancestry reference in the case of multiple parent revisions. But I&#39;d prefer ordinary commit ids. It is not as easy to mess up compared to caret syntax.</p>
+
+<p>References:</p>
+
+<ul>
+<li><a href="https://git-scm.com/book/en/v2/Git-Tools-Revision-Selection">Git Tools - Revision Selection</a></li>
+</ul>
+
   <hr class="!my-8">
   <div class="flex flex-row flex-wrap items-stretch !my-8">
     
@@ -157,9 +167,9 @@
   <ul>
     
       <li>
-        <a href="/20230810_4418/starting-git-branch-in-the-past">Starting a new git branch in the past</a>
+        <a href="/20230620_4165/git-head-revision-id">Getting head revision id from Git</a>
         
-          <small><time datetime="2023-08-10 00:00:00 +0200" class="text-slate-400">2023/08/10</time></small>
+          <small><time datetime="2023-06-20 00:00:00 +0200" class="text-slate-400">2023/06/20</time></small>
         
       </li>
     
@@ -169,7 +179,7 @@
     
       <footer>
         <hr class="!my-8">
-        <p class="text-slate-400">20 Jun 2023</p>
+        <p class="text-slate-400">10 Aug 2023</p>
       </footer>
     
   </div>
