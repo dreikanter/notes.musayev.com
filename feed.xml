@@ -7,9 +7,31 @@
     <description></description>
     
     <item>
+      <title>How to push git tags</title>
+      <link>https://notes.musayev.com/20230811_4426/git-push-tags</link>
+      <guid>20230811_4426</guid>
+      <description><![CDATA[<p><code>git push</code> does not push tags by default. You need to explicitly specify a tag name to push like it was a branch:</p>
+<div class="highlight"><pre class="highlight shell"><code>git tag <span class="nt">-a</span> TAG_NAME <span class="nt">-m</span> <span class="s2">"Optional tag message"</span>
+git push origin TAG_NAME
+</code></pre></div>
+<p>Pushing all tags (may cause a mess):</p>
+<div class="highlight"><pre class="highlight shell"><code>git push <span class="nt">--dry-run</span> <span class="nt">--tags</span> origin
+</code></pre></div>
+<p>Preview tags push with dry run:</p>
+<div class="highlight"><pre class="highlight shell"><code>git push <span class="nt">--dry-run</span> <span class="nt">--tags</span> origin
+</code></pre></div>
+<p>References:</p>
+
+<ul>
+<li><a href="https://git-scm.com/book/en/v2/Git-Basics-Tagging">Git Basics - Tagging</a></li>
+</ul>
+]]></description>
+    </item>
+    
+    <item>
       <title>Starting a new git branch in the past</title>
       <link>https://notes.musayev.com/20230810_4418/starting-git-branch-in-the-past</link>
-      <guid>https://notes.musayev.com/20230810_4418/starting-git-branch-in-the-past</guid>
+      <guid>20230810_4418</guid>
       <description><![CDATA[<p>Imagine you started working on a new feature and realized you didn&#39;t start a new branch, so all your recent commits accidentally went to <code>main</code>. I do this all the time.</p>
 
 <p>If you didn&#39;t push your working branch to the upstream, there is an easy fix.</p>
@@ -37,7 +59,7 @@
     <item>
       <title>Reapplying Rails DB migration</title>
       <link>https://notes.musayev.com/20230809_4414/reapplying-rails-db-migration</link>
-      <guid>https://notes.musayev.com/20230809_4414/reapplying-rails-db-migration</guid>
+      <guid>20230809_4414</guid>
       <description><![CDATA[<p>It is a quite often situation when an issue in new DB migration becomes apparent immediately after you just executed <code>db:migrate</code>.</p>
 
 <p>Before the migration finds its way to the integration branch, fixing it in place is okay. It is much better than creating more follow-up migrations turning some trivial DB table creation into an unreadable mess.</p>
@@ -52,7 +74,7 @@
     <item>
       <title>Why not to write things on the internet</title>
       <link>https://notes.musayev.com/20230808_4403/why-not-to-write</link>
-      <guid>https://notes.musayev.com/20230808_4403/why-not-to-write</guid>
+      <guid>20230808_4403</guid>
       <description><![CDATA[<p>Okay, let&#39;s delve into a thoughtful exploration of why one might consider refraining from online authorship. Here are some reasons not to write on the web:</p>
 
 <ul>
@@ -67,7 +89,7 @@
     <item>
       <title>On manual labor</title>
       <link>https://notes.musayev.com/20230806_4389/on-manual-labor</link>
-      <guid>https://notes.musayev.com/20230806_4389/on-manual-labor</guid>
+      <guid>20230806_4389</guid>
       <description><![CDATA[<p>Avoid unwanted manual labor.</p>
 ]]></description>
     </item>
@@ -75,7 +97,7 @@
     <item>
       <title>Downloading CleanShot images with Ruby</title>
       <link>https://notes.musayev.com/20230806_4387/downloading-cleanshot-images-with-ruby</link>
-      <guid>https://notes.musayev.com/20230806_4387/downloading-cleanshot-images-with-ruby</guid>
+      <guid>20230806_4387</guid>
       <description><![CDATA[<p>In my opinion <a href="https://cleanshot.com/">CleanShot</a> is one of the best screenshot tools for macOS by 2023. I&#39;m using it pretty much every day.</p>
 
 <p>I&#39;m going to integrate CleanShot with my <a href="https://notes.musayev.com/">notes</a> publication script to embed screenshots to Markdown pages.</p>
@@ -219,7 +241,7 @@
     <item>
       <title>Filter out specific paths from Recents in macOS Finder</title>
       <link>https://notes.musayev.com/20230806_4381/macos-finder-recents-filter</link>
-      <guid>https://notes.musayev.com/20230806_4381/macos-finder-recents-filter</guid>
+      <guid>20230806_4381</guid>
       <description><![CDATA[<p><a href="https://apps.apple.com/us/app/arc-app-location-activity/id1063151918">Arc</a> generates a lot of JSON files remaining visible in the &quot;Recents&quot; folder in Finder, making it less usable.</p>
 
 <p>It is possible to filter out specified paths to reduce noise in the Recents:</p>
@@ -239,7 +261,7 @@
     <item>
       <title>Kill a process that occupies a port</title>
       <link>https://notes.musayev.com/20230806_4380/bash-kill-process-by-port</link>
-      <guid>https://notes.musayev.com/20230806_4380/bash-kill-process-by-port</guid>
+      <guid>20230806_4380</guid>
       <description><![CDATA[<p>This command lists process ids listening on a specified port:</p>
 <div class="highlight"><pre class="highlight shell"><code>lsof <span class="nt">-t</span> <span class="nt">-i</span>:PORT_NUMBER
 </code></pre></div>
@@ -257,7 +279,7 @@
     <item>
       <title>Customizing enum fields order for ActiveRecord</title>
       <link>https://notes.musayev.com/20230802_4369/rails-order-by-array-position</link>
-      <guid>https://notes.musayev.com/20230802_4369/rails-order-by-array-position</guid>
+      <guid>20230802_4369</guid>
       <description><![CDATA[<p>ay, there is an <code>Account</code> model with <code>state</code> string attribute having <code>enabled</code>, <code>suspended</code> or <code>disabled</code> value.</p>
 
 <p>You can use PostgreSQL <code>array_position</code> function to specify the required sorting order like so:</p>
@@ -282,7 +304,7 @@
     <item>
       <title>3-4-5 Method</title>
       <link>https://notes.musayev.com/20230730_4361/345-method</link>
-      <guid>https://notes.musayev.com/20230730_4361/345-method</guid>
+      <guid>20230730_4361</guid>
       <description><![CDATA[<p>&quot;3-4-5 method&quot; is a way to ensure a right angle without using a reference square:</p>
 
 <p><a href="https://share.cleanshot.com/qZ5T6q7g">https://share.cleanshot.com/qZ5T6q7g</a></p>
@@ -298,7 +320,7 @@
     <item>
       <title>Updating Ruby with asdf</title>
       <link>https://notes.musayev.com/20230725_4324/updating-ruby-with-asdf</link>
-      <guid>https://notes.musayev.com/20230725_4324/updating-ruby-with-asdf</guid>
+      <guid>20230725_4324</guid>
       <description><![CDATA[<p>Assuming, it is macOS, and <code>asdf</code> was installed with Homebrew.</p>
 <div class="highlight"><pre class="highlight shell"><code>brew update
 asdf plugin update ruby
@@ -318,7 +340,7 @@ asdf <span class="nb">install </span>ruby 3.2.2
     <item>
       <title>Reading list</title>
       <link>https://notes.musayev.com/20230724_4313/readlist</link>
-      <guid>https://notes.musayev.com/20230724_4313/readlist</guid>
+      <guid>20230724_4313</guid>
       <description><![CDATA[<p class="text-muted">A copy of each book is in the Dropbox, and it is searchable by title.</p>
 
 <p>2023:</p>
@@ -357,7 +379,7 @@ asdf <span class="nb">install </span>ruby 3.2.2
     <item>
       <title>Preserving backtrace during exceptions wrapping in Ruby</title>
       <link>https://notes.musayev.com/20230723_4310/preserving-ruby-exception-backtrace</link>
-      <guid>https://notes.musayev.com/20230723_4310/preserving-ruby-exception-backtrace</guid>
+      <guid>20230723_4310</guid>
       <description><![CDATA[<p>In this example raising a <code>CustomError</code> hides the original error backtrace.</p>
 <div class="highlight"><pre class="highlight ruby"><code><span class="no">CustomError</span> <span class="o">=</span> <span class="no">Class</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="no">StandardError</span><span class="p">)</span>
 
@@ -405,7 +427,7 @@ preserve_error_backtrace.rb:14:in `&lt;main&gt;'
     <item>
       <title>Honeybadger deployment notification with curl</title>
       <link>https://notes.musayev.com/20230720_4288/honeybadger-deployment-notification</link>
-      <guid>https://notes.musayev.com/20230720_4288/honeybadger-deployment-notification</guid>
+      <guid>20230720_4288</guid>
       <description><![CDATA[<p>Shell command to tell Honeybadger about a new deployment:</p>
 <div class="highlight"><pre class="highlight shell"><code>curl <span class="nt">--data</span> <span class="s2">"deploy[revision]=</span><span class="si">$(</span><span class="nb">date</span> <span class="nt">-u</span> +%Y%m%d%H%M%S<span class="si">)</span><span class="s2">_</span><span class="si">$(</span>git rev-parse <span class="nt">--short</span> HEAD<span class="si">)</span><span class="s2">&amp;api_key=</span><span class="nv">$HONEYBADGER_API_KEY</span><span class="s2">"</span> <span class="s2">"https://api.honeybadger.io/v1/deploys"</span>
 </code></pre></div>
@@ -447,7 +469,7 @@ preserve_error_backtrace.rb:14:in `&lt;main&gt;'
     <item>
       <title>Github backup</title>
       <link>https://notes.musayev.com/20230718_4279/github-backup</link>
-      <guid>https://notes.musayev.com/20230718_4279/github-backup</guid>
+      <guid>20230718_4279</guid>
       <description><![CDATA[<p>Here is a script to create local snapshots for Github repos. It&#39;s always nice to have one for good measure.</p>
 
 <p>It requires <a href="https://github.com/josegonzalez/python-github-backup"><code>github-backup</code></a> to be installed:</p>
@@ -508,7 +530,7 @@ backup dreikanter notes
     <item>
       <title>RSpec snippet for Sublime Text</title>
       <link>https://notes.musayev.com/20230713_4251/rspec-snippet-for-sublime-text</link>
-      <guid>https://notes.musayev.com/20230713_4251/rspec-snippet-for-sublime-text</guid>
+      <guid>20230713_4251</guid>
       <description><![CDATA[<p>Sublime Text snippet to create a blank RSpec spec:</p>
 <div class="highlight"><pre class="highlight xml"><code><span class="nt">&lt;snippet&gt;</span>
   <span class="nt">&lt;content&gt;</span><span class="cp">&lt;![CDATA[
@@ -525,7 +547,7 @@ end
     <item>
       <title>Migrating PostgreSQL database with pg_dump</title>
       <link>https://notes.musayev.com/20230627_4185/migrating-postgresql-database-with-pg-dump</link>
-      <guid>https://notes.musayev.com/20230627_4185/migrating-postgresql-database-with-pg-dump</guid>
+      <guid>20230627_4185</guid>
       <description><![CDATA[<p>Dump and compress DB on the source server:</p>
 <div class="highlight"><pre class="highlight shell"><code>pg_dump <span class="nt">--username</span><span class="o">=</span>DB_USER <span class="nt">--format</span><span class="o">=</span>custom <span class="nt">--compress</span><span class="o">=</span>9  <span class="nt">--file</span><span class="o">=</span>DB_NAME.dump  DB_NAME
 </code></pre></div>
@@ -542,7 +564,7 @@ end
     <item>
       <title>Installing headless Chrome on Ubuntu</title>
       <link>https://notes.musayev.com/20230625_4177/install-chrome-headless</link>
-      <guid>https://notes.musayev.com/20230625_4177/install-chrome-headless</guid>
+      <guid>20230625_4177</guid>
       <description><![CDATA[<p>Install Chromium (headless Chrome) on Ubuntru</p>
 <div class="highlight"><pre class="highlight shell"><code><span class="nb">sudo </span>apt-get update
 <span class="nb">sudo </span>apt-get <span class="nb">install </span>software-properties-common
@@ -570,7 +592,7 @@ end
     <item>
       <title>Check host connection with Ansible</title>
       <link>https://notes.musayev.com/20230625_4175/ansible-ping</link>
-      <guid>https://notes.musayev.com/20230625_4175/ansible-ping</guid>
+      <guid>20230625_4175</guid>
       <description><![CDATA[<p>A command line for the basic use case when you need to check connection for all hosts in a specified inventory file:</p>
 <div class="highlight"><pre class="highlight shell"><code>ansible all <span class="nt">--inventory</span> INVENTORY_FILE <span class="nt">--user</span> REMOTE_USER <span class="nt">--module-name</span> ping
 </code></pre></div>
@@ -605,7 +627,7 @@ Y.Y.Y.Y | SUCCESS =&gt; {
     <item>
       <title>Rails class_names helper</title>
       <link>https://notes.musayev.com/20230622_4169/rails-class-names</link>
-      <guid>https://notes.musayev.com/20230622_4169/rails-class-names</guid>
+      <guid>20230622_4169</guid>
       <description><![CDATA[<p><a href="https://www.rubydoc.info/docs/rails/ActionView%2FHelpers%2FTagHelper:class_names"><code>class_names</code></a> is a neat helper method for CSS class names.</p>
 
 <p>It merges the class names list into a string, supporting optional conditions. Very similar to the <a href="https://www.npmjs.com/package/classnames"><code>classNames</code></a> JS function.</p>
@@ -631,7 +653,7 @@ Y.Y.Y.Y | SUCCESS =&gt; {
     <item>
       <title>Getting head revision id from Git</title>
       <link>https://notes.musayev.com/20230620_4165/git-head-revision-id</link>
-      <guid>https://notes.musayev.com/20230620_4165/git-head-revision-id</guid>
+      <guid>20230620_4165</guid>
       <description><![CDATA[<p>Getting git commit id for the <code>HEAD</code> revision in a specific working directory, without changing current directory:</p>
 <div class="highlight"><pre class="highlight shell"><code>git <span class="nt">-C</span> ~/public_notes rev-parse HEAD
 </code></pre></div>
@@ -649,7 +671,7 @@ Y.Y.Y.Y | SUCCESS =&gt; {
     <item>
       <title>Public notes purpose</title>
       <link>https://notes.musayev.com/20230620_4164/public-notes-purpose</link>
-      <guid>https://notes.musayev.com/20230620_4164/public-notes-purpose</guid>
+      <guid>20230620_4164</guid>
       <description><![CDATA[<p>The goal of this initiative is to develop and maintain writing skill by practice.</p>
 ]]></description>
     </item>
@@ -657,7 +679,7 @@ Y.Y.Y.Y | SUCCESS =&gt; {
     <item>
       <title>Updating gems</title>
       <link>https://notes.musayev.com/20230618_4153/updating-gems</link>
-      <guid>https://notes.musayev.com/20230618_4153/updating-gems</guid>
+      <guid>20230618_4153</guid>
       <description><![CDATA[<p>I&#39;m updating gems regularly for <code>\d\d</code> years now, but it is still hard to remember related commands. Should I use <code>gem</code> or <code>bundle</code> to upgrade <code>bundle</code>? Is it &quot;update&quot; or &quot;upgrade&quot;? Bwagh!</p>
 
 <p><strong>Updating Bundler:</strong></p>
@@ -678,7 +700,7 @@ Y.Y.Y.Y | SUCCESS =&gt; {
     <item>
       <title>Publishing notes</title>
       <link>https://notes.musayev.com/20230526_4105/publishing-notes</link>
-      <guid>https://notes.musayev.com/20230526_4105/publishing-notes</guid>
+      <guid>20230526_4105</guid>
       <description><![CDATA[<p>Knowing that others can read your notes is enough to</p>
 
 <ul>
