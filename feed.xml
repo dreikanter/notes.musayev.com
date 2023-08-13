@@ -7,6 +7,15 @@
     <description></description>
     
     <item>
+      <title>Reset Bluetooth on macOS to prevent headphones from disconnecting</title>
+      <link>https://notes.musayev.com/20230811_4427/slug</link>
+      <guid>20230811_4427</guid>
+      <description><![CDATA[<p>This command helped to fix an issue with spontaneous headphones disconnection on macOS Ventura. Disconnections were repeating every minute or so.</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="nb">sudo </span>pkill coreaudiod
+</code></pre></div>]]></description>
+    </item>
+    
+    <item>
       <title>How to push git tags</title>
       <link>https://notes.musayev.com/20230811_4426/git-push-tags</link>
       <guid>20230811_4426</guid>
