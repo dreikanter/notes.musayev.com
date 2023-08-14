@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="author" content="Alex Musayev">
   <meta name="description" content="" />
-  <title>Rails class_names helper - Alex Musayev Notes</title>
+  <title>Insert current date in Sublime Text - Alex Musayev Notes</title>
   <link rel="alternate" type="application/rss+xml" title="Alex Musayev Notes" href="https://notes.musayev.com/feed.xml">
   <link rel="icon" href="data:," />
   <link href="/style.css" rel="stylesheet" type="text/css">
@@ -131,32 +131,37 @@
       <a href="/">Alex Musayev Notes</a>
     </nav>
     <main>
-      <h1 class="!my-8 !leading-tight"><a href="/20230622_4169/rails-class-names" class="no-underline">Rails class_names helper</a></h1>
+      <h1 class="!my-8 !leading-tight"><a href="/20230814_4434/insert-current-date-sublime-text" class="no-underline">Insert current date in Sublime Text</a></h1>
 
-<p><a href="https://www.rubydoc.info/docs/rails/ActionView%2FHelpers%2FTagHelper:class_names"><code>class_names</code></a> is a neat helper method for CSS class names.</p>
+<p>Open <a href="https://www.sublimetext.com/docs/packages.html">packages directory</a>: Quick menu → <code>Preferences: Browse Packages</code></p>
 
-<p>It merges the class names list into a string, supporting optional conditions. Very similar to the <a href="https://www.npmjs.com/package/classnames"><code>classNames</code></a> JS function.</p>
+<p>Create <code>User/insert_date.py</code></p>
+<div class="highlight"><pre class="highlight python"><code><span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">import</span> <span class="n">sublime_plugin</span>
 
-<p>The example from <a href="https://github.com/rails/rails/pull/37918">the PR</a> demonstrates the way a new helper improves readability for a conditional class names generation in a view:</p>
 
-<p>Before:</p>
-<div class="highlight"><pre class="highlight html"><code><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"&lt;%= item.for_sale? ? 'active' : '' %&gt;"</span><span class="nt">&gt;</span>
+<span class="k">class</span> <span class="nc">InsertDateCommand</span><span class="p">(</span><span class="n">sublime_plugin</span><span class="p">.</span><span class="n">TextCommand</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">edit</span><span class="p">):</span>
+        <span class="n">timestamp_str</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">.</span><span class="n">datetime</span><span class="p">.</span><span class="nf">now</span><span class="p">().</span><span class="nf">strftime</span><span class="p">(</span><span class="sh">"</span><span class="s">%Y-%m-%d:</span><span class="se">\n</span><span class="sh">"</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="nf">sel</span><span class="p">():</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="nf">insert</span><span class="p">(</span><span class="n">edit</span><span class="p">,</span> <span class="n">r</span><span class="p">.</span><span class="nf">begin</span><span class="p">(),</span> <span class="n">timestamp_str</span><span class="p">)</span>
 </code></pre></div>
-<p>After:</p>
-<div class="highlight"><pre class="highlight html"><code><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"&lt;%= class_names(active: item.for_sale?) %&gt;"</span><span class="nt">&gt;</span>
-</code></pre></div>
-<p><code>class_names</code> is an alias to the more generic <code>token_list</code> that must be a semantic generalization for non-CSS use cases.</p>
+<p>Add new key binding to the keymap file: Quick menu → <code>Preferences: Key Bindings</code></p>
+<div class="highlight"><pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"keys"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"super+k"</span><span class="p">,</span><span class="w"> </span><span class="s2">"super+t"</span><span class="p">],</span><span class="w">
+  </span><span class="nl">"command"</span><span class="p">:</span><span class="w"> </span><span class="s2">"insert_date"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p>This example defines <kbd>Cmd</kbd>+<kbd>K, <kbd>Cmd</kbd>+<kbd>T</kbd> sequence to call the new command.</p>
 
-<p>References:</p>
+<p><a href="https://share.cleanshot.com/vMwYnl19">https://share.cleanshot.com/vMwYnl19</a></p>
 
-<ul>
-<li>Rails API docs: <a href="https://api.rubyonrails.org/classes/ActionView/Helpers/TagHelper.html#method-i-class_names"><code>ActionView::Helpers::TagHelper#class_names</code></a></li>
-</ul>
+<p>Done!</p>
 
   <hr class="!my-8">
   <div class="flex flex-row flex-wrap items-stretch !my-8">
     
-      <a href="/tags/rails" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">rails</a>
+      <a href="/tags/sublime text" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">sublime text</a>
     
   </div>
 
@@ -166,23 +171,9 @@
     <ul>
       
         <li>
-          <a href="/20230814_4433/rails-model-validators-list">How to list all validators in a Rails model</a>
+          <a href="/20230713_4251/rspec-snippet-for-sublime-text">RSpec snippet for Sublime Text</a>
           
-            <small><time datetime="2023-08-14 00:00:00 +0200" class="text-slate-400">2023/08/14</time></small>
-          
-        </li>
-      
-        <li>
-          <a href="/20230809_4414/reapplying-rails-db-migration">Reapplying Rails DB migration</a>
-          
-            <small><time datetime="2023-08-09 00:00:00 +0200" class="text-slate-400">2023/08/09</time></small>
-          
-        </li>
-      
-        <li>
-          <a href="/20230802_4369/rails-order-by-array-position">Customizing enum fields order for ActiveRecord</a>
-          
-            <small><time datetime="2023-08-02 00:00:00 +0200" class="text-slate-400">2023/08/02</time></small>
+            <small><time datetime="2023-07-13 00:00:00 +0200" class="text-slate-400">2023/07/13</time></small>
           
         </li>
       
@@ -193,7 +184,7 @@
     <footer>
       <hr class="!my-8">
       <p class="not-prose text-slate-400">
-        22 Jun 2023 &middot;
+        14 Aug 2023 &middot;
         <a href="/feed.xml">RSS</a>
       </p>
     </footer>
