@@ -29,7 +29,7 @@
   </span><span class="nl">"command"</span><span class="p">:</span><span class="w"> </span><span class="s2">"insert_date"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<p>This example defines <kbd>Cmd</kbd>+<kbd>K, <kbd>Cmd</kbd>+<kbd>T</kbd> sequence to call the new command.</p>
+<p>This example defines <kbd>Cmd</kbd>+<kbd>K</kbd>, <kbd>Cmd</kbd>+<kbd>T</kbd> sequence to call the new command.</p>
 
 <p><a href="https://share.cleanshot.com/vMwYnl19">https://share.cleanshot.com/vMwYnl19</a></p>
 
