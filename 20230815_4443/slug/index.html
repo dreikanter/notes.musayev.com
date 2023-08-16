@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="author" content="Alex Musayev">
   <meta name="description" content="" />
-  <title>Alex Musayev Notes</title>
+  <title>Fixing ActiveRecord::UnknownMigrationVersionError - Alex Musayev Notes</title>
   <link rel="alternate" type="application/rss+xml" title="Alex Musayev Notes" href="https://notes.musayev.com/feed.xml">
   <link rel="icon" href="data:," />
   <link href="/style.css" rel="stylesheet" type="text/css">
@@ -131,78 +131,88 @@
       <a href="/">Alex Musayev Notes</a>
     </nav>
     <main>
-      <main>
+      <h1 class="!my-8 !leading-tight"><a href="/20230815_4443/slug" class="no-underline">Fixing ActiveRecord::UnknownMigrationVersionError</a></h1>
+
+<p>Usual cause: deleting a Rails migration file without a rollback.</p>
+
+<p>Error message example:</p>
+<div class="highlight"><pre class="highlight plaintext"><code>ActiveRecord::UnknownMigrationVersionError:
+No migration with version number 20230815162103.
+</code></pre></div>
+<p>That means Rails can&#39;t find a migration file matching specific record in the <code>schema_migrations</code> table.</p>
+
+<p>To fix this error, open DB console:</p>
+<div class="highlight"><pre class="highlight plaintext"><code>rails dbconsole
+</code></pre></div>
+<p>Drop the missing migration:</p>
+<div class="highlight"><pre class="highlight sql"><code><span class="k">delete</span> <span class="k">from</span> <span class="n">schema_migrations</span> <span class="k">where</span> <span class="k">version</span> <span class="o">=</span> <span class="s1">'20230815162103'</span><span class="p">;</span>
+</code></pre></div>
+<p>Type <code>quit</code> to exit.</p>
+
+<p>Done!</p>
+
+<p>Tracking missing migration:</p>
+<div class="highlight"><pre class="highlight plaintext"><code>$ bin/rails db:migrate:status
+...
+up     20230801199444  Create users table
+up     20230801223219  Create Messages table
+up     20230802211438  ********** NO FILE **********
+up     20230802210508  Update users table
+</code></pre></div>
+<p>References:</p>
+
+<ul>
+<li><a href="https://edgeguides.rubyonrails.org/active_record_migrations.html#old-migrations">Active Record Migrations - Old Migrations</a></li>
+</ul>
+
+  <hr class="!my-8">
   <div class="flex flex-row flex-wrap items-stretch !my-8">
     
       <a href="/tags/rails" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">rails</a>
     
-      <a href="/tags/sublime text" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">sublime text</a>
-    
-      <a href="/tags/git" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">git</a>
-    
-      <a href="/tags/writing" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">writing</a>
-    
-      <a href="/tags/ruby" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-500 !text-slate-100 border-slate-600">ruby</a>
-    
-      <a href="/tags/macos" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">macos</a>
-    
-      <a href="/tags/bash" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">bash</a>
-    
-      <a href="/tags/books" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">books</a>
-    
-      <a href="/tags/deployment" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">deployment</a>
-    
-      <a href="/tags/postgresql" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">postgresql</a>
-    
-      <a href="/tags/ops" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">ops</a>
-    
   </div>
-  <p>Tagged with <a href="/tags/ruby">ruby</a>:</p>
-  <ul>
-    
-      <li>
-        <a href="/20230806_4387/downloading-cleanshot-images-with-ruby">Downloading CleanShot images with Ruby</a>
-        
-          <small><time datetime="2023-08-06 00:00:00 +0200">2023/08/06</time></small>
-        
-      </li>
-    
-      <li>
-        <a href="/20230725_4324/updating-ruby-with-asdf">Updating Ruby with asdf</a>
-        
-          <small><time datetime="2023-07-25 00:00:00 +0200">2023/07/25</time></small>
-        
-      </li>
-    
-      <li>
-        <a href="/20230723_4310/preserving-ruby-exception-backtrace">Preserving backtrace during exceptions wrapping in Ruby</a>
-        
-          <small><time datetime="2023-07-23 00:00:00 +0200">2023/07/23</time></small>
-        
-      </li>
-    
-      <li>
-        <a href="/20230713_4251/rspec-snippet-for-sublime-text">RSpec snippet for Sublime Text</a>
-        
-          <small><time datetime="2023-07-13 00:00:00 +0200">2023/07/13</time></small>
-        
-      </li>
-    
-      <li>
-        <a href="/20230618_4153/updating-gems">Updating gems</a>
-        
-          <small><time datetime="2023-06-18 00:00:00 +0200">2023/06/18</time></small>
-        
-      </li>
-    
-  </ul>
-</main>
+
+  
+    <hr class="!my-8">
+    <p>Somewhat related:</p>
+    <ul>
+      
+        <li>
+          <a href="/20230814_4433/rails-model-validators-list">How to list all validators in a Rails model</a>
+          
+            <small><time datetime="2023-08-14 00:00:00 +0200" class="text-slate-400">2023/08/14</time></small>
+          
+        </li>
+      
+        <li>
+          <a href="/20230809_4414/reapplying-rails-db-migration">Reapplying Rails DB migration</a>
+          
+            <small><time datetime="2023-08-09 00:00:00 +0200" class="text-slate-400">2023/08/09</time></small>
+          
+        </li>
+      
+        <li>
+          <a href="/20230802_4369/rails-order-by-array-position">Customizing enum fields order for ActiveRecord</a>
+          
+            <small><time datetime="2023-08-02 00:00:00 +0200" class="text-slate-400">2023/08/02</time></small>
+          
+        </li>
+      
+        <li>
+          <a href="/20230622_4169/rails-class-names">Rails class_names helper</a>
+          
+            <small><time datetime="2023-06-22 00:00:00 +0200" class="text-slate-400">2023/06/22</time></small>
+          
+        </li>
+      
+    </ul>
+  
 
     </main>
     <footer>
       <hr class="!my-8">
       <p class="not-prose text-slate-400">
-        
+        15 Aug 2023 &middot;
         <a href="/feed.xml">RSS</a>
       </p>
     </footer>

@@ -7,6 +7,44 @@
     <description></description>
     
     <item>
+      <title>Fixing ActiveRecord::UnknownMigrationVersionError</title>
+      <link>https://notes.musayev.com/20230815_4443/slug</link>
+      <guid>20230815_4443</guid>
+      <description><![CDATA[<p>Usual cause: deleting a Rails migration file without a rollback.</p>
+
+<p>Error message example:</p>
+<div class="highlight"><pre class="highlight plaintext"><code>ActiveRecord::UnknownMigrationVersionError:
+No migration with version number 20230815162103.
+</code></pre></div>
+<p>That means Rails can&#39;t find a migration file matching specific record in the <code>schema_migrations</code> table.</p>
+
+<p>To fix this error, open DB console:</p>
+<div class="highlight"><pre class="highlight plaintext"><code>rails dbconsole
+</code></pre></div>
+<p>Drop the missing migration:</p>
+<div class="highlight"><pre class="highlight sql"><code><span class="k">delete</span> <span class="k">from</span> <span class="n">schema_migrations</span> <span class="k">where</span> <span class="k">version</span> <span class="o">=</span> <span class="s1">'20230815162103'</span><span class="p">;</span>
+</code></pre></div>
+<p>Type <code>quit</code> to exit.</p>
+
+<p>Done!</p>
+
+<p>Tracking missing migration:</p>
+<div class="highlight"><pre class="highlight plaintext"><code>$ bin/rails db:migrate:status
+...
+up     20230801199444  Create users table
+up     20230801223219  Create Messages table
+up     20230802211438  ********** NO FILE **********
+up     20230802210508  Update users table
+</code></pre></div>
+<p>References:</p>
+
+<ul>
+<li><a href="https://edgeguides.rubyonrails.org/active_record_migrations.html#old-migrations">Active Record Migrations - Old Migrations</a></li>
+</ul>
+]]></description>
+    </item>
+    
+    <item>
       <title>Insert current date in Sublime Text</title>
       <link>https://notes.musayev.com/20230814_4434/insert-current-date-sublime-text</link>
       <guid>20230814_4434</guid>
