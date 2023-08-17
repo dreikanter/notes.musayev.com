@@ -8,7 +8,7 @@
     
     <item>
       <title>Fixing ActiveRecord::UnknownMigrationVersionError</title>
-      <link>https://notes.musayev.com/20230815_4443/slug</link>
+      <link>https://notes.musayev.com/20230815_4443/fixing-activerecord-unknownmigrationversionerror</link>
       <guid>20230815_4443</guid>
       <description><![CDATA[<p>Usual cause: deleting a Rails migration file without a rollback.</p>
 
@@ -69,7 +69,7 @@ up     20230802210508  Update users table
 </span></code></pre></div>
 <p>This example defines <kbd>Cmd</kbd>+<kbd>K</kbd>, <kbd>Cmd</kbd>+<kbd>T</kbd> sequence to call the new command.</p>
 
-<p><a href="https://share.cleanshot.com/vMwYnl19">https://share.cleanshot.com/vMwYnl19</a></p>
+<p><img src="20230814_4434/baceffe26f0944d9ba31c2d36eba052d.gif" alt="Demo" title="Inserting current date in Sublime Text"></p>
 
 <p>Done!</p>
 ]]></description>
