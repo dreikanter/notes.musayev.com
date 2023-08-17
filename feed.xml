@@ -69,7 +69,7 @@ up     20230802210508  Update users table
 </span></code></pre></div>
 <p>This example defines <kbd>Cmd</kbd>+<kbd>K</kbd>, <kbd>Cmd</kbd>+<kbd>T</kbd> sequence to call the new command.</p>
 
-<p><img src="baceffe26f0944d9ba31c2d36eba052d.gif" alt="Demo" title="Inserting current date in Sublime Text"></p>
+<p><img src="d2c7eceeab674449a242647fce41c315.gif" alt="Demo" title="Inserting current date in Sublime Text"></p>
 
 <p>Done!</p>
 ]]></description>
@@ -364,7 +364,7 @@ git push origin TAG_NAME
 
 <p>(I&#39;ve added <code>~/Library/Mobile Documents/</code> since in my opinion, this folder is an ephemeral files dumpster that does not contain anything valuable in general.)</p>
 
-<p><a href="https://share.cleanshot.com/35WJDTGz">https://share.cleanshot.com/35WJDTGz</a></p>
+<p><img src="ff55b9081c25483386a2425d0b345d99.jpg" alt="" title=""></p>
 ]]></description>
     </item>
     
@@ -417,7 +417,7 @@ git push origin TAG_NAME
       <guid>20230730_4361</guid>
       <description><![CDATA[<p>&quot;3-4-5 method&quot; is a way to ensure a right angle without using a reference square:</p>
 
-<p><a href="https://share.cleanshot.com/qZ5T6q7g">https://share.cleanshot.com/qZ5T6q7g</a></p>
+<p><img src="2b25f72257fc470c82686c9697100f66.jpg" alt="" title=""></p>
 
 <p>References:</p>
 
@@ -552,7 +552,7 @@ preserve_error_backtrace.rb:14:in `&lt;main&gt;'
 
 <p>Project page → Settings → API keys</p>
 
-<p><a href="https://share.cleanshot.com/Yp166HDZ">https://share.cleanshot.com/Yp166HDZ</a></p>
+<p><img src="9ad5cd27e6ca4f24b1e72293ea8c379f.jpg" alt="" title=""></p>
 
 <p>Ansible task:</p>
 <div class="highlight"><pre class="highlight yaml"><code><span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">clone or update sources</span>
