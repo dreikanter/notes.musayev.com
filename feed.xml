@@ -7,6 +7,48 @@
     <description></description>
     
     <item>
+      <title>The 512KB Club</title>
+      <link>https://notes.musayev.com/20230819_4462/doherty-threshold</link>
+      <guid>20230819_4462</guid>
+      <description><![CDATA[<p>Responsive UI is one of the essential attributes of quality software.</p>
+
+<p>Good apps, sites, and services don&#39;t make you wait. And this is why assets bloat in the recent web history royally sucks.</p>
+
+<p>The situation is not going to change anytime soon. Though when it is up to me, I always mind web page performance, as I was one of the end-users.</p>
+
+<p>It won&#39;t &quot;change the world.&quot; But it will make the user experience a little better. Performance is good developer karma.</p>
+
+<p>If you have a choice, please don&#39;t make users wait. 400 ms is a buttload of time to display a web page.</p>
+
+<p>This site joined <a href="https://512kb.club">512kb.club</a> today. It&#39;s mostly a symbolic gesture. Not a petition or a campaign of any kind, god forbid.</p>
+
+<p><a href="https://gtmetrix.com/reports/notes.musayev.com/RKCsJuw5/"><img src="e2e5ea9bb4b54258815218560c78f832.jpg" alt="" title=""></a></p>
+
+<p>References:</p>
+
+<ul>
+<li><a href="https://lawsofux.com/doherty-threshold/">Laws of UX: Doherty Threshold</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/Performance/How_long_is_too_long">Recommended Web Performance Timings: How long is too long?</a> at <a href="https://developer.mozilla.org/">developer.mozilla.org</a></li>
+<li><a href="https://512kb.club">512kb.club</a></li>
+</ul>
+]]></description>
+    </item>
+    
+    <item>
+      <title>Add directory to existing Sublime Text window</title>
+      <link>https://notes.musayev.com/20230819_4459/add-directory-to-existing-sublime-text-window</link>
+      <guid>20230819_4459</guid>
+      <description><![CDATA[<p>I created couple of very simple command line aliases today, and I like them both very much.</p>
+
+<p>This one introduce <code>s</code> command that opens current directory in a new Sublime Text window:</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="nb">alias </span><span class="nv">s</span><span class="o">=</span><span class="s2">"subl ."</span>
+</code></pre></div>
+<p>And this one does the same thing, but it will add current directory to an existing Sublime Text window if it is already open:</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="nb">alias </span><span class="nv">ss</span><span class="o">=</span><span class="s2">"subl --add ."</span>
+</code></pre></div>]]></description>
+    </item>
+    
+    <item>
       <title>Stubbing environment variables in RSpec</title>
       <link>https://notes.musayev.com/20230818_4452/rspec-stub-environment-variables</link>
       <guid>20230818_4452</guid>
@@ -520,6 +562,7 @@ asdf <span class="nb">install </span>ruby 3.2.2
 
 <ul>
 <li>Быть собой: Новая теория сознания (Анил Сет)</li>
+<li>The Creative Act: A Way of Being (Rick Rubin) [<a href="https://www.abebooks.com/servlet/SearchResults?isbn=0593652886&clickid=RwHxaRzPsxyPRp40SdwIk1m9UkF3lMzH40UcVY0&cm_mmc=aff-_-ir-_-64613-_-77416&ref=imprad64613&afn_sr=impact&ref_=aff_ir_64613_77416">1</a>] [<a href="https://www.goodreads.com/book/show/60965426-the-creative-act">2</a>]</li>
 </ul>
 
 <p>2022:</p>
