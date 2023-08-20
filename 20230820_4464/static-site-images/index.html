@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="author" content="Alex Musayev">
   <meta name="description" content="" />
-  <title>Alex Musayev Notes</title>
+  <title>A good way to add images on Markdown-based static website pages - Alex Musayev Notes</title>
   <link rel="alternate" type="application/rss+xml" title="Alex Musayev Notes" href="https://notes.musayev.com/feed.xml">
   <link rel="icon" href="data:," />
   <link href="/style.css" rel="stylesheet" type="text/css">
@@ -129,22 +129,68 @@
       <a href="/">Alex Musayev Notes</a>
     </nav>
     <main>
-      <main>
-  <div class="flex flex-row flex-wrap items-stretch !my-8">
-    <a href="/tags/bash" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">bash</a><a href="/tags/books" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">books</a><a href="/tags/deployment" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">deployment</a><a href="/tags/git" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">git</a><a href="/tags/macos" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">macos</a><a href="/tags/opinion" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">opinion</a><a href="/tags/ops" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">ops</a><a href="/tags/performance" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">performance</a><a href="/tags/postgresql" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">postgresql</a><a href="/tags/rails" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">rails</a><a href="/tags/ruby" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">ruby</a><a href="/tags/sublime text" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">sublime text</a><a href="/tags/writing" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-500 !text-slate-100 border-slate-600">writing</a>
-  </div>
-  <p>Tagged with <a href="/tags/writing">writing</a>:</p>
-  <ul><li>
-  <a href="/20230808_4403/why-not-to-write">Why not to write things on the internet</a>
-  <small class="text-slate-400"><time datetime="2023-08-08 00:00:00 +0200">1w</time></small>
-</li></ul>
-</main>
+      <h1 class="!my-8 !leading-tight"><a href="/20230820_4464/static-site-images" class="no-underline">A good way to add images on Markdown-based static website pages</a></h1>
+
+<p>How do people add images on static site pages?</p>
+
+<p>Typically you intend to create some directory in the source tree. Then you copy the image file to this directory and give it a unique URL-friendly name. It would be nice to associate this name with the page file name to make it easy to find in the future. So ideally, you should invent and maintain some naming convention. Then you reference this file from the Markdown page source, minding the correct relative path to the image file.</p>
+
+<p>This workflow is much better than dragging things with a mouse over some web UI. But it still sounds slow and boring 🚢 Not automated enough, if you will.</p>
+
+<p>Let&#39;s imagine how to make this flow it less boring.</p>
+
+<p>It consist of two steps. First is to capture an image from an original source to some interim storage. Second is to put this image on a page.</p>
+
+<p><strong>1. Capturing images</strong></p>
+
+<p>Local files: Context menu → Open with... → CleanShot X → Upload.
+Web: You just take a screenshot with a hotkey and upload it with one click.</p>
+
+<p><img src="a7c855d0792e4ecc999f530568b9fc8c.jpg" alt="" title=""></p>
+
+<p>Both use cases end up with a short link in your clipboard.</p>
+
+<p><strong>2. Adding images on a page</strong></p>
+
+<p>CleanShot short URLs are not really direct image URLs. They open an HTML page that downscales your screenshot to fit browser window, adds your branding, etc. So what you need on the web page is not really this short URL, but the original image that you can download from there.</p>
+
+<p>But we want to make the workflow suck less, while downloading stuff from the web sound like something opposite. Let&#39;s</p>
+
+<p><img src="9e9dced5b1bf4deb9d119a39e8c8f8f1.jpg" alt="" title=""></p>
+
+<p><a href="https://share.cleanshot.com/XkgTjS1M">https://share.cleanshot.com/XkgTjS1M</a></p>
+<div class="highlight"><pre class="highlight plaintext"><code>$ tree ~/Dropbox/Images
+.
+├── 20230720_4288
+│   └── 43688db1c5851f1a8382a311bd0dc72b.jpg
+├── 20230730_4361
+│   └── 6c53cf2f2916480f9374471f64a7640b.jpg
+│   └── e28f897f968246d1bd45c25aabc32bf8.jpg
+└── index.json
+</code></pre></div><div class="highlight"><pre class="highlight plaintext"><code>$ cat index.json
+{
+  "https://share.cleanshot.com/Yp166HDZ": {
+    "file_name": "43688db1c5851f1a8382a311bd0dc72b.jpg",
+    "page_uid": "20230720_4288"
+  },
+  "https://share.cleanshot.com/qZ5T6q7g": {
+    "file_name": "6c53cf2f2916480f9374471f64a7640b.jpg",
+    "page_uid": "20230730_4361"
+  },
+  "https://share.cleanshot.com/35WJDTGz": {
+    "file_name": "e28f897f968246d1bd45c25aabc32bf8.jpg",
+    "page_uid": "20230730_4361"
+  }
+}
+</code></pre></div>
+
+  
 
     </main>
     <footer>
       <hr class="!my-8">
       <p class="not-prose text-slate-400">
-        <a href="/feed.xml">RSS</a>
+        <time datetime="2023-08-20 00:00:00 +0200">2023/08/20</time>&middot;<a href="/feed.xml">RSS</a>
       </p>
     </footer>
   </div>
