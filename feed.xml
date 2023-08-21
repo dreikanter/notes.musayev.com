@@ -7,6 +7,41 @@
     <description></description>
     
     <item>
+      <title>A good way to add images on a Jamstack site</title>
+      <link>https://notes.musayev.com/20230820_4464/static-site-images</link>
+      <guid>20230820_4464</guid>
+      <description><![CDATA[<p>How do people add images to a Markdown-based static site page?</p>
+
+<p>Typically this workflow requires some preparation and a bunch of manual operations.</p>
+
+<p>Prep work:</p>
+
+<ul>
+<li>Create a directory in the site source tree.</li>
+<li>Ideally, develop a naming convention for image files to keep them associated with the related pages and maintain findability.</li>
+</ul>
+
+<p>Adding an image:</p>
+
+<ul>
+<li>Add an image file to the source tree.</li>
+<li>Ensure the file has a conventional and unique URL-friendly name.</li>
+<li>Reference this file from the Markdown page source, minding the correct relative path to the image file.</li>
+</ul>
+
+<p>Subjectively, this workflow is quicker and more robust than dragging things with a mouse over some WYSIWYG web UI. But imagine you need to add ten images this way. It is still tedious and boring 🚢 Not automated enough if you will.</p>
+
+<p>Let&#39;s make this flow less boring.</p>
+
+<p>References:</p>
+
+<ul>
+<li><a href="https://jamstack.org/">What is Jamstack?</a></li>
+</ul>
+]]></description>
+    </item>
+    
+    <item>
       <title>The 512KB Club</title>
       <link>https://notes.musayev.com/20230819_4462/doherty-threshold</link>
       <guid>20230819_4462</guid>
@@ -150,37 +185,6 @@ up     20230802210508  Update users table
     </item>
     
     <item>
-      <title>Insert current date in Sublime Text</title>
-      <link>https://notes.musayev.com/20230814_4434/insert-current-date-sublime-text</link>
-      <guid>20230814_4434</guid>
-      <description><![CDATA[<p>Open <a href="https://www.sublimetext.com/docs/packages.html">packages directory</a>: Quick menu → <code>Preferences: Browse Packages</code></p>
-
-<p>Create <code>User/insert_date.py</code></p>
-<div class="highlight"><pre class="highlight python"><code><span class="kn">import</span> <span class="n">datetime</span>
-<span class="kn">import</span> <span class="n">sublime_plugin</span>
-
-
-<span class="k">class</span> <span class="nc">InsertDateCommand</span><span class="p">(</span><span class="n">sublime_plugin</span><span class="p">.</span><span class="n">TextCommand</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">edit</span><span class="p">):</span>
-        <span class="n">timestamp_str</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">.</span><span class="n">datetime</span><span class="p">.</span><span class="nf">now</span><span class="p">().</span><span class="nf">strftime</span><span class="p">(</span><span class="sh">"</span><span class="s">%Y-%m-%d:</span><span class="se">\n</span><span class="sh">"</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="nf">sel</span><span class="p">():</span>
-            <span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="nf">insert</span><span class="p">(</span><span class="n">edit</span><span class="p">,</span> <span class="n">r</span><span class="p">.</span><span class="nf">begin</span><span class="p">(),</span> <span class="n">timestamp_str</span><span class="p">)</span>
-</code></pre></div>
-<p>Add new key binding to the keymap file: Quick menu → <code>Preferences: Key Bindings</code></p>
-<div class="highlight"><pre class="highlight json"><code><span class="p">{</span><span class="w">
-  </span><span class="nl">"keys"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"super+k"</span><span class="p">,</span><span class="w"> </span><span class="s2">"super+t"</span><span class="p">],</span><span class="w">
-  </span><span class="nl">"command"</span><span class="p">:</span><span class="w"> </span><span class="s2">"insert_date"</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div>
-<p>This example defines <kbd>Cmd</kbd>+<kbd>K</kbd>, <kbd>Cmd</kbd>+<kbd>T</kbd> sequence to call the new command.</p>
-
-<p><img src="d5cb9237cb0b41f0ab52c3f15ed85517.gif" alt="Demo" title="Inserting current date in Sublime Text"></p>
-
-<p>Done!</p>
-]]></description>
-    </item>
-    
-    <item>
       <title>How to list all validators in a Rails model</title>
       <link>https://notes.musayev.com/20230814_4433/rails-model-validators-list</link>
       <guid>20230814_4433</guid>
@@ -209,6 +213,37 @@ up     20230802210508  Update users table
 <ul>
 <li><a href="https://api.rubyonrails.org/classes/ActiveModel/Validations/ClassMethods.html#method-i-validators"><code>ActiveModel::Validations::ClassMethods</code></a></li>
 </ul>
+]]></description>
+    </item>
+    
+    <item>
+      <title>Insert current date in Sublime Text</title>
+      <link>https://notes.musayev.com/20230814_4434/insert-current-date-sublime-text</link>
+      <guid>20230814_4434</guid>
+      <description><![CDATA[<p>Open <a href="https://www.sublimetext.com/docs/packages.html">packages directory</a>: Quick menu → <code>Preferences: Browse Packages</code></p>
+
+<p>Create <code>User/insert_date.py</code></p>
+<div class="highlight"><pre class="highlight python"><code><span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">import</span> <span class="n">sublime_plugin</span>
+
+
+<span class="k">class</span> <span class="nc">InsertDateCommand</span><span class="p">(</span><span class="n">sublime_plugin</span><span class="p">.</span><span class="n">TextCommand</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">edit</span><span class="p">):</span>
+        <span class="n">timestamp_str</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">.</span><span class="n">datetime</span><span class="p">.</span><span class="nf">now</span><span class="p">().</span><span class="nf">strftime</span><span class="p">(</span><span class="sh">"</span><span class="s">%Y-%m-%d:</span><span class="se">\n</span><span class="sh">"</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="nf">sel</span><span class="p">():</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="nf">insert</span><span class="p">(</span><span class="n">edit</span><span class="p">,</span> <span class="n">r</span><span class="p">.</span><span class="nf">begin</span><span class="p">(),</span> <span class="n">timestamp_str</span><span class="p">)</span>
+</code></pre></div>
+<p>Add new key binding to the keymap file: Quick menu → <code>Preferences: Key Bindings</code></p>
+<div class="highlight"><pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"keys"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"super+k"</span><span class="p">,</span><span class="w"> </span><span class="s2">"super+t"</span><span class="p">],</span><span class="w">
+  </span><span class="nl">"command"</span><span class="p">:</span><span class="w"> </span><span class="s2">"insert_date"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p>This example defines <kbd>Cmd</kbd>+<kbd>K</kbd>, <kbd>Cmd</kbd>+<kbd>T</kbd> sequence to call the new command.</p>
+
+<p><img src="d5cb9237cb0b41f0ab52c3f15ed85517.gif" alt="Demo" title="Inserting current date in Sublime Text"></p>
+
+<p>Done!</p>
 ]]></description>
     </item>
     
