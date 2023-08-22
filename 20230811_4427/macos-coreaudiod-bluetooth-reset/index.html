@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="author" content="Alex Musayev">
   <meta name="description" content="" />
-  <title>Updating gems - Alex Musayev Notes</title>
+  <title>Reset Bluetooth on macOS to prevent headphones from disconnecting - Alex Musayev Notes</title>
   <link rel="alternate" type="application/rss+xml" title="Alex Musayev Notes" href="https://notes.musayev.com/feed.xml">
   <link rel="icon" href="data:," />
   <link href="/style.css" rel="stylesheet" type="text/css">
@@ -129,54 +129,19 @@
       <a href="/">Alex Musayev Notes</a>
     </nav>
     <main>
-      <h1 class="!my-8 !leading-tight"><a href="/20230618_4153/updating-gems" class="no-underline">Updating gems</a></h1>
+      <h1 class="!my-8 !leading-tight"><a href="/20230811_4427/macos-coreaudiod-bluetooth-reset" class="no-underline">Reset Bluetooth on macOS to prevent headphones from disconnecting</a></h1>
 
-<p>I&#39;m updating gems regularly for <code>\d\d</code> years now, but it is still hard to remember related commands. Should I use <code>gem</code> or <code>bundle</code> to upgrade <code>bundle</code>? Is it &quot;update&quot; or &quot;upgrade&quot;? Bwagh!</p>
-
-<p><strong>Updating Bundler:</strong></p>
-<div class="highlight"><pre class="highlight shell"><code>bundle update <span class="nt">--bundler</span>
+<p>This command helped to fix an issue with spontaneous headphones disconnection on macOS Ventura. Disconnections were repeating every minute or so.</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="nb">sudo </span>pkill coreaudiod
 </code></pre></div>
-<p>Note: <code>Gemfile.lock</code> may lock Bundler version with <code>BUNDLED WITH</code> value. Also it may cause to alternative bundler version installation during <code>bundle install</code>.</p>
 
-<p>Check current version with <code>bundle --version</code>.</p>
-
-<p><strong>Update system gems:</strong></p>
-<div class="highlight"><pre class="highlight shell"><code>gem update <span class="nt">--system</span>
-</code></pre></div>
-<p><strong>Getting gem paths and other environment variables:</strong></p>
-<div class="highlight"><pre class="highlight shell"><code>gem <span class="nb">env</span>
-</code></pre></div>
-  <hr class="!my-8">
-  <div class="flex flex-row flex-wrap items-stretch !my-8">
-    <a href="/tags/ruby" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">ruby</a>
-  </div>
-
-  
-    <hr class="!my-8">
-    <p>Somewhat related:</p>
-    <ul><li>
-  <a href="/20230818_4452/rspec-stub-environment-variables">Stubbing environment variables in RSpec</a>
-  <small class="text-slate-400"><time datetime="2023-08-18 00:00:00 +0200">4d</time></small>
-</li><li>
-  <a href="/20230806_4387/downloading-cleanshot-images-with-ruby">Downloading CleanShot images with Ruby</a>
-  <small class="text-slate-400"><time datetime="2023-08-06 00:00:00 +0200">2w</time></small>
-</li><li>
-  <a href="/20230725_4324/updating-ruby-with-asdf">Updating Ruby with asdf</a>
-  <small class="text-slate-400"><time datetime="2023-07-25 00:00:00 +0200">4w</time></small>
-</li><li>
-  <a href="/20230723_4310/preserving-ruby-exception-backtrace">Preserving backtrace during exceptions wrapping in Ruby</a>
-  <small class="text-slate-400"><time datetime="2023-07-23 00:00:00 +0200">4w</time></small>
-</li><li>
-  <a href="/20230713_4251/rspec-snippet-for-sublime-text">RSpec snippet for Sublime Text</a>
-  <small class="text-slate-400"><time datetime="2023-07-13 00:00:00 +0200">1mo</time></small>
-</li></ul>
   
 
     </main>
     <footer>
       <hr class="!my-8">
       <p class="not-prose text-slate-400">
-        <time datetime="2023-06-18 00:00:00 +0200">2023/06/18</time> &middot; <a href="/feed.xml">RSS</a>
+        <time datetime="2023-08-11 00:00:00 +0200">2023/08/11</time> &middot; <a href="/feed.xml">RSS</a>
       </p>
     </footer>
   </div>
