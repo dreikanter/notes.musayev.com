@@ -136,15 +136,23 @@
 <p><strong>Updating Bundler:</strong></p>
 <div class="highlight"><pre class="highlight shell"><code>bundle update <span class="nt">--bundler</span>
 </code></pre></div>
-<p>Note: <code>Gemfile.lock</code> may lock Bundler version with <code>BUNDLED WITH</code> value. Also it may cause to alternative bundler version installation during <code>bundle install</code>.</p>
+<p>Note:
+- <code>Gemfile.lock</code> may lock Bundler version with <code>BUNDLED WITH</code> value.
+- <code>Gemfile.lock</code> may cause an alternative bundler version installation during <code>bundle install</code>.</p>
 
-<p>Check current version with <code>bundle --version</code>.</p>
-
-<p><strong>Update system gems:</strong></p>
+<p>Update system gems:</p>
 <div class="highlight"><pre class="highlight shell"><code>gem update <span class="nt">--system</span>
 </code></pre></div>
-<p><strong>Getting gem paths and other environment variables:</strong></p>
+<p>Getting gem paths and other environment variables:</p>
 <div class="highlight"><pre class="highlight shell"><code>gem <span class="nb">env</span>
+</code></pre></div>
+<p>Updating rbenv with Homenrew:</p>
+<div class="highlight"><pre class="highlight shell"><code>brew update
+brew upgrade rbenv
+</code></pre></div>
+<p>Installing new Ruby version with rbenv:</p>
+<div class="highlight"><pre class="highlight shell"><code>rbenv <span class="nb">install </span>3.2.2
+bundle <span class="nb">install</span>
 </code></pre></div>
   <hr class="!my-8">
   <div class="flex flex-row flex-wrap items-stretch !my-8">

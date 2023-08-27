@@ -7,7 +7,82 @@
     <description></description>
     
     <item>
-      <title>Jamstack images management is tedious</title>
+      <title>Automating image management for a static site</title>
+      <link>https://notes.musayev.com/20230821_4474/static-site-images-2</link>
+      <guid>20230821_4474</guid>
+      <description><![CDATA[<p>Ok, let&#39;s make the images publishing process less tedious for a generic static site.</p>
+
+<p>There are two major use cases involved:</p>
+
+<p><strong>1. Capturing an image</strong> from an arbitrary external source to some interim storage.</p>
+
+<p>This is already automated operation. There are tools for that. My recent favorite is <a href="https://cleanshot.com/">CleanShot X</a>, which can take screenshots and upload arbitrary images from a file or clipboard to the cloud, providing a quick short link for sharing. Silky-smooth UX. Do recommend.</p>
+
+<p><strong>2. Adding images on a page.</strong></p>
+
+<p>Generally, adding an image to a Markdown page is as easy as pasting its URL into contents like so: <code>![](https://example.com/image.jpg)</code>. Let&#39;s make this work with CleanShot short URLs.</p>
+
+<p>CleanShot URLs open an HTML page that downscales your screenshot to fit the browser window, adds your branding, etc. So what we need to display a new image on a web page is to extract the original direct image image URL from the short link, download the file somewhere, and use it during site generation instead:</p>
+<div class="highlight"><pre class="highlight plaintext"><code>![](https://share.cleanshot.com/gnNSXtJx) → &lt;img src="/local-images/unique-name.jpg" alt=""&gt;
+</code></pre></div>
+<p>The following example demonstrates how to use <a href="https://github.com/vmg/redcarpet">redcarpet gem</a>, a popular Markdown parser for Ruby, with a custom renderer that will process CleanShot URLs this way:</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="c1"># Markdown renderer class with a custom processing logic for image tags</span>
+<span class="k">class</span> <span class="nc">CustomMarkdownRenderer</span> <span class="o">&lt;</span> <span class="no">Redcarpet</span><span class="o">::</span><span class="no">Render</span><span class="o">::</span><span class="no">HTML</span>
+  <span class="kp">include</span> <span class="no">Rouge</span><span class="o">::</span><span class="no">Plugins</span><span class="o">::</span><span class="no">Redcarpet</span>
+
+  <span class="nb">attr_reader</span> <span class="ss">:images_cache</span>
+
+  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">images_cache</span><span class="p">:,</span> <span class="ss">extensions: </span><span class="p">{})</span>
+    <span class="k">super</span><span class="p">(</span><span class="n">extensions</span><span class="p">)</span>
+    <span class="vi">@images_cache</span> <span class="o">=</span> <span class="n">images_cache</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">image</span><span class="p">(</span><span class="n">link</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">alt_text</span><span class="p">)</span>
+    <span class="n">file_name</span> <span class="o">=</span> <span class="n">images_cache</span><span class="p">.</span><span class="nf">fetch</span><span class="p">(</span><span class="n">link</span><span class="p">)</span>
+    <span class="s2">"&lt;img src=</span><span class="se">\"</span><span class="si">#{</span><span class="n">file_name</span><span class="si">}</span><span class="se">\"</span><span class="s2"> alt=</span><span class="se">\"</span><span class="si">#{</span><span class="n">alt_text</span><span class="si">}</span><span class="se">\"</span><span class="s2"> title=</span><span class="se">\"</span><span class="si">#{</span><span class="n">title</span><span class="si">}</span><span class="se">\"</span><span class="s2">&gt;"</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">ImagesCache</span>
+  <span class="k">def</span> <span class="nf">fetch</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="c1"># If URL is not found in the local cache</span>
+    <span class="c1">#   Download the image file from CleanShot</span>
+    <span class="c1">#   Save the image to a local directory</span>
+    <span class="c1"># Return relative path to the local image copy, suitable for &lt;img&gt; tag</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="c1"># Rendering HTML for a sample page</span>
+<span class="no">Redcarpet</span><span class="o">::</span><span class="no">Markdown</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span>
+  <span class="no">CustomMarkdownRenderer</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">images_cache: </span><span class="no">ImagesCache</span><span class="p">.</span><span class="nf">new</span><span class="p">),</span>
+  <span class="ss">fenced_code_blocks: </span><span class="kp">true</span><span class="p">,</span>
+  <span class="ss">highlight: </span><span class="kp">true</span>
+<span class="p">).</span><span class="nf">render</span><span class="p">(</span><span class="no">File</span><span class="p">.</span><span class="nf">read</span><span class="p">(</span><span class="s2">"site-content/page.md"</span><span class="p">))</span>
+</code></pre></div>
+<p><code>ImagesCache</code> class can build a local file structure similar to this one, using UUID values for unique URL-friendly file names:</p>
+<div class="highlight"><pre class="highlight plaintext"><code>$ tree ~/Dropbox/Images
+.
+├── 20230720_4288
+│   └── 43688db1c5851f1a8382a311bd0dc72b.jpg
+├── 20230730_4361
+│   └── 6c53cf2f2916480f9374471f64a7640b.jpg
+│   └── e28f897f968246d1bd45c25aabc32bf8.jpg
+└── index.json
+</code></pre></div>
+<p>And an index for quick look-up for the cached files using the original URL from the Markdown source as the key. DB table, or a CSV, or JSON file, whatever:</p>
+<div class="highlight"><pre class="highlight plaintext"><code>$ cat index.json
+{
+  "https://share.cleanshot.com/Yp166HDZ": "20230720_4288/43688db1c5851f1a8382a311bd0dc72b.jpg",
+  "https://share.cleanshot.com/qZ5T6q7g": "20230730_4361/6c53cf2f2916480f9374471f64a7640b.jpg",
+  "https://share.cleanshot.com/35WJDTGz": "20230730_4361/e28f897f968246d1bd45c25aabc32bf8.jpg"
+}
+</code></pre></div>
+<p>This is how this site build script works for about few weeks now. So far so good.</p>
+]]></description>
+    </item>
+    
+    <item>
+      <title>Images management for a static site is tedious</title>
       <link>https://notes.musayev.com/20230820_4464/static-site-images</link>
       <guid>20230820_4464</guid>
       <description><![CDATA[<p>How do people add images to a Markdown-based static site page?</p>
@@ -31,13 +106,7 @@
 
 <p>Subjectively, this workflow is quicker and more robust than dragging things with a mouse over some WYSIWYG web UI. But imagine you need to add ten images this way. It is still tedious and boring 🚢 Not automated enough if you will.</p>
 
-<p>Let&#39;s make this flow less boring.</p>
-
-<p>References:</p>
-
-<ul>
-<li><a href="https://jamstack.org/">What is Jamstack?</a></li>
-</ul>
+<p><a href="/20230821_4474/">Let&#39;s make this flow less boring</a>.</p>
 ]]></description>
     </item>
     
@@ -937,15 +1006,23 @@ Y.Y.Y.Y | SUCCESS =&gt; {
 <p><strong>Updating Bundler:</strong></p>
 <div class="highlight"><pre class="highlight shell"><code>bundle update <span class="nt">--bundler</span>
 </code></pre></div>
-<p>Note: <code>Gemfile.lock</code> may lock Bundler version with <code>BUNDLED WITH</code> value. Also it may cause to alternative bundler version installation during <code>bundle install</code>.</p>
+<p>Note:
+- <code>Gemfile.lock</code> may lock Bundler version with <code>BUNDLED WITH</code> value.
+- <code>Gemfile.lock</code> may cause an alternative bundler version installation during <code>bundle install</code>.</p>
 
-<p>Check current version with <code>bundle --version</code>.</p>
-
-<p><strong>Update system gems:</strong></p>
+<p>Update system gems:</p>
 <div class="highlight"><pre class="highlight shell"><code>gem update <span class="nt">--system</span>
 </code></pre></div>
-<p><strong>Getting gem paths and other environment variables:</strong></p>
+<p>Getting gem paths and other environment variables:</p>
 <div class="highlight"><pre class="highlight shell"><code>gem <span class="nb">env</span>
+</code></pre></div>
+<p>Updating rbenv with Homenrew:</p>
+<div class="highlight"><pre class="highlight shell"><code>brew update
+brew upgrade rbenv
+</code></pre></div>
+<p>Installing new Ruby version with rbenv:</p>
+<div class="highlight"><pre class="highlight shell"><code>rbenv <span class="nb">install </span>3.2.2
+bundle <span class="nb">install</span>
 </code></pre></div>]]></description>
     </item>
     
