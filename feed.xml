@@ -22,8 +22,20 @@
 
 <p>Generally, adding an image to a Markdown page is as easy as pasting its URL into contents like so: <code>![](https://example.com/image.jpg)</code>. Let&#39;s make this work with CleanShot short URLs.</p>
 
-<p>CleanShot URLs open an HTML page that downscales your screenshot to fit the browser window, adds your branding, etc. So what we need to display a new image on a web page is to extract the original direct image image URL from the short link, download the file somewhere, and use it during site generation instead:</p>
-<div class="highlight"><pre class="highlight plaintext"><code>![](https://share.cleanshot.com/gnNSXtJx) → &lt;img src="/local-images/unique-name.jpg" alt=""&gt;
+<p>CleanShot URLs open an HTML page that downscales your screenshot to fit the browser window, adds your branding, etc.</p>
+
+<p><img src="cbcab44c52974d23b90c11bab68829c0.jpg" alt="" title=""></p>
+
+<p>So here is the flow:</p>
+
+<ul>
+<li>Extract the direct image image URL using the short URL.</li>
+<li>Download the file.</li>
+<li>Replace CleanShot links with local image paths during HTML generation.</li>
+</ul>
+
+<p>Like so:</p>
+<div class="highlight"><pre class="highlight plaintext"><code>![](https://share.cleanshot.com/gnNSXtJx) → &lt;img src="/image.jpg" alt=""&gt;
 </code></pre></div>
 <p>The following example demonstrates how to use <a href="https://github.com/vmg/redcarpet">redcarpet gem</a>, a popular Markdown parser for Ruby, with a custom renderer that will process CleanShot URLs this way:</p>
 <div class="highlight"><pre class="highlight ruby"><code><span class="c1"># Markdown renderer class with a custom processing logic for image tags</span>
