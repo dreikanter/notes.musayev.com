@@ -10,13 +10,15 @@
       <title>Automating image management for a static site</title>
       <link>https://notes.musayev.com/20230821_4474/static-site-images-2</link>
       <guid>20230821_4474</guid>
-      <description><![CDATA[<p>Ok, let&#39;s make the images publishing process less tedious for a generic static site.</p>
+      <description><![CDATA[<p><strong>TLDR:</strong> This post demonstrates using an arbitrary image-sharing tool and some custom code (like a one-hour effort) to simplify picture publishing with a static site generator.</p>
 
-<p>There are two major use cases involved:</p>
+<p>Okay, let&#39;s make the <a href="/20230820_4464/">images publishing process</a> less tedious for a generic static site.</p>
+
+<p>There are two primary use cases involved:</p>
 
 <p><strong>1. Capturing an image</strong> from an arbitrary external source to some interim storage.</p>
 
-<p>This is already automated operation. There are tools for that. My recent favorite is <a href="https://cleanshot.com/">CleanShot X</a>, which can take screenshots and upload arbitrary images from a file or clipboard to the cloud, providing a quick short link for sharing. Silky-smooth UX. Do recommend.</p>
+<p>This is already an automated operation. There are tools for that. My recent favorite is <a href="https://cleanshot.com/">CleanShot X</a>, which can take screenshots and upload arbitrary images from a file or clipboard to the cloud, providing a quick short link for sharing. Silky-smooth UX. Do recommend.</p>
 
 <p><strong>2. Adding images on a page.</strong></p>
 
@@ -29,7 +31,7 @@
 <p>So here is the flow:</p>
 
 <ul>
-<li>Download the image file from CleanShot share page.</li>
+<li>Download the image file from the CleanShot share page.</li>
 <li>Replace CleanShot URLs with local image paths during HTML generation.</li>
 </ul>
 
@@ -88,7 +90,7 @@
   "https://share.cleanshot.com/35WJDTGz": "20230730_4361/e28f897f968246d1bd45c25aabc32bf8.jpg"
 }
 </code></pre></div>
-<p>This is how this site build script works for about few weeks now. So far so good.</p>
+<p>The example above explains how the images appear on this site pages. So far, so good.</p>
 ]]></description>
     </item>
     
