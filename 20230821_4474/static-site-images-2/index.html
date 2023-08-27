@@ -150,15 +150,14 @@
 <p>So here is the flow:</p>
 
 <ul>
-<li>Extract the direct image image URL using the short URL.</li>
-<li>Download the file.</li>
-<li>Replace CleanShot links with local image paths during HTML generation.</li>
+<li>Download the image file from CleanShot share page.</li>
+<li>Replace CleanShot URLs with local image paths during HTML generation.</li>
 </ul>
 
 <p>Like so:</p>
 <div class="highlight"><pre class="highlight plaintext"><code>![](https://share.cleanshot.com/gnNSXtJx) → &lt;img src="/image.jpg" alt=""&gt;
 </code></pre></div>
-<p>The following example demonstrates how to use <a href="https://github.com/vmg/redcarpet">redcarpet gem</a>, a popular Markdown parser for Ruby, with a custom renderer that will process CleanShot URLs this way:</p>
+<p>The following example demonstrates how to use <a href="https://github.com/vmg/redcarpet">redcarpet gem</a>, a popular Markdown parser for Ruby, for this purpose:</p>
 <div class="highlight"><pre class="highlight ruby"><code><span class="c1"># Markdown renderer class with a custom processing logic for image tags</span>
 <span class="k">class</span> <span class="nc">CustomMarkdownRenderer</span> <span class="o">&lt;</span> <span class="no">Redcarpet</span><span class="o">::</span><span class="no">Render</span><span class="o">::</span><span class="no">HTML</span>
   <span class="kp">include</span> <span class="no">Rouge</span><span class="o">::</span><span class="no">Plugins</span><span class="o">::</span><span class="no">Redcarpet</span>
@@ -192,7 +191,7 @@
   <span class="ss">highlight: </span><span class="kp">true</span>
 <span class="p">).</span><span class="nf">render</span><span class="p">(</span><span class="no">File</span><span class="p">.</span><span class="nf">read</span><span class="p">(</span><span class="s2">"site-content/page.md"</span><span class="p">))</span>
 </code></pre></div>
-<p><code>ImagesCache</code> class can build a local file structure similar to this one, using UUID values for unique URL-friendly file names:</p>
+<p><code>ImagesCache</code> class suppose to build an arbitrary local directory structure to keep image files with unique URL-friendly names:</p>
 <div class="highlight"><pre class="highlight plaintext"><code>$ tree ~/Dropbox/Images
 .
 ├── 20230720_4288
