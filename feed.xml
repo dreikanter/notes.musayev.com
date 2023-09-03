@@ -669,6 +669,48 @@ asdf <span class="nb">install </span>ruby 3.2.2
     </item>
     
     <item>
+      <title>Reading list</title>
+      <link>https://notes.musayev.com/20230724_4313/readlist</link>
+      <guid>20230724_4313</guid>
+      <description><![CDATA[<p class="text-muted">A copy of each book is in the Dropbox, and it is searchable by title.</p>
+
+<p>2023:</p>
+
+<ul>
+<li>CLI text processing with GNU awk [<a href="https://learnbyexample.github.io/learn_gnuawk/">1</a>]</li>
+<li>GNU Parallel 2018 (Ole Tange) [<a href="https://zenodo.org/record/1146014">1</a>], [<a href="https://alexplescan.com/posts/2023/08/20/gnu-parallel/">2</a>]</li>
+<li>Быть собой: Новая теория сознания (Анил Сет)</li>
+<li>The Creative Act: A Way of Being (Rick Rubin) [<a href="https://www.abebooks.com/servlet/SearchResults?isbn=0593652886&clickid=RwHxaRzPsxyPRp40SdwIk1m9UkF3lMzH40UcVY0&cm_mmc=aff-_-ir-_-64613-_-77416&ref=imprad64613&afn_sr=impact&ref_=aff_ir_64613_77416">1</a>] [<a href="https://www.goodreads.com/book/show/60965426-the-creative-act">2</a>]</li>
+</ul>
+
+<p>2022:</p>
+
+<ul>
+<li>Clean Code, Code of conduct (Robert Martin)</li>
+<li>Sustainable Web Development with Ruby on Rails (David Bryant Copeland)</li>
+<li>Resilient management (Lara Hogan)</li>
+<li>Век тревожности (Скотт Стоссел)</li>
+<li>Почему я отвлекаюсь (Эдвард Хэлловэлл, Джон Рэйти)</li>
+<li>The Art of Learning (Josh waitzkin)</li>
+<li>Книга ленивого гуру (Лоуренс Шортер)</li>
+<li>Junior to Senior (Yuri Karabatov)</li>
+</ul>
+
+<p>2021:</p>
+
+<ul>
+<li>Designing DataIntensive Applications (Martin Kleppmann)</li>
+<li>Go Recipes (Shiju Varghese)</li>
+<li>Go Design Patterns (Mario Castro Contreras)</li>
+<li>The Little Book of Stoicism (Jonas Salzgeber)</li>
+<li>Structure and Interpretation of Computer Programs</li>
+<li>The Art of PostgreSQL (Dimitri Fontaine)</li>
+<li>Webapps in Go, the anti textbook (Suraj Patil)</li>
+</ul>
+]]></description>
+    </item>
+    
+    <item>
       <title>Preserving backtrace during exceptions wrapping in Ruby</title>
       <link>https://notes.musayev.com/20230723_4310/preserving-ruby-exception-backtrace</link>
       <guid>20230723_4310</guid>
