@@ -156,9 +156,8 @@
 <li>Replace CleanShot URLs with local image paths during HTML generation.</li>
 </ul>
 
-<p>Like so:</p>
-<div class="highlight"><pre class="highlight plaintext"><code>![](https://share.cleanshot.com/gnNSXtJx) → &lt;img src="/image.jpg" alt=""&gt;
-</code></pre></div>
+<p>Turn <code>![](https://share.cleanshot.com/gnNSXtJx)</code> into <code>&lt;img src=&quot;/image.jpg&quot; alt=&quot;&quot;&gt;</code>.</p>
+
 <p>The following example demonstrates how to use <a href="https://github.com/vmg/redcarpet">redcarpet gem</a>, a popular Markdown parser for Ruby, for this purpose:</p>
 <div class="highlight"><pre class="highlight ruby"><code><span class="c1"># Markdown renderer class with a custom processing logic for image tags</span>
 <span class="k">class</span> <span class="nc">CustomMarkdownRenderer</span> <span class="o">&lt;</span> <span class="no">Redcarpet</span><span class="o">::</span><span class="no">Render</span><span class="o">::</span><span class="no">HTML</span>

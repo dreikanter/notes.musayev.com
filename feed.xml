@@ -35,9 +35,8 @@
 <li>Replace CleanShot URLs with local image paths during HTML generation.</li>
 </ul>
 
-<p>Like so:</p>
-<div class="highlight"><pre class="highlight plaintext"><code>![](https://share.cleanshot.com/gnNSXtJx) → &lt;img src="/image.jpg" alt=""&gt;
-</code></pre></div>
+<p>Turn <code>![](https://share.cleanshot.com/gnNSXtJx)</code> into <code>&lt;img src=&quot;/image.jpg&quot; alt=&quot;&quot;&gt;</code>.</p>
+
 <p>The following example demonstrates how to use <a href="https://github.com/vmg/redcarpet">redcarpet gem</a>, a popular Markdown parser for Ruby, for this purpose:</p>
 <div class="highlight"><pre class="highlight ruby"><code><span class="c1"># Markdown renderer class with a custom processing logic for image tags</span>
 <span class="k">class</span> <span class="nc">CustomMarkdownRenderer</span> <span class="o">&lt;</span> <span class="no">Redcarpet</span><span class="o">::</span><span class="no">Render</span><span class="o">::</span><span class="no">HTML</span>
@@ -670,47 +669,6 @@ asdf <span class="nb">install </span>ruby 3.2.2
     </item>
     
     <item>
-      <title>Reading list</title>
-      <link>https://notes.musayev.com/20230724_4313/readlist</link>
-      <guid>20230724_4313</guid>
-      <description><![CDATA[<p class="text-muted">A copy of each book is in the Dropbox, and it is searchable by title.</p>
-
-<p>2023:</p>
-
-<ul>
-<li>GNU Parallel 2018 (Ole Tange) [<a href="https://zenodo.org/record/1146014">1</a>], [<a href="https://alexplescan.com/posts/2023/08/20/gnu-parallel/">2</a>]</li>
-<li>Быть собой: Новая теория сознания (Анил Сет)</li>
-<li>The Creative Act: A Way of Being (Rick Rubin) [<a href="https://www.abebooks.com/servlet/SearchResults?isbn=0593652886&clickid=RwHxaRzPsxyPRp40SdwIk1m9UkF3lMzH40UcVY0&cm_mmc=aff-_-ir-_-64613-_-77416&ref=imprad64613&afn_sr=impact&ref_=aff_ir_64613_77416">1</a>] [<a href="https://www.goodreads.com/book/show/60965426-the-creative-act">2</a>]</li>
-</ul>
-
-<p>2022:</p>
-
-<ul>
-<li>Clean Code, Code of conduct (Robert Martin)</li>
-<li>Sustainable Web Development with Ruby on Rails (David Bryant Copeland)</li>
-<li>Resilient management (Lara Hogan)</li>
-<li>Век тревожности (Скотт Стоссел)</li>
-<li>Почему я отвлекаюсь (Эдвард Хэлловэлл, Джон Рэйти)</li>
-<li>The Art of Learning (Josh waitzkin)</li>
-<li>Книга ленивого гуру (Лоуренс Шортер)</li>
-<li>Junior to Senior (Yuri Karabatov)</li>
-</ul>
-
-<p>2021:</p>
-
-<ul>
-<li>Designing DataIntensive Applications (Martin Kleppmann)</li>
-<li>Go Recipes (Shiju Varghese)</li>
-<li>Go Design Patterns (Mario Castro Contreras)</li>
-<li>The Little Book of Stoicism (Jonas Salzgeber)</li>
-<li>Structure and Interpretation of Computer Programs</li>
-<li>The Art of PostgreSQL (Dimitri Fontaine)</li>
-<li>Webapps in Go, the anti textbook (Suraj Patil)</li>
-</ul>
-]]></description>
-    </item>
-    
-    <item>
       <title>Preserving backtrace during exceptions wrapping in Ruby</title>
       <link>https://notes.musayev.com/20230723_4310/preserving-ruby-exception-backtrace</link>
       <guid>20230723_4310</guid>
@@ -1054,6 +1012,16 @@ bundle <span class="nb">install</span>
 
 <p>If you make your knowledge public, you learn better. This alone is a sufficient reason for the personal notes publication.</p>
 ]]></description>
+    </item>
+    
+    <item>
+      <title>Hot to change password manually with Rails and Devise</title>
+      <link>https://notes.musayev.com/20230130_3961/rails-devise-manula-password-change</link>
+      <guid>20230130_3961</guid>
+      <description><![CDATA[<p>Changing password for a user does not require a manual update for the related fields.</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">user</span><span class="p">.</span><span class="nf">update!</span><span class="p">(</span><span class="ss">password: </span><span class="s2">"new password"</span><span class="p">)</span>
+</code></pre></div>]]></description>
     </item>
     
   </channel>

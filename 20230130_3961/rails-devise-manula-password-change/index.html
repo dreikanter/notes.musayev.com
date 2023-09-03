@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="author" content="Alex Musayev">
   <meta name="description" content="" />
-  <title>Alex Musayev Notes</title>
+  <title>Hot to change password manually with Rails and Devise - Alex Musayev Notes</title>
   <link rel="alternate" type="application/rss+xml" title="Alex Musayev Notes" href="https://notes.musayev.com/feed.xml">
   <link rel="icon" href="data:," />
   <link href="/style.css" rel="stylesheet" type="text/css">
@@ -129,28 +129,46 @@
       <a href="/">Alex Musayev Notes</a>
     </nav>
     <main>
-      <main>
+      <h1 class="!my-8 !leading-tight"><a href="/20230130_3961/rails-devise-manula-password-change" class="no-underline">Hot to change password manually with Rails and Devise</a></h1>
+
+<p>Changing password for a user does not require a manual update for the related fields.</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">user</span><span class="p">.</span><span class="nf">update!</span><span class="p">(</span><span class="ss">password: </span><span class="s2">"new password"</span><span class="p">)</span>
+</code></pre></div>
+  <hr class="!my-8">
   <div class="flex flex-row flex-wrap items-stretch !my-8">
-    <a href="/tags/bash" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">bash</a><a href="/tags/deployment" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">deployment</a><a href="/tags/git" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-500 !text-slate-100 border-slate-600">git</a><a href="/tags/macos" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">macos</a><a href="/tags/opinion" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">opinion</a><a href="/tags/ops" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">ops</a><a href="/tags/performance" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">performance</a><a href="/tags/postgresql" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">postgresql</a><a href="/tags/rails" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">rails</a><a href="/tags/ruby" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">ruby</a><a href="/tags/static site generators" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">static site generators</a><a href="/tags/sublime text" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">sublime text</a><a href="/tags/writing" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">writing</a>
+    <a href="/tags/rails" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">rails</a>
   </div>
-  <p>Tagged with <a href="/tags/git">git</a>:</p>
-  <ul><li>
-  <a href="/20230811_4426/git-push-tags">How to push git tags</a>
-  <small class="text-slate-400"><time datetime="2023-08-11 00:00:00 +0200">2023/08/11</time></small>
+
+  
+    <hr class="!my-8">
+    <p>Somewhat related:</p>
+    <ul><li>
+  <a href="/20230818_4452/rspec-stub-environment-variables">Stubbing environment variables in RSpec</a>
+  <small class="text-slate-400"><time datetime="2023-08-18 00:00:00 +0200">2023/08/18</time></small>
 </li><li>
-  <a href="/20230810_4418/starting-git-branch-in-the-past">Starting a new git branch in the past</a>
-  <small class="text-slate-400"><time datetime="2023-08-10 00:00:00 +0200">2023/08/10</time></small>
+  <a href="/20230815_4443/fixing-activerecord-unknownmigrationversionerror">Fixing ActiveRecord::UnknownMigrationVersionError</a>
+  <small class="text-slate-400"><time datetime="2023-08-15 00:00:00 +0200">2023/08/15</time></small>
 </li><li>
-  <a href="/20230620_4165/git-head-revision-id">Getting head revision id from Git</a>
-  <small class="text-slate-400"><time datetime="2023-06-20 00:00:00 +0200">2023/06/20</time></small>
+  <a href="/20230814_4433/rails-model-validators-list">How to list all validators in a Rails model</a>
+  <small class="text-slate-400"><time datetime="2023-08-14 00:00:00 +0200">2023/08/14</time></small>
+</li><li>
+  <a href="/20230809_4414/reapplying-rails-db-migration">Reapplying Rails DB migration</a>
+  <small class="text-slate-400"><time datetime="2023-08-09 00:00:00 +0200">2023/08/09</time></small>
+</li><li>
+  <a href="/20230802_4369/rails-order-by-array-position">Customizing enum fields order for ActiveRecord</a>
+  <small class="text-slate-400"><time datetime="2023-08-02 00:00:00 +0200">2023/08/02</time></small>
+</li><li>
+  <a href="/20230622_4169/rails-class-names">Rails class_names helper</a>
+  <small class="text-slate-400"><time datetime="2023-06-22 00:00:00 +0200">2023/06/22</time></small>
 </li></ul>
-</main>
+  
 
     </main>
     <footer>
       <hr class="!my-8">
       <p class="not-prose text-slate-400">
-        <a href="/feed.xml">RSS</a>
+        <time datetime="2023-01-30 00:00:00 +0100">30 January 2023</time> &middot; <a href="/feed.xml">RSS</a>
       </p>
     </footer>
   </div>
