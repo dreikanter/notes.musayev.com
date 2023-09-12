@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="author" content="Alex Musayev">
   <meta name="description" content="" />
-  <title>Alex Musayev Notes</title>
+  <title>List changed files for the current git branch - Alex Musayev Notes</title>
   <link rel="alternate" type="application/rss+xml" title="Alex Musayev Notes" href="https://notes.musayev.com/feed.xml">
   <link rel="icon" href="data:," />
   <link href="/style.css" rel="stylesheet" type="text/css">
@@ -129,15 +129,23 @@
       <a href="/">Alex Musayev Notes</a>
     </nav>
     <main>
-      <main>
+      <h1 class="!my-8 !leading-tight"><a href="/20230912_4619/git-whatchanged" class="no-underline">List changed files for the current git branch</a></h1>
+
+<p>List files, changed in the current branch (<code>HEAD</code>), comparing to the source branch (<code>main</code>):</p>
+<div class="highlight"><pre class="highlight shell"><code>git diff <span class="nt">--name-only</span> main HEAD
+</code></pre></div>
+<p>Alternatively:</p>
+<div class="highlight"><pre class="highlight shell"><code>git whatchanged <span class="nt">--name-only</span> <span class="nt">--pretty</span><span class="o">=</span><span class="s2">""</span> main..HEAD
+</code></pre></div>
+  <hr class="!my-8">
   <div class="flex flex-row flex-wrap items-stretch !my-8">
-    <a href="/tags/bash" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">bash</a><a href="/tags/books" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">books</a><a href="/tags/deployment" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">deployment</a><a href="/tags/git" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-500 !text-slate-100 border-slate-600">git</a><a href="/tags/macos" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">macos</a><a href="/tags/opinion" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">opinion</a><a href="/tags/ops" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">ops</a><a href="/tags/performance" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">performance</a><a href="/tags/postgresql" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">postgresql</a><a href="/tags/rails" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">rails</a><a href="/tags/ruby" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">ruby</a><a href="/tags/static site generators" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">static site generators</a><a href="/tags/sublime text" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">sublime text</a><a href="/tags/writing" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">writing</a>
+    <a href="/tags/git" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">git</a>
   </div>
-  <p>Tagged with <a href="/tags/git">git</a>:</p>
-  <ul><li>
-  <a href="/20230912_4619/git-whatchanged">List changed files for the current git branch</a>
-  <small class="text-slate-400"><time datetime="2023-09-12 00:00:00 +0200">2023/09/12</time></small>
-</li><li>
+
+  
+    <hr class="!my-8">
+    <p>Somewhat related:</p>
+    <ul><li>
   <a href="/20230811_4426/git-push-tags">How to push git tags</a>
   <small class="text-slate-400"><time datetime="2023-08-11 00:00:00 +0200">2023/08/11</time></small>
 </li><li>
@@ -147,13 +155,13 @@
   <a href="/20230620_4165/git-head-revision-id">Getting head revision id from Git</a>
   <small class="text-slate-400"><time datetime="2023-06-20 00:00:00 +0200">2023/06/20</time></small>
 </li></ul>
-</main>
+  
 
     </main>
     <footer>
       <hr class="!my-8">
       <p class="not-prose text-slate-400">
-        <a href="/feed.xml">RSS</a>
+        <time datetime="2023-09-12 00:00:00 +0200">12 September 2023</time> &middot; <a href="/feed.xml">RSS</a>
       </p>
     </footer>
   </div>
