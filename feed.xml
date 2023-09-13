@@ -684,11 +684,12 @@ asdf <span class="nb">install </span>ruby 3.2.2
       <title>Reading list</title>
       <link>https://notes.musayev.com/20230724_4313/readlist</link>
       <guid>20230724_4313</guid>
-      <description><![CDATA[<p class="text-muted">A copy of each book is in the Dropbox, and it is searchable by title.</p>
+      <description><![CDATA[<p class="text-muted">I keep copy of each book is in the Dropbox, searchable by title.</p>
 
 <p>2023:</p>
 
 <ul>
+<li>Layered Design for Ruby on Rails Applications: Discover practical design patterns for maintainable web applications Paperback (Vladimir Dementyev) [<a href="https://www.amazon.ca/Layered-Design-Ruby-Rails-Applications/dp/1801813787/">1</a>]</li>
 <li>CLI text processing with GNU awk [<a href="https://learnbyexample.github.io/learn_gnuawk/">1</a>]</li>
 <li>GNU Parallel 2018 (Ole Tange) [<a href="https://zenodo.org/record/1146014">1</a>], [<a href="https://alexplescan.com/posts/2023/08/20/gnu-parallel/">2</a>]</li>
 <li>Быть собой: Новая теория сознания (Анил Сет)</li>
@@ -705,7 +706,7 @@ asdf <span class="nb">install </span>ruby 3.2.2
 <li>Почему я отвлекаюсь (Эдвард Хэлловэлл, Джон Рэйти)</li>
 <li>The Art of Learning (Josh waitzkin)</li>
 <li>Книга ленивого гуру (Лоуренс Шортер)</li>
-<li>Junior to Senior (Yuri Karabatov)</li>
+<li>Junior to Senior (Yuri Karabatov) [<a href="https://norikitech.gumroad.com/l/junior-to-senior">1</a>]</li>
 </ul>
 
 <p>2021:</p>
@@ -716,8 +717,15 @@ asdf <span class="nb">install </span>ruby 3.2.2
 <li>Go Design Patterns (Mario Castro Contreras)</li>
 <li>The Little Book of Stoicism (Jonas Salzgeber)</li>
 <li>Structure and Interpretation of Computer Programs</li>
-<li>The Art of PostgreSQL (Dimitri Fontaine)</li>
+<li>⭐ The Art of PostgreSQL (Dimitri Fontaine)</li>
 <li>Webapps in Go, the anti textbook (Suraj Patil)</li>
+</ul>
+
+<p>2018:</p>
+
+<ul>
+<li>⭐ Practical Object-Oriented Design: An Agile Primer Using Ruby Paperback (Sandi Metz)</li>
+<li>⭐ Designing Data-Intensive Applications: The Big Ideas Behind Reliable, Scalable, and Maintainable Systems (Martin Kleppmann)</li>
 </ul>
 ]]></description>
     </item>
