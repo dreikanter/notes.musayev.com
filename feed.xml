@@ -240,6 +240,69 @@
     </item>
     
     <item>
+      <title>Stubbing environment variables in RSpec</title>
+      <link>https://notes.musayev.com/20230818_4452/rspec-stub-environment-variables</link>
+      <guid>20230818_4452</guid>
+      <description><![CDATA[<p>To test code based on some <a href="https://12factor.net/config">environment variables configuration</a>, you usually need a way to define environment variables on an individual test case level and be sure this configuration won&#39;t leak from test to test.</p>
+
+<p>In this scenario, RSpec&#39;s <a href="https://github.com/rspec/rspec-mocks#method-stubs">method stubbing</a> comes in handy:</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="c1"># spec/support/env_helpers.rb</span>
+<span class="k">module</span> <span class="nn">EnvHelpers</span>
+  <span class="k">def</span> <span class="nf">stub_env</span><span class="p">(</span><span class="n">variable_name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+    <span class="n">allow</span><span class="p">(</span><span class="no">ENV</span><span class="p">).</span><span class="nf">to</span> <span class="n">receive</span><span class="p">(</span><span class="ss">:[]</span><span class="p">).</span><span class="nf">and_call_original</span>
+    <span class="n">allow</span><span class="p">(</span><span class="no">ENV</span><span class="p">).</span><span class="nf">to</span> <span class="n">receive</span><span class="p">(</span><span class="ss">:[]</span><span class="p">).</span><span class="nf">with</span><span class="p">(</span><span class="n">variable_name</span><span class="p">).</span><span class="nf">and_return</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="n">allow</span><span class="p">(</span><span class="no">ENV</span><span class="p">).</span><span class="nf">to</span> <span class="n">receive</span><span class="p">(</span><span class="ss">:fetch</span><span class="p">).</span><span class="nf">and_call_original</span>
+    <span class="n">allow</span><span class="p">(</span><span class="no">ENV</span><span class="p">).</span><span class="nf">to</span> <span class="n">receive</span><span class="p">(</span><span class="ss">:fetch</span><span class="p">).</span><span class="nf">with</span><span class="p">(</span><span class="n">variable_name</span><span class="p">).</span><span class="nf">and_return</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+  <span class="k">end</span>
+
+  <span class="no">RSpec</span><span class="p">.</span><span class="nf">configure</span> <span class="p">{</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span> <span class="n">config</span><span class="p">.</span><span class="nf">include</span> <span class="nb">self</span> <span class="p">}</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Require this module from <code>spec/spec_helper.rb</code> for new helpers availability in the specs:</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="nb">require_relative</span> <span class="s2">"./support/env_helpers"</span>
+</code></pre></div>
+<p>Usage example with custom configuration file in a Rails project:</p>
+<div class="highlight"><pre class="highlight yaml"><code><span class="c1"># config/external_api.yml</span>
+<span class="na">development</span><span class="pi">:</span>
+  <span class="na">api_key</span><span class="pi">:</span> <span class="s2">"</span><span class="s">non_secret_api_key"</span>
+<span class="na">test</span><span class="pi">:</span>
+  <span class="na">api_key</span><span class="pi">:</span> <span class="s">&lt;%= ENV["API_KEY"] %&gt;</span>
+<span class="na">production</span><span class="pi">:</span>
+  <span class="na">api_key</span><span class="pi">:</span> <span class="s">&lt;%= ENV["API_KEY"] %&gt;</span>
+</code></pre></div>
+<p>The spec:</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="c1"># specs/configuration/external_api_spec.rb</span>
+<span class="no">RSpec</span><span class="p">.</span><span class="nf">describe</span> <span class="s2">"external api configuration"</span> <span class="k">do</span>
+  <span class="n">subject</span><span class="p">(</span><span class="ss">:configuration</span><span class="p">)</span> <span class="p">{</span> <span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">config_for</span><span class="p">(</span><span class="s2">"external_api"</span><span class="p">)</span> <span class="p">}</span>
+
+  <span class="n">context</span> <span class="s2">"with sample configuration"</span> <span class="k">do</span>
+    <span class="n">before</span> <span class="p">{</span> <span class="n">stub_env</span><span class="p">(</span><span class="s2">"API_KEY"</span><span class="p">,</span> <span class="s2">"test_api_key"</span><span class="p">)</span> <span class="p">}</span>
+
+    <span class="n">it</span> <span class="p">{</span> <span class="n">expect</span><span class="p">(</span><span class="n">configuration</span><span class="p">.</span><span class="nf">api_key</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="s2">"test_api_key"</span><span class="p">)</span> <span class="p">}</span>
+  <span class="k">end</span>
+
+  <span class="n">context</span> <span class="s2">"with no configuration"</span> <span class="k">do</span>
+    <span class="n">it</span> <span class="p">{</span> <span class="n">expect</span><span class="p">(</span><span class="n">configuration</span><span class="p">.</span><span class="nf">api_key</span><span class="p">).</span><span class="nf">to</span> <span class="n">be_nil</span> <span class="p">}</span>
+  <span class="k">end</span>
+
+  <span class="n">context</span> <span class="s2">"with direct environment variables access"</span> <span class="k">do</span>
+    <span class="n">before</span> <span class="p">{</span> <span class="n">stub_env</span><span class="p">(</span><span class="s2">"SAMPLE"</span><span class="p">,</span> <span class="s2">"value"</span><span class="p">)</span> <span class="p">}</span>
+
+    <span class="n">it</span> <span class="p">{</span> <span class="n">expect</span><span class="p">(</span><span class="no">ENV</span><span class="p">[</span><span class="s2">"SAMPLE"</span><span class="p">]).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="s2">"value"</span><span class="p">)</span> <span class="p">}</span>
+    <span class="n">it</span> <span class="p">{</span> <span class="n">expect</span><span class="p">(</span><span class="no">ENV</span><span class="p">.</span><span class="nf">fetch</span><span class="p">(</span><span class="s2">"SAMPLE"</span><span class="p">)).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="s2">"value"</span><span class="p">)</span> <span class="p">}</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>References:</p>
+
+<ul>
+<li><a href="https://github.com/rspec/rspec-mocks#method-stubs"><code>rspec-mocks</code> gem</a></li>
+<li><a href="https://12factor.net/config">The Twelve-Factor App: Store config in the environment</a></li>
+</ul>
+]]></description>
+    </item>
+    
+    <item>
       <title>Fixing ActiveRecord::UnknownMigrationVersionError</title>
       <link>https://notes.musayev.com/20230815_4443/fixing-activerecord-unknownmigrationversionerror</link>
       <guid>20230815_4443</guid>
@@ -430,10 +493,146 @@ git push origin TAG_NAME
     </item>
     
     <item>
-      <title>On manual labor</title>
-      <link>https://notes.musayev.com/20230806_4389/on-manual-labor</link>
-      <guid>20230806_4389</guid>
-      <description><![CDATA[<p>Avoid unwanted manual labor.</p>
+      <title>Downloading CleanShot images with Ruby</title>
+      <link>https://notes.musayev.com/20230806_4387/downloading-cleanshot-images-with-ruby</link>
+      <guid>20230806_4387</guid>
+      <description><![CDATA[<p>In my opinion <a href="https://cleanshot.com/">CleanShot</a> is one of the best screenshot tools for macOS by 2023. I&#39;m using it pretty much every day.</p>
+
+<p>I&#39;m going to integrate CleanShot with my <a href="https://notes.musayev.com/">notes</a> publication script to embed screenshots to Markdown pages.</p>
+
+<p>My desired workflow is to plug CleanShot short URL into my notes using <a href="https://spec.commonmark.org/0.30/#images">Markdown image markup</a>, letting a script to extract actual image URL and do further processing.</p>
+
+<p>Here is a quick example on how to download image file from CleanShot URL:</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="nb">require</span> <span class="s2">"http"</span>
+<span class="nb">require</span> <span class="s2">"cgi"</span>
+
+<span class="n">cleanshot_url</span> <span class="o">=</span> <span class="s2">"https://share.cleanshot.com/35WJDTGz"</span>
+
+<span class="c1"># Fetch direct image URL</span>
+<span class="n">direct_image_url</span> <span class="o">=</span> <span class="no">HTTP</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="s2">"</span><span class="si">#{</span><span class="n">cleanshot_url</span><span class="si">}</span><span class="s2">+"</span><span class="p">).</span><span class="nf">headers</span><span class="p">[</span><span class="s2">"Location"</span><span class="p">]</span>
+
+<span class="c1"># Extract image file name from the CleanShot query string</span>
+<span class="n">query</span> <span class="o">=</span> <span class="no">URI</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">direct_image_url</span><span class="p">).</span><span class="nf">query</span>
+<span class="n">param</span> <span class="o">=</span> <span class="no">CGI</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">query</span><span class="p">).</span><span class="nf">fetch</span><span class="p">(</span><span class="s2">"response-content-disposition"</span><span class="p">).</span><span class="nf">first</span>
+<span class="n">file_name</span> <span class="o">=</span> <span class="no">CGI</span><span class="p">.</span><span class="nf">unescape</span><span class="p">(</span><span class="n">param</span><span class="p">.</span><span class="nf">split</span><span class="p">(</span><span class="s2">"="</span><span class="p">,</span> <span class="mi">2</span><span class="p">).</span><span class="nf">last</span><span class="p">)</span>
+
+<span class="c1"># Download the image to a file</span>
+<span class="n">image_contents</span> <span class="o">=</span> <span class="no">HTTP</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="n">direct_image_url</span><span class="p">).</span><span class="nf">body</span><span class="p">.</span><span class="nf">to_s</span>
+<span class="no">File</span><span class="p">.</span><span class="nf">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s2">"wb"</span><span class="p">)</span> <span class="p">{</span> <span class="n">_1</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="n">image_contents</span><span class="p">)</span> <span class="p">}</span>
+</code></pre></div>
+<p>(Yes, it is possible to avoid third party dependency here by using Ruby&#39;s native <code>Net::HTTP</code> instead of the <code>http</code> gem, but I don&#39;t enjoy pain.)</p>
+
+<p>Let&#39;s add some errors handling and refactor it into a service class:</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="nb">require</span> <span class="s2">"http"</span>
+<span class="nb">require</span> <span class="s2">"cgi"</span>
+
+<span class="k">class</span> <span class="nc">CleanshotDownloader</span>
+  <span class="nb">attr_reader</span> <span class="ss">:cleanshot_url</span>
+
+  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">cleanshot_url</span><span class="p">,</span> <span class="ss">file_name: </span><span class="kp">nil</span><span class="p">)</span>
+    <span class="vi">@cleanshot_url</span> <span class="o">=</span> <span class="n">cleanshot_url</span>
+    <span class="vi">@file_name</span> <span class="o">=</span> <span class="n">file_name</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">download</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="no">HTTP</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="n">direct_image_url</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="s2">"error downloading image"</span> <span class="k">unless</span> <span class="n">response</span><span class="p">.</span><span class="nf">status</span><span class="p">.</span><span class="nf">success?</span>
+    <span class="no">File</span><span class="p">.</span><span class="nf">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s2">"wb"</span><span class="p">)</span> <span class="p">{</span> <span class="n">_1</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="nf">body</span><span class="p">.</span><span class="nf">to_s</span><span class="p">)</span> <span class="p">}</span>
+    <span class="n">file_name</span>
+  <span class="k">end</span>
+
+  <span class="kp">private</span>
+
+  <span class="k">def</span> <span class="nf">direct_image_url</span>
+    <span class="vi">@direct_image_url</span> <span class="o">||=</span> <span class="k">begin</span>
+      <span class="n">response</span> <span class="o">=</span> <span class="no">HTTP</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="s2">"</span><span class="si">#{</span><span class="n">cleanshot_url</span><span class="si">}</span><span class="s2">+"</span><span class="p">)</span>
+      <span class="k">raise</span> <span class="s2">"error getting image URL"</span> <span class="k">unless</span> <span class="n">response</span><span class="p">.</span><span class="nf">status</span><span class="p">.</span><span class="nf">redirect?</span>
+      <span class="n">response</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="s2">"Location"</span><span class="p">]</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">file_name</span>
+    <span class="vi">@file_name</span> <span class="o">||=</span> <span class="k">begin</span>
+      <span class="n">query</span> <span class="o">=</span> <span class="no">URI</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">direct_image_url</span><span class="p">).</span><span class="nf">query</span>
+      <span class="n">param</span> <span class="o">=</span> <span class="no">CGI</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">query</span><span class="p">).</span><span class="nf">fetch</span><span class="p">(</span><span class="s2">"response-content-disposition"</span><span class="p">).</span><span class="nf">first</span>
+      <span class="no">CGI</span><span class="p">.</span><span class="nf">unescape</span><span class="p">(</span><span class="n">param</span><span class="p">.</span><span class="nf">split</span><span class="p">(</span><span class="s2">"="</span><span class="p">,</span> <span class="mi">2</span><span class="p">).</span><span class="nf">last</span><span class="p">)</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Usage example:</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="no">CleanshotDownloader</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s2">"https://share.cleanshot.com/35WJDTGz"</span><span class="p">).</span><span class="nf">download</span>
+<span class="c1"># =&gt; "CleanShot 2023-08-06 at 15.27.35.jpeg"</span>
+</code></pre></div>
+<p>And a spec with fancy <a href="https://rubygems.org/gems/webmock">WebMock</a> stubs:</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="no">RSpec</span><span class="p">.</span><span class="nf">describe</span> <span class="no">CleanshotDownloader</span> <span class="k">do</span>
+  <span class="n">subject</span><span class="p">(</span><span class="ss">:service_call</span><span class="p">)</span> <span class="p">{</span> <span class="n">described_class</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">cleanshot_url</span><span class="p">).</span><span class="nf">download</span> <span class="p">}</span>
+
+  <span class="n">let</span><span class="p">(</span><span class="ss">:cleanshot_url</span><span class="p">)</span> <span class="p">{</span> <span class="s2">"https://share.cleanshot.com/80085"</span> <span class="p">}</span>
+
+  <span class="n">let</span><span class="p">(</span><span class="ss">:direct_image_url</span><span class="p">)</span> <span class="k">do</span>
+    <span class="s2">"https://media.cleanshot.cloud/media/1334/itkYgfyMGKeaUT.jpeg?"</span> <span class="p">\</span>
+    <span class="s2">"response-content-disposition=attachment%3Bfilename%3DCleanShot"</span> <span class="p">\</span>
+    <span class="s2">"%25202023-08-06%2520at%252015.27.35.jpeg&amp;Expires=1691367016"</span>
+  <span class="k">end</span>
+
+  <span class="n">let</span><span class="p">(</span><span class="ss">:image_contents</span><span class="p">)</span> <span class="p">{</span> <span class="n">file_fixture</span><span class="p">(</span><span class="s2">"banana.jpg"</span><span class="p">).</span><span class="nf">read</span> <span class="p">}</span>
+
+  <span class="n">context</span> <span class="s2">"with explicit file name"</span> <span class="k">do</span>
+    <span class="n">subject</span><span class="p">(</span><span class="ss">:service_call</span><span class="p">)</span> <span class="p">{</span> <span class="n">described_class</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">cleanshot_url</span><span class="p">,</span> <span class="ss">file_name: </span><span class="n">file_name</span><span class="p">).</span><span class="nf">download</span> <span class="p">}</span>
+
+    <span class="n">let</span><span class="p">(</span><span class="ss">:file_name</span><span class="p">)</span> <span class="p">{</span> <span class="no">Tempfile</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">described_class</span><span class="p">.</span><span class="nf">name</span><span class="p">)</span> <span class="p">}</span>
+
+    <span class="n">before</span> <span class="k">do</span>
+      <span class="n">stub_cleanshot_url</span><span class="p">.</span><span class="nf">to_return</span><span class="p">(</span><span class="ss">status: </span><span class="mi">302</span><span class="p">,</span> <span class="ss">headers: </span><span class="p">{</span><span class="s2">"Location"</span> <span class="o">=&gt;</span> <span class="n">direct_image_url</span><span class="p">})</span>
+      <span class="n">stub_direct_image_url</span><span class="p">.</span><span class="nf">to_return</span><span class="p">(</span><span class="ss">headers: </span><span class="p">{</span><span class="s2">"Content-Type"</span> <span class="o">=&gt;</span> <span class="s2">"image/jpeg"</span><span class="p">},</span> <span class="ss">body: </span><span class="n">image_contents</span><span class="p">)</span>
+      <span class="n">service_call</span>
+    <span class="k">end</span>
+
+    <span class="n">it</span> <span class="p">{</span> <span class="n">expect</span><span class="p">(</span><span class="no">File</span><span class="p">.</span><span class="nf">read</span><span class="p">(</span><span class="n">file_name</span><span class="p">)).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="n">image_contents</span><span class="p">)</span> <span class="p">}</span>
+  <span class="k">end</span>
+
+  <span class="n">context</span> <span class="s2">"with implicit file name"</span> <span class="k">do</span>
+    <span class="n">before</span> <span class="k">do</span>
+      <span class="n">stub_cleanshot_url</span><span class="p">.</span><span class="nf">to_return</span><span class="p">(</span><span class="ss">status: </span><span class="mi">302</span><span class="p">,</span> <span class="ss">headers: </span><span class="p">{</span><span class="s2">"Location"</span> <span class="o">=&gt;</span> <span class="n">direct_image_url</span><span class="p">})</span>
+      <span class="n">stub_direct_image_url</span><span class="p">.</span><span class="nf">to_return</span><span class="p">(</span><span class="ss">headers: </span><span class="p">{</span><span class="s2">"Content-Type"</span> <span class="o">=&gt;</span> <span class="s2">"image/jpeg"</span><span class="p">},</span> <span class="ss">body: </span><span class="n">image_contents</span><span class="p">)</span>
+    <span class="k">end</span>
+
+    <span class="n">it</span> <span class="p">{</span> <span class="n">expect</span><span class="p">(</span><span class="n">service_call</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="s2">"CleanShot 2023-08-06 at 15.27.35.jpeg"</span><span class="p">)</span> <span class="p">}</span>
+  <span class="k">end</span>
+
+  <span class="n">context</span> <span class="s2">"with redirect error"</span> <span class="k">do</span>
+    <span class="n">before</span> <span class="k">do</span>
+      <span class="n">stub_cleanshot_url</span><span class="p">.</span><span class="nf">to_return</span><span class="p">(</span><span class="ss">status: </span><span class="mi">500</span><span class="p">)</span>
+    <span class="k">end</span>
+
+    <span class="n">it</span> <span class="p">{</span> <span class="n">expect</span> <span class="p">{</span> <span class="n">service_call</span> <span class="p">}.</span><span class="nf">to</span> <span class="n">raise_error</span><span class="p">(</span><span class="s2">"error getting image URL"</span><span class="p">)</span> <span class="p">}</span>
+  <span class="k">end</span>
+
+  <span class="n">context</span> <span class="s2">"with image downloading error"</span> <span class="k">do</span>
+    <span class="n">before</span> <span class="k">do</span>
+      <span class="n">stub_cleanshot_url</span><span class="p">.</span><span class="nf">to_return</span><span class="p">(</span><span class="ss">status: </span><span class="mi">302</span><span class="p">,</span> <span class="ss">headers: </span><span class="p">{</span><span class="s2">"Location"</span> <span class="o">=&gt;</span> <span class="n">direct_image_url</span><span class="p">})</span>
+      <span class="n">stub_direct_image_url</span><span class="p">.</span><span class="nf">to_return</span><span class="p">(</span><span class="ss">status: </span><span class="mi">500</span><span class="p">)</span>
+    <span class="k">end</span>
+
+    <span class="n">it</span> <span class="p">{</span> <span class="n">expect</span> <span class="p">{</span> <span class="n">service_call</span> <span class="p">}.</span><span class="nf">to</span> <span class="n">raise_error</span><span class="p">(</span><span class="s2">"error downloading image"</span><span class="p">)</span> <span class="p">}</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">stub_cleanshot_url</span>
+    <span class="n">stub_request</span><span class="p">(</span><span class="ss">:get</span><span class="p">,</span> <span class="s2">"</span><span class="si">#{</span><span class="n">cleanshot_url</span><span class="si">}</span><span class="s2">+"</span><span class="p">)</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">stub_direct_image_url</span>
+    <span class="n">stub_request</span><span class="p">(</span><span class="ss">:get</span><span class="p">,</span> <span class="n">direct_image_url</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>References:</p>
+
+<ul>
+<li>CleanShot: <a href="https://cleanshot.com">https://cleanshot.com</a></li>
+<li>Markdown reference (CommonMark): <a href="https://commonmark.org/help/">https://commonmark.org/help/</a></li>
+</ul>
 ]]></description>
     </item>
     
@@ -620,6 +819,14 @@ git push origin TAG_NAME
     </item>
     
     <item>
+      <title>On manual labor</title>
+      <link>https://notes.musayev.com/20230806_4389/on-manual-labor</link>
+      <guid>20230806_4389</guid>
+      <description><![CDATA[<p>Avoid unwanted manual labor.</p>
+]]></description>
+    </item>
+    
+    <item>
       <title>Customizing enum fields order for ActiveRecord</title>
       <link>https://notes.musayev.com/20230802_4369/rails-order-by-array-position</link>
       <guid>20230802_4369</guid>
@@ -656,6 +863,26 @@ git push origin TAG_NAME
 
 <ul>
 <li><a href="https://www.fao.org/3/R7021E/r7021e05.htm">Irrigation Water Management: Training Manual No. 2 - Elements of Topographic Surveying</a></li>
+</ul>
+]]></description>
+    </item>
+    
+    <item>
+      <title>Updating Ruby with asdf</title>
+      <link>https://notes.musayev.com/20230725_4324/updating-ruby-with-asdf</link>
+      <guid>20230725_4324</guid>
+      <description><![CDATA[<p>Assuming, it is macOS, and <code>asdf</code> was installed with Homebrew.</p>
+<div class="highlight"><pre class="highlight shell"><code>brew update
+asdf plugin update ruby
+asdf <span class="nb">install </span>ruby 3.2.2
+</code></pre></div>
+<p>In case <code>asdf</code> was installed manually, use this instead of the brew commend to update to the lates stable release:</p>
+<div class="highlight"><pre class="highlight shell"><code>asdf update
+</code></pre></div>
+<p>References:</p>
+
+<ul>
+<li><a href="https://asdf-vm.com/"><code>asdf</code></a></li>
 </ul>
 ]]></description>
     </item>
@@ -719,6 +946,7 @@ asdf <span class="nb">install </span>ruby 3.2.2
 <li>Structure and Interpretation of Computer Programs</li>
 <li>⭐ The Art of PostgreSQL (Dimitri Fontaine)</li>
 <li>Webapps in Go, the anti textbook (Suraj Patil)</li>
+<li>⭐ Язык шаблонов (Кристофер Александер)</li>
 </ul>
 
 <p>2018:</p>
@@ -726,6 +954,54 @@ asdf <span class="nb">install </span>ruby 3.2.2
 <ul>
 <li>⭐ Practical Object-Oriented Design: An Agile Primer Using Ruby Paperback (Sandi Metz)</li>
 <li>⭐ Designing Data-Intensive Applications: The Big Ideas Behind Reliable, Scalable, and Maintainable Systems (Martin Kleppmann)</li>
+</ul>
+]]></description>
+    </item>
+    
+    <item>
+      <title>Preserving backtrace during exceptions wrapping in Ruby</title>
+      <link>https://notes.musayev.com/20230723_4310/preserving-ruby-exception-backtrace</link>
+      <guid>20230723_4310</guid>
+      <description><![CDATA[<p>In this example raising a <code>CustomError</code> hides the original error backtrace.</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="no">CustomError</span> <span class="o">=</span> <span class="no">Class</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="no">StandardError</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">raise_error</span>
+  <span class="k">raise</span> <span class="no">StandardError</span><span class="p">,</span> <span class="s2">"Original error"</span> <span class="c1"># line 4</span>
+<span class="k">end</span>
+
+<span class="k">def</span> <span class="nf">call_the_error_raiser</span>
+  <span class="n">raise_error</span> <span class="c1"># line 8</span>
+<span class="k">rescue</span> <span class="o">=&gt;</span> <span class="n">e</span>
+  <span class="k">raise</span> <span class="no">CustomError</span><span class="p">,</span> <span class="s2">"Error message"</span>
+<span class="k">end</span>
+
+<span class="k">begin</span>
+  <span class="n">call_the_error_raiser</span> <span class="c1"># line 14</span>
+<span class="k">rescue</span> <span class="no">StandardError</span> <span class="o">=&gt;</span> <span class="n">e</span>
+  <span class="nb">puts</span> <span class="n">e</span><span class="p">.</span><span class="nf">inspect</span>
+  <span class="nb">puts</span> <span class="n">e</span><span class="p">.</span><span class="nf">backtrace</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Output (the cause of the original error is lost):</p>
+<div class="highlight"><pre class="highlight plaintext"><code>#&lt;CustomError: Error message&gt;
+preserve_error_backtrace.rb:10:in `rescue in call_the_error_raiser'
+preserve_error_backtrace.rb:7:in `call_the_error_raiser'
+preserve_error_backtrace.rb:14:in `&lt;main&gt;'
+</code></pre></div>
+<p>You can still access the &quot;Original error&quot; backtrace via <a href="https://ruby-doc.org/3.2.2/Exception.html#method-i-cause"><code>Exception#cause</code></a>, but it may be better to preserve the original while raising the custom error, instead of generating a new non-helpful backtrace:</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="k">raise</span> <span class="no">CustomError</span><span class="p">,</span> <span class="s2">"Error message"</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="nf">backtrace</span>
+</code></pre></div>
+<p>Output (the cause of the original error is on the first line):</p>
+<div class="highlight"><pre class="highlight plaintext"><code>#&lt;CustomError: Error message&gt;
+preserve_error_backtrace.rb:4:in `raise_error' ← The cause of the error
+preserve_error_backtrace.rb:8:in `call_the_error_raiser'
+preserve_error_backtrace.rb:14:in `&lt;main&gt;'
+</code></pre></div>
+<p>References:</p>
+
+<ul>
+<li><a href="https://www.honeybadger.io/blog/nested-errors-in-ruby-with-exception-cause/">Nested errors in Ruby with Exception#cause</a> at Honeybadger blog</li>
+<li><a href="https://ruby-doc.org/3.2.2/Exception.html#method-i-cause"><code>Exception#cause</code> docs</a></li>
 </ul>
 ]]></description>
     </item>
@@ -899,6 +1175,23 @@ end
     </item>
     
     <item>
+      <title>RSpec snippet for Sublime Text</title>
+      <link>https://notes.musayev.com/20230713_4251/rspec-snippet-for-sublime-text</link>
+      <guid>20230713_4251</guid>
+      <description><![CDATA[<p>Sublime Text snippet to create a blank RSpec spec:</p>
+<div class="highlight"><pre class="highlight xml"><code><span class="nt">&lt;snippet&gt;</span>
+  <span class="nt">&lt;content&gt;</span><span class="cp">&lt;![CDATA[
+RSpec.describe ${1:subject_class} do
+  subject(:${2:subject_name}) { described_class }
+end
+]]&gt;</span><span class="nt">&lt;/content&gt;</span>
+  <span class="nt">&lt;tabTrigger&gt;</span>spec<span class="nt">&lt;/tabTrigger&gt;</span>
+  <span class="nt">&lt;scope&gt;</span>source.ruby<span class="nt">&lt;/scope&gt;</span>
+<span class="nt">&lt;/snippet&gt;</span>
+</code></pre></div>]]></description>
+    </item>
+    
+    <item>
       <title>Migrating PostgreSQL database with pg_dump</title>
       <link>https://notes.musayev.com/20230627_4185/migrating-postgresql-database-with-pg-dump</link>
       <guid>20230627_4185</guid>
@@ -1028,6 +1321,35 @@ Y.Y.Y.Y | SUCCESS =&gt; {
       <guid>20230620_4164</guid>
       <description><![CDATA[<p>The goal of this initiative is to develop and maintain writing skill by practice.</p>
 ]]></description>
+    </item>
+    
+    <item>
+      <title>Updating gems</title>
+      <link>https://notes.musayev.com/20230618_4153/updating-gems</link>
+      <guid>20230618_4153</guid>
+      <description><![CDATA[<p>I&#39;m updating gems regularly for <code>\d\d</code> years now, but it is still hard to remember related commands. Should I use <code>gem</code> or <code>bundle</code> to upgrade <code>bundle</code>? Is it &quot;update&quot; or &quot;upgrade&quot;? Bwagh!</p>
+
+<p><strong>Updating Bundler:</strong></p>
+<div class="highlight"><pre class="highlight shell"><code>bundle update <span class="nt">--bundler</span>
+</code></pre></div>
+<p>Note:
+- <code>Gemfile.lock</code> may lock Bundler version with <code>BUNDLED WITH</code> value.
+- <code>Gemfile.lock</code> may cause an alternative bundler version installation during <code>bundle install</code>.</p>
+
+<p>Update system gems:</p>
+<div class="highlight"><pre class="highlight shell"><code>gem update <span class="nt">--system</span>
+</code></pre></div>
+<p>Getting gem paths and other environment variables:</p>
+<div class="highlight"><pre class="highlight shell"><code>gem <span class="nb">env</span>
+</code></pre></div>
+<p>Updating rbenv with Homenrew:</p>
+<div class="highlight"><pre class="highlight shell"><code>brew update
+brew upgrade rbenv
+</code></pre></div>
+<p>Installing new Ruby version with rbenv:</p>
+<div class="highlight"><pre class="highlight shell"><code>rbenv <span class="nb">install </span>3.2.2
+bundle <span class="nb">install</span>
+</code></pre></div>]]></description>
     </item>
     
     <item>
