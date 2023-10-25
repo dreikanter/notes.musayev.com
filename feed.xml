@@ -7,6 +7,46 @@
     <description></description>
     
     <item>
+      <title>Calling the original instance method after overriding in Ruby</title>
+      <link>https://notes.musayev.com/20231023_4812/override-an-override-in-ruby</link>
+      <guid>20231023_4812</guid>
+      <description><![CDATA[<p>Say, there is a class:</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="k">class</span> <span class="nc">Base</span>
+  <span class="k">def</span> <span class="nf">test</span>
+    <span class="s2">"original result"</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>And a descendant that overrides base class method:</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="k">class</span> <span class="nc">Descendant</span> <span class="o">&lt;</span> <span class="no">Base</span>
+  <span class="k">def</span> <span class="nf">test</span>
+    <span class="s2">"overridden result"</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>How to call <code>Base#test</code> in the <code>Descendant</code> instance context, outside from the <code>Descendant#test</code>? In other words, how woud you access <code>super</code> for some secific instance method outside from the override?</p>
+
+<p>There is a way:</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="k">class</span> <span class="nc">Descendant</span> <span class="o">&lt;</span> <span class="no">Base</span>
+  <span class="k">def</span> <span class="nf">test</span>
+    <span class="s2">"overridden result"</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">original_test</span>
+    <span class="n">super_test</span> <span class="o">=</span> <span class="no">Base</span><span class="p">.</span><span class="nf">instance_method</span><span class="p">(</span><span class="ss">:test</span><span class="p">).</span><span class="nf">bind</span><span class="p">(</span><span class="nb">self</span><span class="p">)</span>
+    <span class="n">super_test</span><span class="p">.</span><span class="nf">call</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p><code>Descendant#original_test</code> will call the <code>Base#test</code>:</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="no">Descendant</span><span class="p">.</span><span class="nf">new</span><span class="p">.</span><span class="nf">original_test</span>
+<span class="c1"># =&gt; "original result"</span>
+</code></pre></div>
+<p>Same approach works for module methods: <code>ImportedModule.instance_method(:method_name).bind(self).call</code></p>
+]]></description>
+    </item>
+    
+    <item>
       <title>List changed files for the current git branch</title>
       <link>https://notes.musayev.com/20230912_4619/git-whatchanged</link>
       <guid>20230912_4619</guid>
@@ -135,6 +175,20 @@
     </item>
     
     <item>
+      <title>Add directory to existing Sublime Text window</title>
+      <link>https://notes.musayev.com/20230819_4459/add-directory-to-existing-sublime-text-window</link>
+      <guid>20230819_4459</guid>
+      <description><![CDATA[<p>I created couple of very simple command line aliases today, and I like them both very much.</p>
+
+<p>This one introduce <code>s</code> command that opens current directory in a new Sublime Text window:</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="nb">alias </span><span class="nv">s</span><span class="o">=</span><span class="s2">"subl ."</span>
+</code></pre></div>
+<p>And this one does the same thing, but it will add current directory to an existing Sublime Text window if it is already open:</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="nb">alias </span><span class="nv">ss</span><span class="o">=</span><span class="s2">"subl --add ."</span>
+</code></pre></div>]]></description>
+    </item>
+    
+    <item>
       <title>The 512KB Club</title>
       <link>https://notes.musayev.com/20230819_4462/doherty-threshold</link>
       <guid>20230819_4462</guid>
@@ -160,20 +214,6 @@
 <li><a href="https://512kb.club">512kb.club</a></li>
 </ul>
 ]]></description>
-    </item>
-    
-    <item>
-      <title>Add directory to existing Sublime Text window</title>
-      <link>https://notes.musayev.com/20230819_4459/add-directory-to-existing-sublime-text-window</link>
-      <guid>20230819_4459</guid>
-      <description><![CDATA[<p>I created couple of very simple command line aliases today, and I like them both very much.</p>
-
-<p>This one introduce <code>s</code> command that opens current directory in a new Sublime Text window:</p>
-<div class="highlight"><pre class="highlight shell"><code><span class="nb">alias </span><span class="nv">s</span><span class="o">=</span><span class="s2">"subl ."</span>
-</code></pre></div>
-<p>And this one does the same thing, but it will add current directory to an existing Sublime Text window if it is already open:</p>
-<div class="highlight"><pre class="highlight shell"><code><span class="nb">alias </span><span class="nv">ss</span><span class="o">=</span><span class="s2">"subl --add ."</span>
-</code></pre></div>]]></description>
     </item>
     
     <item>
@@ -404,15 +444,6 @@ up     20230802210508  Update users table
     </item>
     
     <item>
-      <title>Reset Bluetooth on macOS to prevent headphones from disconnecting</title>
-      <link>https://notes.musayev.com/20230811_4427/macos-coreaudiod-bluetooth-reset</link>
-      <guid>20230811_4427</guid>
-      <description><![CDATA[<p>This command helped to fix an issue with spontaneous headphones disconnection on macOS Ventura. Disconnections were repeating every minute or so.</p>
-<div class="highlight"><pre class="highlight shell"><code><span class="nb">sudo </span>pkill coreaudiod
-</code></pre></div>]]></description>
-    </item>
-    
-    <item>
       <title>How to push git tags</title>
       <link>https://notes.musayev.com/20230811_4426/git-push-tags</link>
       <guid>20230811_4426</guid>
@@ -432,6 +463,15 @@ git push origin TAG_NAME
 <li><a href="https://git-scm.com/book/en/v2/Git-Basics-Tagging">Git Basics - Tagging</a></li>
 </ul>
 ]]></description>
+    </item>
+    
+    <item>
+      <title>Reset Bluetooth on macOS to prevent headphones from disconnecting</title>
+      <link>https://notes.musayev.com/20230811_4427/macos-coreaudiod-bluetooth-reset</link>
+      <guid>20230811_4427</guid>
+      <description><![CDATA[<p>This command helped to fix an issue with spontaneous headphones disconnection on macOS Ventura. Disconnections were repeating every minute or so.</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="nb">sudo </span>pkill coreaudiod
+</code></pre></div>]]></description>
     </item>
     
     <item>
@@ -493,291 +533,21 @@ git push origin TAG_NAME
     </item>
     
     <item>
-      <title>Downloading CleanShot images with Ruby</title>
-      <link>https://notes.musayev.com/20230806_4387/downloading-cleanshot-images-with-ruby</link>
-      <guid>20230806_4387</guid>
-      <description><![CDATA[<p>In my opinion <a href="https://cleanshot.com/">CleanShot</a> is one of the best screenshot tools for macOS by 2023. I&#39;m using it pretty much every day.</p>
-
-<p>I&#39;m going to integrate CleanShot with my <a href="https://notes.musayev.com/">notes</a> publication script to embed screenshots to Markdown pages.</p>
-
-<p>My desired workflow is to plug CleanShot short URL into my notes using <a href="https://spec.commonmark.org/0.30/#images">Markdown image markup</a>, letting a script to extract actual image URL and do further processing.</p>
-
-<p>Here is a quick example on how to download image file from CleanShot URL:</p>
-<div class="highlight"><pre class="highlight ruby"><code><span class="nb">require</span> <span class="s2">"http"</span>
-<span class="nb">require</span> <span class="s2">"cgi"</span>
-
-<span class="n">cleanshot_url</span> <span class="o">=</span> <span class="s2">"https://share.cleanshot.com/35WJDTGz"</span>
-
-<span class="c1"># Fetch direct image URL</span>
-<span class="n">direct_image_url</span> <span class="o">=</span> <span class="no">HTTP</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="s2">"</span><span class="si">#{</span><span class="n">cleanshot_url</span><span class="si">}</span><span class="s2">+"</span><span class="p">).</span><span class="nf">headers</span><span class="p">[</span><span class="s2">"Location"</span><span class="p">]</span>
-
-<span class="c1"># Extract image file name from the CleanShot query string</span>
-<span class="n">query</span> <span class="o">=</span> <span class="no">URI</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">direct_image_url</span><span class="p">).</span><span class="nf">query</span>
-<span class="n">param</span> <span class="o">=</span> <span class="no">CGI</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">query</span><span class="p">).</span><span class="nf">fetch</span><span class="p">(</span><span class="s2">"response-content-disposition"</span><span class="p">).</span><span class="nf">first</span>
-<span class="n">file_name</span> <span class="o">=</span> <span class="no">CGI</span><span class="p">.</span><span class="nf">unescape</span><span class="p">(</span><span class="n">param</span><span class="p">.</span><span class="nf">split</span><span class="p">(</span><span class="s2">"="</span><span class="p">,</span> <span class="mi">2</span><span class="p">).</span><span class="nf">last</span><span class="p">)</span>
-
-<span class="c1"># Download the image to a file</span>
-<span class="n">image_contents</span> <span class="o">=</span> <span class="no">HTTP</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="n">direct_image_url</span><span class="p">).</span><span class="nf">body</span><span class="p">.</span><span class="nf">to_s</span>
-<span class="no">File</span><span class="p">.</span><span class="nf">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s2">"wb"</span><span class="p">)</span> <span class="p">{</span> <span class="n">_1</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="n">image_contents</span><span class="p">)</span> <span class="p">}</span>
+      <title>Kill a process that occupies a port</title>
+      <link>https://notes.musayev.com/20230806_4380/bash-kill-process-by-port</link>
+      <guid>20230806_4380</guid>
+      <description><![CDATA[<p>This command lists process ids listening on a specified port:</p>
+<div class="highlight"><pre class="highlight shell"><code>lsof <span class="nt">-t</span> <span class="nt">-i</span>:PORT_NUMBER
 </code></pre></div>
-<p>(Yes, it is possible to avoid third party dependency here by using Ruby&#39;s native <code>Net::HTTP</code> instead of the <code>http</code> gem, but I don&#39;t enjoy pain.)</p>
-
-<p>Let&#39;s add some errors handling and refactor it into a service class:</p>
-<div class="highlight"><pre class="highlight ruby"><code><span class="nb">require</span> <span class="s2">"http"</span>
-<span class="nb">require</span> <span class="s2">"cgi"</span>
-
-<span class="k">class</span> <span class="nc">CleanshotDownloader</span>
-  <span class="nb">attr_reader</span> <span class="ss">:cleanshot_url</span>
-
-  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">cleanshot_url</span><span class="p">,</span> <span class="ss">file_name: </span><span class="kp">nil</span><span class="p">)</span>
-    <span class="vi">@cleanshot_url</span> <span class="o">=</span> <span class="n">cleanshot_url</span>
-    <span class="vi">@file_name</span> <span class="o">=</span> <span class="n">file_name</span>
-  <span class="k">end</span>
-
-  <span class="k">def</span> <span class="nf">download</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="no">HTTP</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="n">direct_image_url</span><span class="p">)</span>
-    <span class="k">raise</span> <span class="s2">"error downloading image"</span> <span class="k">unless</span> <span class="n">response</span><span class="p">.</span><span class="nf">status</span><span class="p">.</span><span class="nf">success?</span>
-    <span class="no">File</span><span class="p">.</span><span class="nf">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s2">"wb"</span><span class="p">)</span> <span class="p">{</span> <span class="n">_1</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="nf">body</span><span class="p">.</span><span class="nf">to_s</span><span class="p">)</span> <span class="p">}</span>
-    <span class="n">file_name</span>
-  <span class="k">end</span>
-
-  <span class="kp">private</span>
-
-  <span class="k">def</span> <span class="nf">direct_image_url</span>
-    <span class="vi">@direct_image_url</span> <span class="o">||=</span> <span class="k">begin</span>
-      <span class="n">response</span> <span class="o">=</span> <span class="no">HTTP</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="s2">"</span><span class="si">#{</span><span class="n">cleanshot_url</span><span class="si">}</span><span class="s2">+"</span><span class="p">)</span>
-      <span class="k">raise</span> <span class="s2">"error getting image URL"</span> <span class="k">unless</span> <span class="n">response</span><span class="p">.</span><span class="nf">status</span><span class="p">.</span><span class="nf">redirect?</span>
-      <span class="n">response</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="s2">"Location"</span><span class="p">]</span>
-    <span class="k">end</span>
-  <span class="k">end</span>
-
-  <span class="k">def</span> <span class="nf">file_name</span>
-    <span class="vi">@file_name</span> <span class="o">||=</span> <span class="k">begin</span>
-      <span class="n">query</span> <span class="o">=</span> <span class="no">URI</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">direct_image_url</span><span class="p">).</span><span class="nf">query</span>
-      <span class="n">param</span> <span class="o">=</span> <span class="no">CGI</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">query</span><span class="p">).</span><span class="nf">fetch</span><span class="p">(</span><span class="s2">"response-content-disposition"</span><span class="p">).</span><span class="nf">first</span>
-      <span class="no">CGI</span><span class="p">.</span><span class="nf">unescape</span><span class="p">(</span><span class="n">param</span><span class="p">.</span><span class="nf">split</span><span class="p">(</span><span class="s2">"="</span><span class="p">,</span> <span class="mi">2</span><span class="p">).</span><span class="nf">last</span><span class="p">)</span>
-    <span class="k">end</span>
-  <span class="k">end</span>
-<span class="k">end</span>
+<p>You can use it to kill processes:</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="nb">kill</span> <span class="nt">-9</span> <span class="o">(</span>lsof <span class="nt">-t</span> <span class="nt">-i</span>:PORT_NUMBER<span class="o">)</span>
+</code></pre></div>
+<p>Here is a Bash function making this command easier to use:</p>
+<div class="highlight"><pre class="highlight shell"><code>killport<span class="o">()</span> <span class="o">{</span> <span class="nb">kill</span> <span class="nt">-9</span> <span class="si">$(</span>lsof <span class="nt">-t</span> <span class="nt">-i</span>:<span class="nv">$1</span><span class="si">)</span> <span class="o">}</span>
 </code></pre></div>
 <p>Usage example:</p>
-<div class="highlight"><pre class="highlight ruby"><code><span class="no">CleanshotDownloader</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s2">"https://share.cleanshot.com/35WJDTGz"</span><span class="p">).</span><span class="nf">download</span>
-<span class="c1"># =&gt; "CleanShot 2023-08-06 at 15.27.35.jpeg"</span>
-</code></pre></div>
-<p>And a spec with fancy <a href="https://rubygems.org/gems/webmock">WebMock</a> stubs:</p>
-<div class="highlight"><pre class="highlight ruby"><code><span class="no">RSpec</span><span class="p">.</span><span class="nf">describe</span> <span class="no">CleanshotDownloader</span> <span class="k">do</span>
-  <span class="n">subject</span><span class="p">(</span><span class="ss">:service_call</span><span class="p">)</span> <span class="p">{</span> <span class="n">described_class</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">cleanshot_url</span><span class="p">).</span><span class="nf">download</span> <span class="p">}</span>
-
-  <span class="n">let</span><span class="p">(</span><span class="ss">:cleanshot_url</span><span class="p">)</span> <span class="p">{</span> <span class="s2">"https://share.cleanshot.com/80085"</span> <span class="p">}</span>
-
-  <span class="n">let</span><span class="p">(</span><span class="ss">:direct_image_url</span><span class="p">)</span> <span class="k">do</span>
-    <span class="s2">"https://media.cleanshot.cloud/media/1334/itkYgfyMGKeaUT.jpeg?"</span> <span class="p">\</span>
-    <span class="s2">"response-content-disposition=attachment%3Bfilename%3DCleanShot"</span> <span class="p">\</span>
-    <span class="s2">"%25202023-08-06%2520at%252015.27.35.jpeg&amp;Expires=1691367016"</span>
-  <span class="k">end</span>
-
-  <span class="n">let</span><span class="p">(</span><span class="ss">:image_contents</span><span class="p">)</span> <span class="p">{</span> <span class="n">file_fixture</span><span class="p">(</span><span class="s2">"banana.jpg"</span><span class="p">).</span><span class="nf">read</span> <span class="p">}</span>
-
-  <span class="n">context</span> <span class="s2">"with explicit file name"</span> <span class="k">do</span>
-    <span class="n">subject</span><span class="p">(</span><span class="ss">:service_call</span><span class="p">)</span> <span class="p">{</span> <span class="n">described_class</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">cleanshot_url</span><span class="p">,</span> <span class="ss">file_name: </span><span class="n">file_name</span><span class="p">).</span><span class="nf">download</span> <span class="p">}</span>
-
-    <span class="n">let</span><span class="p">(</span><span class="ss">:file_name</span><span class="p">)</span> <span class="p">{</span> <span class="no">Tempfile</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">described_class</span><span class="p">.</span><span class="nf">name</span><span class="p">)</span> <span class="p">}</span>
-
-    <span class="n">before</span> <span class="k">do</span>
-      <span class="n">stub_cleanshot_url</span><span class="p">.</span><span class="nf">to_return</span><span class="p">(</span><span class="ss">status: </span><span class="mi">302</span><span class="p">,</span> <span class="ss">headers: </span><span class="p">{</span><span class="s2">"Location"</span> <span class="o">=&gt;</span> <span class="n">direct_image_url</span><span class="p">})</span>
-      <span class="n">stub_direct_image_url</span><span class="p">.</span><span class="nf">to_return</span><span class="p">(</span><span class="ss">headers: </span><span class="p">{</span><span class="s2">"Content-Type"</span> <span class="o">=&gt;</span> <span class="s2">"image/jpeg"</span><span class="p">},</span> <span class="ss">body: </span><span class="n">image_contents</span><span class="p">)</span>
-      <span class="n">service_call</span>
-    <span class="k">end</span>
-
-    <span class="n">it</span> <span class="p">{</span> <span class="n">expect</span><span class="p">(</span><span class="no">File</span><span class="p">.</span><span class="nf">read</span><span class="p">(</span><span class="n">file_name</span><span class="p">)).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="n">image_contents</span><span class="p">)</span> <span class="p">}</span>
-  <span class="k">end</span>
-
-  <span class="n">context</span> <span class="s2">"with implicit file name"</span> <span class="k">do</span>
-    <span class="n">before</span> <span class="k">do</span>
-      <span class="n">stub_cleanshot_url</span><span class="p">.</span><span class="nf">to_return</span><span class="p">(</span><span class="ss">status: </span><span class="mi">302</span><span class="p">,</span> <span class="ss">headers: </span><span class="p">{</span><span class="s2">"Location"</span> <span class="o">=&gt;</span> <span class="n">direct_image_url</span><span class="p">})</span>
-      <span class="n">stub_direct_image_url</span><span class="p">.</span><span class="nf">to_return</span><span class="p">(</span><span class="ss">headers: </span><span class="p">{</span><span class="s2">"Content-Type"</span> <span class="o">=&gt;</span> <span class="s2">"image/jpeg"</span><span class="p">},</span> <span class="ss">body: </span><span class="n">image_contents</span><span class="p">)</span>
-    <span class="k">end</span>
-
-    <span class="n">it</span> <span class="p">{</span> <span class="n">expect</span><span class="p">(</span><span class="n">service_call</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="s2">"CleanShot 2023-08-06 at 15.27.35.jpeg"</span><span class="p">)</span> <span class="p">}</span>
-  <span class="k">end</span>
-
-  <span class="n">context</span> <span class="s2">"with redirect error"</span> <span class="k">do</span>
-    <span class="n">before</span> <span class="k">do</span>
-      <span class="n">stub_cleanshot_url</span><span class="p">.</span><span class="nf">to_return</span><span class="p">(</span><span class="ss">status: </span><span class="mi">500</span><span class="p">)</span>
-    <span class="k">end</span>
-
-    <span class="n">it</span> <span class="p">{</span> <span class="n">expect</span> <span class="p">{</span> <span class="n">service_call</span> <span class="p">}.</span><span class="nf">to</span> <span class="n">raise_error</span><span class="p">(</span><span class="s2">"error getting image URL"</span><span class="p">)</span> <span class="p">}</span>
-  <span class="k">end</span>
-
-  <span class="n">context</span> <span class="s2">"with image downloading error"</span> <span class="k">do</span>
-    <span class="n">before</span> <span class="k">do</span>
-      <span class="n">stub_cleanshot_url</span><span class="p">.</span><span class="nf">to_return</span><span class="p">(</span><span class="ss">status: </span><span class="mi">302</span><span class="p">,</span> <span class="ss">headers: </span><span class="p">{</span><span class="s2">"Location"</span> <span class="o">=&gt;</span> <span class="n">direct_image_url</span><span class="p">})</span>
-      <span class="n">stub_direct_image_url</span><span class="p">.</span><span class="nf">to_return</span><span class="p">(</span><span class="ss">status: </span><span class="mi">500</span><span class="p">)</span>
-    <span class="k">end</span>
-
-    <span class="n">it</span> <span class="p">{</span> <span class="n">expect</span> <span class="p">{</span> <span class="n">service_call</span> <span class="p">}.</span><span class="nf">to</span> <span class="n">raise_error</span><span class="p">(</span><span class="s2">"error downloading image"</span><span class="p">)</span> <span class="p">}</span>
-  <span class="k">end</span>
-
-  <span class="k">def</span> <span class="nf">stub_cleanshot_url</span>
-    <span class="n">stub_request</span><span class="p">(</span><span class="ss">:get</span><span class="p">,</span> <span class="s2">"</span><span class="si">#{</span><span class="n">cleanshot_url</span><span class="si">}</span><span class="s2">+"</span><span class="p">)</span>
-  <span class="k">end</span>
-
-  <span class="k">def</span> <span class="nf">stub_direct_image_url</span>
-    <span class="n">stub_request</span><span class="p">(</span><span class="ss">:get</span><span class="p">,</span> <span class="n">direct_image_url</span><span class="p">)</span>
-  <span class="k">end</span>
-<span class="k">end</span>
-</code></pre></div>
-<p>References:</p>
-
-<ul>
-<li>CleanShot: <a href="https://cleanshot.com">https://cleanshot.com</a></li>
-<li>Markdown reference (CommonMark): <a href="https://commonmark.org/help/">https://commonmark.org/help/</a></li>
-</ul>
-]]></description>
-    </item>
-    
-    <item>
-      <title>Downloading CleanShot images with Ruby</title>
-      <link>https://notes.musayev.com/20230806_4387/downloading-cleanshot-images-with-ruby</link>
-      <guid>20230806_4387</guid>
-      <description><![CDATA[<p>In my opinion <a href="https://cleanshot.com/">CleanShot</a> is one of the best screenshot tools for macOS by 2023. I&#39;m using it pretty much every day.</p>
-
-<p>I&#39;m going to integrate CleanShot with my <a href="https://notes.musayev.com/">notes</a> publication script to embed screenshots to Markdown pages.</p>
-
-<p>My desired workflow is to plug CleanShot short URL into my notes using <a href="https://spec.commonmark.org/0.30/#images">Markdown image markup</a>, letting a script to extract actual image URL and do further processing.</p>
-
-<p>Here is a quick example on how to download image file from CleanShot URL:</p>
-<div class="highlight"><pre class="highlight ruby"><code><span class="nb">require</span> <span class="s2">"http"</span>
-<span class="nb">require</span> <span class="s2">"cgi"</span>
-
-<span class="n">cleanshot_url</span> <span class="o">=</span> <span class="s2">"https://share.cleanshot.com/35WJDTGz"</span>
-
-<span class="c1"># Fetch direct image URL</span>
-<span class="n">direct_image_url</span> <span class="o">=</span> <span class="no">HTTP</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="s2">"</span><span class="si">#{</span><span class="n">cleanshot_url</span><span class="si">}</span><span class="s2">+"</span><span class="p">).</span><span class="nf">headers</span><span class="p">[</span><span class="s2">"Location"</span><span class="p">]</span>
-
-<span class="c1"># Extract image file name from the CleanShot query string</span>
-<span class="n">query</span> <span class="o">=</span> <span class="no">URI</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">direct_image_url</span><span class="p">).</span><span class="nf">query</span>
-<span class="n">param</span> <span class="o">=</span> <span class="no">CGI</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">query</span><span class="p">).</span><span class="nf">fetch</span><span class="p">(</span><span class="s2">"response-content-disposition"</span><span class="p">).</span><span class="nf">first</span>
-<span class="n">file_name</span> <span class="o">=</span> <span class="no">CGI</span><span class="p">.</span><span class="nf">unescape</span><span class="p">(</span><span class="n">param</span><span class="p">.</span><span class="nf">split</span><span class="p">(</span><span class="s2">"="</span><span class="p">,</span> <span class="mi">2</span><span class="p">).</span><span class="nf">last</span><span class="p">)</span>
-
-<span class="c1"># Download the image to a file</span>
-<span class="n">image_contents</span> <span class="o">=</span> <span class="no">HTTP</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="n">direct_image_url</span><span class="p">).</span><span class="nf">body</span><span class="p">.</span><span class="nf">to_s</span>
-<span class="no">File</span><span class="p">.</span><span class="nf">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s2">"wb"</span><span class="p">)</span> <span class="p">{</span> <span class="n">_1</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="n">image_contents</span><span class="p">)</span> <span class="p">}</span>
-</code></pre></div>
-<p>(Yes, it is possible to avoid third party dependency here by using Ruby&#39;s native <code>Net::HTTP</code> instead of the <code>http</code> gem, but I don&#39;t enjoy pain.)</p>
-
-<p>Let&#39;s add some errors handling and refactor it into a service class:</p>
-<div class="highlight"><pre class="highlight ruby"><code><span class="nb">require</span> <span class="s2">"http"</span>
-<span class="nb">require</span> <span class="s2">"cgi"</span>
-
-<span class="k">class</span> <span class="nc">CleanshotDownloader</span>
-  <span class="nb">attr_reader</span> <span class="ss">:cleanshot_url</span>
-
-  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">cleanshot_url</span><span class="p">,</span> <span class="ss">file_name: </span><span class="kp">nil</span><span class="p">)</span>
-    <span class="vi">@cleanshot_url</span> <span class="o">=</span> <span class="n">cleanshot_url</span>
-    <span class="vi">@file_name</span> <span class="o">=</span> <span class="n">file_name</span>
-  <span class="k">end</span>
-
-  <span class="k">def</span> <span class="nf">download</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="no">HTTP</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="n">direct_image_url</span><span class="p">)</span>
-    <span class="k">raise</span> <span class="s2">"error downloading image"</span> <span class="k">unless</span> <span class="n">response</span><span class="p">.</span><span class="nf">status</span><span class="p">.</span><span class="nf">success?</span>
-    <span class="no">File</span><span class="p">.</span><span class="nf">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s2">"wb"</span><span class="p">)</span> <span class="p">{</span> <span class="n">_1</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="nf">body</span><span class="p">.</span><span class="nf">to_s</span><span class="p">)</span> <span class="p">}</span>
-    <span class="n">file_name</span>
-  <span class="k">end</span>
-
-  <span class="kp">private</span>
-
-  <span class="k">def</span> <span class="nf">direct_image_url</span>
-    <span class="vi">@direct_image_url</span> <span class="o">||=</span> <span class="k">begin</span>
-      <span class="n">response</span> <span class="o">=</span> <span class="no">HTTP</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="s2">"</span><span class="si">#{</span><span class="n">cleanshot_url</span><span class="si">}</span><span class="s2">+"</span><span class="p">)</span>
-      <span class="k">raise</span> <span class="s2">"error getting image URL"</span> <span class="k">unless</span> <span class="n">response</span><span class="p">.</span><span class="nf">status</span><span class="p">.</span><span class="nf">redirect?</span>
-      <span class="n">response</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="s2">"Location"</span><span class="p">]</span>
-    <span class="k">end</span>
-  <span class="k">end</span>
-
-  <span class="k">def</span> <span class="nf">file_name</span>
-    <span class="vi">@file_name</span> <span class="o">||=</span> <span class="k">begin</span>
-      <span class="n">query</span> <span class="o">=</span> <span class="no">URI</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">direct_image_url</span><span class="p">).</span><span class="nf">query</span>
-      <span class="n">param</span> <span class="o">=</span> <span class="no">CGI</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">query</span><span class="p">).</span><span class="nf">fetch</span><span class="p">(</span><span class="s2">"response-content-disposition"</span><span class="p">).</span><span class="nf">first</span>
-      <span class="no">CGI</span><span class="p">.</span><span class="nf">unescape</span><span class="p">(</span><span class="n">param</span><span class="p">.</span><span class="nf">split</span><span class="p">(</span><span class="s2">"="</span><span class="p">,</span> <span class="mi">2</span><span class="p">).</span><span class="nf">last</span><span class="p">)</span>
-    <span class="k">end</span>
-  <span class="k">end</span>
-<span class="k">end</span>
-</code></pre></div>
-<p>Usage example:</p>
-<div class="highlight"><pre class="highlight ruby"><code><span class="no">CleanshotDownloader</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s2">"https://share.cleanshot.com/35WJDTGz"</span><span class="p">).</span><span class="nf">download</span>
-<span class="c1"># =&gt; "CleanShot 2023-08-06 at 15.27.35.jpeg"</span>
-</code></pre></div>
-<p>And a spec with fancy <a href="https://rubygems.org/gems/webmock">WebMock</a> stubs:</p>
-<div class="highlight"><pre class="highlight ruby"><code><span class="no">RSpec</span><span class="p">.</span><span class="nf">describe</span> <span class="no">CleanshotDownloader</span> <span class="k">do</span>
-  <span class="n">subject</span><span class="p">(</span><span class="ss">:service_call</span><span class="p">)</span> <span class="p">{</span> <span class="n">described_class</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">cleanshot_url</span><span class="p">).</span><span class="nf">download</span> <span class="p">}</span>
-
-  <span class="n">let</span><span class="p">(</span><span class="ss">:cleanshot_url</span><span class="p">)</span> <span class="p">{</span> <span class="s2">"https://share.cleanshot.com/80085"</span> <span class="p">}</span>
-
-  <span class="n">let</span><span class="p">(</span><span class="ss">:direct_image_url</span><span class="p">)</span> <span class="k">do</span>
-    <span class="s2">"https://media.cleanshot.cloud/media/1334/itkYgfyMGKeaUT.jpeg?"</span> <span class="p">\</span>
-    <span class="s2">"response-content-disposition=attachment%3Bfilename%3DCleanShot"</span> <span class="p">\</span>
-    <span class="s2">"%25202023-08-06%2520at%252015.27.35.jpeg&amp;Expires=1691367016"</span>
-  <span class="k">end</span>
-
-  <span class="n">let</span><span class="p">(</span><span class="ss">:image_contents</span><span class="p">)</span> <span class="p">{</span> <span class="n">file_fixture</span><span class="p">(</span><span class="s2">"banana.jpg"</span><span class="p">).</span><span class="nf">read</span> <span class="p">}</span>
-
-  <span class="n">context</span> <span class="s2">"with explicit file name"</span> <span class="k">do</span>
-    <span class="n">subject</span><span class="p">(</span><span class="ss">:service_call</span><span class="p">)</span> <span class="p">{</span> <span class="n">described_class</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">cleanshot_url</span><span class="p">,</span> <span class="ss">file_name: </span><span class="n">file_name</span><span class="p">).</span><span class="nf">download</span> <span class="p">}</span>
-
-    <span class="n">let</span><span class="p">(</span><span class="ss">:file_name</span><span class="p">)</span> <span class="p">{</span> <span class="no">Tempfile</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">described_class</span><span class="p">.</span><span class="nf">name</span><span class="p">)</span> <span class="p">}</span>
-
-    <span class="n">before</span> <span class="k">do</span>
-      <span class="n">stub_cleanshot_url</span><span class="p">.</span><span class="nf">to_return</span><span class="p">(</span><span class="ss">status: </span><span class="mi">302</span><span class="p">,</span> <span class="ss">headers: </span><span class="p">{</span><span class="s2">"Location"</span> <span class="o">=&gt;</span> <span class="n">direct_image_url</span><span class="p">})</span>
-      <span class="n">stub_direct_image_url</span><span class="p">.</span><span class="nf">to_return</span><span class="p">(</span><span class="ss">headers: </span><span class="p">{</span><span class="s2">"Content-Type"</span> <span class="o">=&gt;</span> <span class="s2">"image/jpeg"</span><span class="p">},</span> <span class="ss">body: </span><span class="n">image_contents</span><span class="p">)</span>
-      <span class="n">service_call</span>
-    <span class="k">end</span>
-
-    <span class="n">it</span> <span class="p">{</span> <span class="n">expect</span><span class="p">(</span><span class="no">File</span><span class="p">.</span><span class="nf">read</span><span class="p">(</span><span class="n">file_name</span><span class="p">)).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="n">image_contents</span><span class="p">)</span> <span class="p">}</span>
-  <span class="k">end</span>
-
-  <span class="n">context</span> <span class="s2">"with implicit file name"</span> <span class="k">do</span>
-    <span class="n">before</span> <span class="k">do</span>
-      <span class="n">stub_cleanshot_url</span><span class="p">.</span><span class="nf">to_return</span><span class="p">(</span><span class="ss">status: </span><span class="mi">302</span><span class="p">,</span> <span class="ss">headers: </span><span class="p">{</span><span class="s2">"Location"</span> <span class="o">=&gt;</span> <span class="n">direct_image_url</span><span class="p">})</span>
-      <span class="n">stub_direct_image_url</span><span class="p">.</span><span class="nf">to_return</span><span class="p">(</span><span class="ss">headers: </span><span class="p">{</span><span class="s2">"Content-Type"</span> <span class="o">=&gt;</span> <span class="s2">"image/jpeg"</span><span class="p">},</span> <span class="ss">body: </span><span class="n">image_contents</span><span class="p">)</span>
-    <span class="k">end</span>
-
-    <span class="n">it</span> <span class="p">{</span> <span class="n">expect</span><span class="p">(</span><span class="n">service_call</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="s2">"CleanShot 2023-08-06 at 15.27.35.jpeg"</span><span class="p">)</span> <span class="p">}</span>
-  <span class="k">end</span>
-
-  <span class="n">context</span> <span class="s2">"with redirect error"</span> <span class="k">do</span>
-    <span class="n">before</span> <span class="k">do</span>
-      <span class="n">stub_cleanshot_url</span><span class="p">.</span><span class="nf">to_return</span><span class="p">(</span><span class="ss">status: </span><span class="mi">500</span><span class="p">)</span>
-    <span class="k">end</span>
-
-    <span class="n">it</span> <span class="p">{</span> <span class="n">expect</span> <span class="p">{</span> <span class="n">service_call</span> <span class="p">}.</span><span class="nf">to</span> <span class="n">raise_error</span><span class="p">(</span><span class="s2">"error getting image URL"</span><span class="p">)</span> <span class="p">}</span>
-  <span class="k">end</span>
-
-  <span class="n">context</span> <span class="s2">"with image downloading error"</span> <span class="k">do</span>
-    <span class="n">before</span> <span class="k">do</span>
-      <span class="n">stub_cleanshot_url</span><span class="p">.</span><span class="nf">to_return</span><span class="p">(</span><span class="ss">status: </span><span class="mi">302</span><span class="p">,</span> <span class="ss">headers: </span><span class="p">{</span><span class="s2">"Location"</span> <span class="o">=&gt;</span> <span class="n">direct_image_url</span><span class="p">})</span>
-      <span class="n">stub_direct_image_url</span><span class="p">.</span><span class="nf">to_return</span><span class="p">(</span><span class="ss">status: </span><span class="mi">500</span><span class="p">)</span>
-    <span class="k">end</span>
-
-    <span class="n">it</span> <span class="p">{</span> <span class="n">expect</span> <span class="p">{</span> <span class="n">service_call</span> <span class="p">}.</span><span class="nf">to</span> <span class="n">raise_error</span><span class="p">(</span><span class="s2">"error downloading image"</span><span class="p">)</span> <span class="p">}</span>
-  <span class="k">end</span>
-
-  <span class="k">def</span> <span class="nf">stub_cleanshot_url</span>
-    <span class="n">stub_request</span><span class="p">(</span><span class="ss">:get</span><span class="p">,</span> <span class="s2">"</span><span class="si">#{</span><span class="n">cleanshot_url</span><span class="si">}</span><span class="s2">+"</span><span class="p">)</span>
-  <span class="k">end</span>
-
-  <span class="k">def</span> <span class="nf">stub_direct_image_url</span>
-    <span class="n">stub_request</span><span class="p">(</span><span class="ss">:get</span><span class="p">,</span> <span class="n">direct_image_url</span><span class="p">)</span>
-  <span class="k">end</span>
-<span class="k">end</span>
-</code></pre></div>
-<p>References:</p>
-
-<ul>
-<li>CleanShot: <a href="https://cleanshot.com">https://cleanshot.com</a></li>
-<li>Markdown reference (CommonMark): <a href="https://commonmark.org/help/">https://commonmark.org/help/</a></li>
-</ul>
-]]></description>
+<div class="highlight"><pre class="highlight shell"><code>killport 3000
+</code></pre></div>]]></description>
     </item>
     
     <item>
@@ -801,21 +571,291 @@ git push origin TAG_NAME
     </item>
     
     <item>
-      <title>Kill a process that occupies a port</title>
-      <link>https://notes.musayev.com/20230806_4380/bash-kill-process-by-port</link>
-      <guid>20230806_4380</guid>
-      <description><![CDATA[<p>This command lists process ids listening on a specified port:</p>
-<div class="highlight"><pre class="highlight shell"><code>lsof <span class="nt">-t</span> <span class="nt">-i</span>:PORT_NUMBER
+      <title>Downloading CleanShot images with Ruby</title>
+      <link>https://notes.musayev.com/20230806_4387/downloading-cleanshot-images-with-ruby</link>
+      <guid>20230806_4387</guid>
+      <description><![CDATA[<p>In my opinion <a href="https://cleanshot.com/">CleanShot</a> is one of the best screenshot tools for macOS by 2023. I&#39;m using it pretty much every day.</p>
+
+<p>I&#39;m going to integrate CleanShot with my <a href="https://notes.musayev.com/">notes</a> publication script to embed screenshots to Markdown pages.</p>
+
+<p>My desired workflow is to plug CleanShot short URL into my notes using <a href="https://spec.commonmark.org/0.30/#images">Markdown image markup</a>, letting a script to extract actual image URL and do further processing.</p>
+
+<p>Here is a quick example on how to download image file from CleanShot URL:</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="nb">require</span> <span class="s2">"http"</span>
+<span class="nb">require</span> <span class="s2">"cgi"</span>
+
+<span class="n">cleanshot_url</span> <span class="o">=</span> <span class="s2">"https://share.cleanshot.com/35WJDTGz"</span>
+
+<span class="c1"># Fetch direct image URL</span>
+<span class="n">direct_image_url</span> <span class="o">=</span> <span class="no">HTTP</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="s2">"</span><span class="si">#{</span><span class="n">cleanshot_url</span><span class="si">}</span><span class="s2">+"</span><span class="p">).</span><span class="nf">headers</span><span class="p">[</span><span class="s2">"Location"</span><span class="p">]</span>
+
+<span class="c1"># Extract image file name from the CleanShot query string</span>
+<span class="n">query</span> <span class="o">=</span> <span class="no">URI</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">direct_image_url</span><span class="p">).</span><span class="nf">query</span>
+<span class="n">param</span> <span class="o">=</span> <span class="no">CGI</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">query</span><span class="p">).</span><span class="nf">fetch</span><span class="p">(</span><span class="s2">"response-content-disposition"</span><span class="p">).</span><span class="nf">first</span>
+<span class="n">file_name</span> <span class="o">=</span> <span class="no">CGI</span><span class="p">.</span><span class="nf">unescape</span><span class="p">(</span><span class="n">param</span><span class="p">.</span><span class="nf">split</span><span class="p">(</span><span class="s2">"="</span><span class="p">,</span> <span class="mi">2</span><span class="p">).</span><span class="nf">last</span><span class="p">)</span>
+
+<span class="c1"># Download the image to a file</span>
+<span class="n">image_contents</span> <span class="o">=</span> <span class="no">HTTP</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="n">direct_image_url</span><span class="p">).</span><span class="nf">body</span><span class="p">.</span><span class="nf">to_s</span>
+<span class="no">File</span><span class="p">.</span><span class="nf">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s2">"wb"</span><span class="p">)</span> <span class="p">{</span> <span class="n">_1</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="n">image_contents</span><span class="p">)</span> <span class="p">}</span>
 </code></pre></div>
-<p>You can use it to kill processes:</p>
-<div class="highlight"><pre class="highlight shell"><code><span class="nb">kill</span> <span class="nt">-9</span> <span class="o">(</span>lsof <span class="nt">-t</span> <span class="nt">-i</span>:PORT_NUMBER<span class="o">)</span>
-</code></pre></div>
-<p>Here is a Bash function making this command easier to use:</p>
-<div class="highlight"><pre class="highlight shell"><code>killport<span class="o">()</span> <span class="o">{</span> <span class="nb">kill</span> <span class="nt">-9</span> <span class="si">$(</span>lsof <span class="nt">-t</span> <span class="nt">-i</span>:<span class="nv">$1</span><span class="si">)</span> <span class="o">}</span>
+<p>(Yes, it is possible to avoid third party dependency here by using Ruby&#39;s native <code>Net::HTTP</code> instead of the <code>http</code> gem, but I don&#39;t enjoy pain.)</p>
+
+<p>Let&#39;s add some errors handling and refactor it into a service class:</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="nb">require</span> <span class="s2">"http"</span>
+<span class="nb">require</span> <span class="s2">"cgi"</span>
+
+<span class="k">class</span> <span class="nc">CleanshotDownloader</span>
+  <span class="nb">attr_reader</span> <span class="ss">:cleanshot_url</span>
+
+  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">cleanshot_url</span><span class="p">,</span> <span class="ss">file_name: </span><span class="kp">nil</span><span class="p">)</span>
+    <span class="vi">@cleanshot_url</span> <span class="o">=</span> <span class="n">cleanshot_url</span>
+    <span class="vi">@file_name</span> <span class="o">=</span> <span class="n">file_name</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">download</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="no">HTTP</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="n">direct_image_url</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="s2">"error downloading image"</span> <span class="k">unless</span> <span class="n">response</span><span class="p">.</span><span class="nf">status</span><span class="p">.</span><span class="nf">success?</span>
+    <span class="no">File</span><span class="p">.</span><span class="nf">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s2">"wb"</span><span class="p">)</span> <span class="p">{</span> <span class="n">_1</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="nf">body</span><span class="p">.</span><span class="nf">to_s</span><span class="p">)</span> <span class="p">}</span>
+    <span class="n">file_name</span>
+  <span class="k">end</span>
+
+  <span class="kp">private</span>
+
+  <span class="k">def</span> <span class="nf">direct_image_url</span>
+    <span class="vi">@direct_image_url</span> <span class="o">||=</span> <span class="k">begin</span>
+      <span class="n">response</span> <span class="o">=</span> <span class="no">HTTP</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="s2">"</span><span class="si">#{</span><span class="n">cleanshot_url</span><span class="si">}</span><span class="s2">+"</span><span class="p">)</span>
+      <span class="k">raise</span> <span class="s2">"error getting image URL"</span> <span class="k">unless</span> <span class="n">response</span><span class="p">.</span><span class="nf">status</span><span class="p">.</span><span class="nf">redirect?</span>
+      <span class="n">response</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="s2">"Location"</span><span class="p">]</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">file_name</span>
+    <span class="vi">@file_name</span> <span class="o">||=</span> <span class="k">begin</span>
+      <span class="n">query</span> <span class="o">=</span> <span class="no">URI</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">direct_image_url</span><span class="p">).</span><span class="nf">query</span>
+      <span class="n">param</span> <span class="o">=</span> <span class="no">CGI</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">query</span><span class="p">).</span><span class="nf">fetch</span><span class="p">(</span><span class="s2">"response-content-disposition"</span><span class="p">).</span><span class="nf">first</span>
+      <span class="no">CGI</span><span class="p">.</span><span class="nf">unescape</span><span class="p">(</span><span class="n">param</span><span class="p">.</span><span class="nf">split</span><span class="p">(</span><span class="s2">"="</span><span class="p">,</span> <span class="mi">2</span><span class="p">).</span><span class="nf">last</span><span class="p">)</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
 </code></pre></div>
 <p>Usage example:</p>
-<div class="highlight"><pre class="highlight shell"><code>killport 3000
-</code></pre></div>]]></description>
+<div class="highlight"><pre class="highlight ruby"><code><span class="no">CleanshotDownloader</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s2">"https://share.cleanshot.com/35WJDTGz"</span><span class="p">).</span><span class="nf">download</span>
+<span class="c1"># =&gt; "CleanShot 2023-08-06 at 15.27.35.jpeg"</span>
+</code></pre></div>
+<p>And a spec with fancy <a href="https://rubygems.org/gems/webmock">WebMock</a> stubs:</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="no">RSpec</span><span class="p">.</span><span class="nf">describe</span> <span class="no">CleanshotDownloader</span> <span class="k">do</span>
+  <span class="n">subject</span><span class="p">(</span><span class="ss">:service_call</span><span class="p">)</span> <span class="p">{</span> <span class="n">described_class</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">cleanshot_url</span><span class="p">).</span><span class="nf">download</span> <span class="p">}</span>
+
+  <span class="n">let</span><span class="p">(</span><span class="ss">:cleanshot_url</span><span class="p">)</span> <span class="p">{</span> <span class="s2">"https://share.cleanshot.com/80085"</span> <span class="p">}</span>
+
+  <span class="n">let</span><span class="p">(</span><span class="ss">:direct_image_url</span><span class="p">)</span> <span class="k">do</span>
+    <span class="s2">"https://media.cleanshot.cloud/media/1334/itkYgfyMGKeaUT.jpeg?"</span> <span class="p">\</span>
+    <span class="s2">"response-content-disposition=attachment%3Bfilename%3DCleanShot"</span> <span class="p">\</span>
+    <span class="s2">"%25202023-08-06%2520at%252015.27.35.jpeg&amp;Expires=1691367016"</span>
+  <span class="k">end</span>
+
+  <span class="n">let</span><span class="p">(</span><span class="ss">:image_contents</span><span class="p">)</span> <span class="p">{</span> <span class="n">file_fixture</span><span class="p">(</span><span class="s2">"banana.jpg"</span><span class="p">).</span><span class="nf">read</span> <span class="p">}</span>
+
+  <span class="n">context</span> <span class="s2">"with explicit file name"</span> <span class="k">do</span>
+    <span class="n">subject</span><span class="p">(</span><span class="ss">:service_call</span><span class="p">)</span> <span class="p">{</span> <span class="n">described_class</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">cleanshot_url</span><span class="p">,</span> <span class="ss">file_name: </span><span class="n">file_name</span><span class="p">).</span><span class="nf">download</span> <span class="p">}</span>
+
+    <span class="n">let</span><span class="p">(</span><span class="ss">:file_name</span><span class="p">)</span> <span class="p">{</span> <span class="no">Tempfile</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">described_class</span><span class="p">.</span><span class="nf">name</span><span class="p">)</span> <span class="p">}</span>
+
+    <span class="n">before</span> <span class="k">do</span>
+      <span class="n">stub_cleanshot_url</span><span class="p">.</span><span class="nf">to_return</span><span class="p">(</span><span class="ss">status: </span><span class="mi">302</span><span class="p">,</span> <span class="ss">headers: </span><span class="p">{</span><span class="s2">"Location"</span> <span class="o">=&gt;</span> <span class="n">direct_image_url</span><span class="p">})</span>
+      <span class="n">stub_direct_image_url</span><span class="p">.</span><span class="nf">to_return</span><span class="p">(</span><span class="ss">headers: </span><span class="p">{</span><span class="s2">"Content-Type"</span> <span class="o">=&gt;</span> <span class="s2">"image/jpeg"</span><span class="p">},</span> <span class="ss">body: </span><span class="n">image_contents</span><span class="p">)</span>
+      <span class="n">service_call</span>
+    <span class="k">end</span>
+
+    <span class="n">it</span> <span class="p">{</span> <span class="n">expect</span><span class="p">(</span><span class="no">File</span><span class="p">.</span><span class="nf">read</span><span class="p">(</span><span class="n">file_name</span><span class="p">)).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="n">image_contents</span><span class="p">)</span> <span class="p">}</span>
+  <span class="k">end</span>
+
+  <span class="n">context</span> <span class="s2">"with implicit file name"</span> <span class="k">do</span>
+    <span class="n">before</span> <span class="k">do</span>
+      <span class="n">stub_cleanshot_url</span><span class="p">.</span><span class="nf">to_return</span><span class="p">(</span><span class="ss">status: </span><span class="mi">302</span><span class="p">,</span> <span class="ss">headers: </span><span class="p">{</span><span class="s2">"Location"</span> <span class="o">=&gt;</span> <span class="n">direct_image_url</span><span class="p">})</span>
+      <span class="n">stub_direct_image_url</span><span class="p">.</span><span class="nf">to_return</span><span class="p">(</span><span class="ss">headers: </span><span class="p">{</span><span class="s2">"Content-Type"</span> <span class="o">=&gt;</span> <span class="s2">"image/jpeg"</span><span class="p">},</span> <span class="ss">body: </span><span class="n">image_contents</span><span class="p">)</span>
+    <span class="k">end</span>
+
+    <span class="n">it</span> <span class="p">{</span> <span class="n">expect</span><span class="p">(</span><span class="n">service_call</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="s2">"CleanShot 2023-08-06 at 15.27.35.jpeg"</span><span class="p">)</span> <span class="p">}</span>
+  <span class="k">end</span>
+
+  <span class="n">context</span> <span class="s2">"with redirect error"</span> <span class="k">do</span>
+    <span class="n">before</span> <span class="k">do</span>
+      <span class="n">stub_cleanshot_url</span><span class="p">.</span><span class="nf">to_return</span><span class="p">(</span><span class="ss">status: </span><span class="mi">500</span><span class="p">)</span>
+    <span class="k">end</span>
+
+    <span class="n">it</span> <span class="p">{</span> <span class="n">expect</span> <span class="p">{</span> <span class="n">service_call</span> <span class="p">}.</span><span class="nf">to</span> <span class="n">raise_error</span><span class="p">(</span><span class="s2">"error getting image URL"</span><span class="p">)</span> <span class="p">}</span>
+  <span class="k">end</span>
+
+  <span class="n">context</span> <span class="s2">"with image downloading error"</span> <span class="k">do</span>
+    <span class="n">before</span> <span class="k">do</span>
+      <span class="n">stub_cleanshot_url</span><span class="p">.</span><span class="nf">to_return</span><span class="p">(</span><span class="ss">status: </span><span class="mi">302</span><span class="p">,</span> <span class="ss">headers: </span><span class="p">{</span><span class="s2">"Location"</span> <span class="o">=&gt;</span> <span class="n">direct_image_url</span><span class="p">})</span>
+      <span class="n">stub_direct_image_url</span><span class="p">.</span><span class="nf">to_return</span><span class="p">(</span><span class="ss">status: </span><span class="mi">500</span><span class="p">)</span>
+    <span class="k">end</span>
+
+    <span class="n">it</span> <span class="p">{</span> <span class="n">expect</span> <span class="p">{</span> <span class="n">service_call</span> <span class="p">}.</span><span class="nf">to</span> <span class="n">raise_error</span><span class="p">(</span><span class="s2">"error downloading image"</span><span class="p">)</span> <span class="p">}</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">stub_cleanshot_url</span>
+    <span class="n">stub_request</span><span class="p">(</span><span class="ss">:get</span><span class="p">,</span> <span class="s2">"</span><span class="si">#{</span><span class="n">cleanshot_url</span><span class="si">}</span><span class="s2">+"</span><span class="p">)</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">stub_direct_image_url</span>
+    <span class="n">stub_request</span><span class="p">(</span><span class="ss">:get</span><span class="p">,</span> <span class="n">direct_image_url</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>References:</p>
+
+<ul>
+<li>CleanShot: <a href="https://cleanshot.com">https://cleanshot.com</a></li>
+<li>Markdown reference (CommonMark): <a href="https://commonmark.org/help/">https://commonmark.org/help/</a></li>
+</ul>
+]]></description>
+    </item>
+    
+    <item>
+      <title>Downloading CleanShot images with Ruby</title>
+      <link>https://notes.musayev.com/20230806_4387/downloading-cleanshot-images-with-ruby</link>
+      <guid>20230806_4387</guid>
+      <description><![CDATA[<p>In my opinion <a href="https://cleanshot.com/">CleanShot</a> is one of the best screenshot tools for macOS by 2023. I&#39;m using it pretty much every day.</p>
+
+<p>I&#39;m going to integrate CleanShot with my <a href="https://notes.musayev.com/">notes</a> publication script to embed screenshots to Markdown pages.</p>
+
+<p>My desired workflow is to plug CleanShot short URL into my notes using <a href="https://spec.commonmark.org/0.30/#images">Markdown image markup</a>, letting a script to extract actual image URL and do further processing.</p>
+
+<p>Here is a quick example on how to download image file from CleanShot URL:</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="nb">require</span> <span class="s2">"http"</span>
+<span class="nb">require</span> <span class="s2">"cgi"</span>
+
+<span class="n">cleanshot_url</span> <span class="o">=</span> <span class="s2">"https://share.cleanshot.com/35WJDTGz"</span>
+
+<span class="c1"># Fetch direct image URL</span>
+<span class="n">direct_image_url</span> <span class="o">=</span> <span class="no">HTTP</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="s2">"</span><span class="si">#{</span><span class="n">cleanshot_url</span><span class="si">}</span><span class="s2">+"</span><span class="p">).</span><span class="nf">headers</span><span class="p">[</span><span class="s2">"Location"</span><span class="p">]</span>
+
+<span class="c1"># Extract image file name from the CleanShot query string</span>
+<span class="n">query</span> <span class="o">=</span> <span class="no">URI</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">direct_image_url</span><span class="p">).</span><span class="nf">query</span>
+<span class="n">param</span> <span class="o">=</span> <span class="no">CGI</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">query</span><span class="p">).</span><span class="nf">fetch</span><span class="p">(</span><span class="s2">"response-content-disposition"</span><span class="p">).</span><span class="nf">first</span>
+<span class="n">file_name</span> <span class="o">=</span> <span class="no">CGI</span><span class="p">.</span><span class="nf">unescape</span><span class="p">(</span><span class="n">param</span><span class="p">.</span><span class="nf">split</span><span class="p">(</span><span class="s2">"="</span><span class="p">,</span> <span class="mi">2</span><span class="p">).</span><span class="nf">last</span><span class="p">)</span>
+
+<span class="c1"># Download the image to a file</span>
+<span class="n">image_contents</span> <span class="o">=</span> <span class="no">HTTP</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="n">direct_image_url</span><span class="p">).</span><span class="nf">body</span><span class="p">.</span><span class="nf">to_s</span>
+<span class="no">File</span><span class="p">.</span><span class="nf">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s2">"wb"</span><span class="p">)</span> <span class="p">{</span> <span class="n">_1</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="n">image_contents</span><span class="p">)</span> <span class="p">}</span>
+</code></pre></div>
+<p>(Yes, it is possible to avoid third party dependency here by using Ruby&#39;s native <code>Net::HTTP</code> instead of the <code>http</code> gem, but I don&#39;t enjoy pain.)</p>
+
+<p>Let&#39;s add some errors handling and refactor it into a service class:</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="nb">require</span> <span class="s2">"http"</span>
+<span class="nb">require</span> <span class="s2">"cgi"</span>
+
+<span class="k">class</span> <span class="nc">CleanshotDownloader</span>
+  <span class="nb">attr_reader</span> <span class="ss">:cleanshot_url</span>
+
+  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">cleanshot_url</span><span class="p">,</span> <span class="ss">file_name: </span><span class="kp">nil</span><span class="p">)</span>
+    <span class="vi">@cleanshot_url</span> <span class="o">=</span> <span class="n">cleanshot_url</span>
+    <span class="vi">@file_name</span> <span class="o">=</span> <span class="n">file_name</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">download</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="no">HTTP</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="n">direct_image_url</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="s2">"error downloading image"</span> <span class="k">unless</span> <span class="n">response</span><span class="p">.</span><span class="nf">status</span><span class="p">.</span><span class="nf">success?</span>
+    <span class="no">File</span><span class="p">.</span><span class="nf">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s2">"wb"</span><span class="p">)</span> <span class="p">{</span> <span class="n">_1</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="nf">body</span><span class="p">.</span><span class="nf">to_s</span><span class="p">)</span> <span class="p">}</span>
+    <span class="n">file_name</span>
+  <span class="k">end</span>
+
+  <span class="kp">private</span>
+
+  <span class="k">def</span> <span class="nf">direct_image_url</span>
+    <span class="vi">@direct_image_url</span> <span class="o">||=</span> <span class="k">begin</span>
+      <span class="n">response</span> <span class="o">=</span> <span class="no">HTTP</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="s2">"</span><span class="si">#{</span><span class="n">cleanshot_url</span><span class="si">}</span><span class="s2">+"</span><span class="p">)</span>
+      <span class="k">raise</span> <span class="s2">"error getting image URL"</span> <span class="k">unless</span> <span class="n">response</span><span class="p">.</span><span class="nf">status</span><span class="p">.</span><span class="nf">redirect?</span>
+      <span class="n">response</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="s2">"Location"</span><span class="p">]</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">file_name</span>
+    <span class="vi">@file_name</span> <span class="o">||=</span> <span class="k">begin</span>
+      <span class="n">query</span> <span class="o">=</span> <span class="no">URI</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">direct_image_url</span><span class="p">).</span><span class="nf">query</span>
+      <span class="n">param</span> <span class="o">=</span> <span class="no">CGI</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">query</span><span class="p">).</span><span class="nf">fetch</span><span class="p">(</span><span class="s2">"response-content-disposition"</span><span class="p">).</span><span class="nf">first</span>
+      <span class="no">CGI</span><span class="p">.</span><span class="nf">unescape</span><span class="p">(</span><span class="n">param</span><span class="p">.</span><span class="nf">split</span><span class="p">(</span><span class="s2">"="</span><span class="p">,</span> <span class="mi">2</span><span class="p">).</span><span class="nf">last</span><span class="p">)</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Usage example:</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="no">CleanshotDownloader</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s2">"https://share.cleanshot.com/35WJDTGz"</span><span class="p">).</span><span class="nf">download</span>
+<span class="c1"># =&gt; "CleanShot 2023-08-06 at 15.27.35.jpeg"</span>
+</code></pre></div>
+<p>And a spec with fancy <a href="https://rubygems.org/gems/webmock">WebMock</a> stubs:</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="no">RSpec</span><span class="p">.</span><span class="nf">describe</span> <span class="no">CleanshotDownloader</span> <span class="k">do</span>
+  <span class="n">subject</span><span class="p">(</span><span class="ss">:service_call</span><span class="p">)</span> <span class="p">{</span> <span class="n">described_class</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">cleanshot_url</span><span class="p">).</span><span class="nf">download</span> <span class="p">}</span>
+
+  <span class="n">let</span><span class="p">(</span><span class="ss">:cleanshot_url</span><span class="p">)</span> <span class="p">{</span> <span class="s2">"https://share.cleanshot.com/80085"</span> <span class="p">}</span>
+
+  <span class="n">let</span><span class="p">(</span><span class="ss">:direct_image_url</span><span class="p">)</span> <span class="k">do</span>
+    <span class="s2">"https://media.cleanshot.cloud/media/1334/itkYgfyMGKeaUT.jpeg?"</span> <span class="p">\</span>
+    <span class="s2">"response-content-disposition=attachment%3Bfilename%3DCleanShot"</span> <span class="p">\</span>
+    <span class="s2">"%25202023-08-06%2520at%252015.27.35.jpeg&amp;Expires=1691367016"</span>
+  <span class="k">end</span>
+
+  <span class="n">let</span><span class="p">(</span><span class="ss">:image_contents</span><span class="p">)</span> <span class="p">{</span> <span class="n">file_fixture</span><span class="p">(</span><span class="s2">"banana.jpg"</span><span class="p">).</span><span class="nf">read</span> <span class="p">}</span>
+
+  <span class="n">context</span> <span class="s2">"with explicit file name"</span> <span class="k">do</span>
+    <span class="n">subject</span><span class="p">(</span><span class="ss">:service_call</span><span class="p">)</span> <span class="p">{</span> <span class="n">described_class</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">cleanshot_url</span><span class="p">,</span> <span class="ss">file_name: </span><span class="n">file_name</span><span class="p">).</span><span class="nf">download</span> <span class="p">}</span>
+
+    <span class="n">let</span><span class="p">(</span><span class="ss">:file_name</span><span class="p">)</span> <span class="p">{</span> <span class="no">Tempfile</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">described_class</span><span class="p">.</span><span class="nf">name</span><span class="p">)</span> <span class="p">}</span>
+
+    <span class="n">before</span> <span class="k">do</span>
+      <span class="n">stub_cleanshot_url</span><span class="p">.</span><span class="nf">to_return</span><span class="p">(</span><span class="ss">status: </span><span class="mi">302</span><span class="p">,</span> <span class="ss">headers: </span><span class="p">{</span><span class="s2">"Location"</span> <span class="o">=&gt;</span> <span class="n">direct_image_url</span><span class="p">})</span>
+      <span class="n">stub_direct_image_url</span><span class="p">.</span><span class="nf">to_return</span><span class="p">(</span><span class="ss">headers: </span><span class="p">{</span><span class="s2">"Content-Type"</span> <span class="o">=&gt;</span> <span class="s2">"image/jpeg"</span><span class="p">},</span> <span class="ss">body: </span><span class="n">image_contents</span><span class="p">)</span>
+      <span class="n">service_call</span>
+    <span class="k">end</span>
+
+    <span class="n">it</span> <span class="p">{</span> <span class="n">expect</span><span class="p">(</span><span class="no">File</span><span class="p">.</span><span class="nf">read</span><span class="p">(</span><span class="n">file_name</span><span class="p">)).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="n">image_contents</span><span class="p">)</span> <span class="p">}</span>
+  <span class="k">end</span>
+
+  <span class="n">context</span> <span class="s2">"with implicit file name"</span> <span class="k">do</span>
+    <span class="n">before</span> <span class="k">do</span>
+      <span class="n">stub_cleanshot_url</span><span class="p">.</span><span class="nf">to_return</span><span class="p">(</span><span class="ss">status: </span><span class="mi">302</span><span class="p">,</span> <span class="ss">headers: </span><span class="p">{</span><span class="s2">"Location"</span> <span class="o">=&gt;</span> <span class="n">direct_image_url</span><span class="p">})</span>
+      <span class="n">stub_direct_image_url</span><span class="p">.</span><span class="nf">to_return</span><span class="p">(</span><span class="ss">headers: </span><span class="p">{</span><span class="s2">"Content-Type"</span> <span class="o">=&gt;</span> <span class="s2">"image/jpeg"</span><span class="p">},</span> <span class="ss">body: </span><span class="n">image_contents</span><span class="p">)</span>
+    <span class="k">end</span>
+
+    <span class="n">it</span> <span class="p">{</span> <span class="n">expect</span><span class="p">(</span><span class="n">service_call</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="s2">"CleanShot 2023-08-06 at 15.27.35.jpeg"</span><span class="p">)</span> <span class="p">}</span>
+  <span class="k">end</span>
+
+  <span class="n">context</span> <span class="s2">"with redirect error"</span> <span class="k">do</span>
+    <span class="n">before</span> <span class="k">do</span>
+      <span class="n">stub_cleanshot_url</span><span class="p">.</span><span class="nf">to_return</span><span class="p">(</span><span class="ss">status: </span><span class="mi">500</span><span class="p">)</span>
+    <span class="k">end</span>
+
+    <span class="n">it</span> <span class="p">{</span> <span class="n">expect</span> <span class="p">{</span> <span class="n">service_call</span> <span class="p">}.</span><span class="nf">to</span> <span class="n">raise_error</span><span class="p">(</span><span class="s2">"error getting image URL"</span><span class="p">)</span> <span class="p">}</span>
+  <span class="k">end</span>
+
+  <span class="n">context</span> <span class="s2">"with image downloading error"</span> <span class="k">do</span>
+    <span class="n">before</span> <span class="k">do</span>
+      <span class="n">stub_cleanshot_url</span><span class="p">.</span><span class="nf">to_return</span><span class="p">(</span><span class="ss">status: </span><span class="mi">302</span><span class="p">,</span> <span class="ss">headers: </span><span class="p">{</span><span class="s2">"Location"</span> <span class="o">=&gt;</span> <span class="n">direct_image_url</span><span class="p">})</span>
+      <span class="n">stub_direct_image_url</span><span class="p">.</span><span class="nf">to_return</span><span class="p">(</span><span class="ss">status: </span><span class="mi">500</span><span class="p">)</span>
+    <span class="k">end</span>
+
+    <span class="n">it</span> <span class="p">{</span> <span class="n">expect</span> <span class="p">{</span> <span class="n">service_call</span> <span class="p">}.</span><span class="nf">to</span> <span class="n">raise_error</span><span class="p">(</span><span class="s2">"error downloading image"</span><span class="p">)</span> <span class="p">}</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">stub_cleanshot_url</span>
+    <span class="n">stub_request</span><span class="p">(</span><span class="ss">:get</span><span class="p">,</span> <span class="s2">"</span><span class="si">#{</span><span class="n">cleanshot_url</span><span class="si">}</span><span class="s2">+"</span><span class="p">)</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">stub_direct_image_url</span>
+    <span class="n">stub_request</span><span class="p">(</span><span class="ss">:get</span><span class="p">,</span> <span class="n">direct_image_url</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>References:</p>
+
+<ul>
+<li>CleanShot: <a href="https://cleanshot.com">https://cleanshot.com</a></li>
+<li>Markdown reference (CommonMark): <a href="https://commonmark.org/help/">https://commonmark.org/help/</a></li>
+</ul>
+]]></description>
     </item>
     
     <item>
@@ -1298,6 +1338,14 @@ Y.Y.Y.Y | SUCCESS =&gt; {
     </item>
     
     <item>
+      <title>Public notes purpose</title>
+      <link>https://notes.musayev.com/20230620_4164/public-notes-purpose</link>
+      <guid>20230620_4164</guid>
+      <description><![CDATA[<p>The goal of this initiative is to develop and maintain writing skill by practice.</p>
+]]></description>
+    </item>
+    
+    <item>
       <title>Getting head revision id from Git</title>
       <link>https://notes.musayev.com/20230620_4165/git-head-revision-id</link>
       <guid>20230620_4165</guid>
@@ -1313,14 +1361,6 @@ Y.Y.Y.Y | SUCCESS =&gt; {
 <p>Output example:</p>
 <div class="highlight"><pre class="highlight shell"><code>bf27c74
 </code></pre></div>]]></description>
-    </item>
-    
-    <item>
-      <title>Public notes purpose</title>
-      <link>https://notes.musayev.com/20230620_4164/public-notes-purpose</link>
-      <guid>20230620_4164</guid>
-      <description><![CDATA[<p>The goal of this initiative is to develop and maintain writing skill by practice.</p>
-]]></description>
     </item>
     
     <item>

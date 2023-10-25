@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="author" content="Alex Musayev">
   <meta name="description" content="" />
-  <title>Updating gems - Alex Musayev Notes</title>
+  <title>Calling the original instance method after overriding in Ruby - Alex Musayev Notes</title>
   <link rel="alternate" type="application/rss+xml" title="Alex Musayev Notes" href="https://notes.musayev.com/feed.xml">
   <link rel="icon" href="data:," />
   <link href="/style.css" rel="stylesheet" type="text/css">
@@ -129,31 +129,42 @@
       <a href="/">Alex Musayev Notes</a>
     </nav>
     <main>
-      <h1 class="!my-8 !leading-tight"><a href="/20230618_4153/updating-gems" class="no-underline">Updating gems</a></h1>
+      <h1 class="!my-8 !leading-tight"><a href="/20231023_4812/override-an-override-in-ruby" class="no-underline">Calling the original instance method after overriding in Ruby</a></h1>
 
-<p>I&#39;m updating gems regularly for <code>\d\d</code> years now, but it is still hard to remember related commands. Should I use <code>gem</code> or <code>bundle</code> to upgrade <code>bundle</code>? Is it &quot;update&quot; or &quot;upgrade&quot;? Bwagh!</p>
+<p>Say, there is a class:</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="k">class</span> <span class="nc">Base</span>
+  <span class="k">def</span> <span class="nf">test</span>
+    <span class="s2">"original result"</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>And a descendant that overrides base class method:</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="k">class</span> <span class="nc">Descendant</span> <span class="o">&lt;</span> <span class="no">Base</span>
+  <span class="k">def</span> <span class="nf">test</span>
+    <span class="s2">"overridden result"</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>How to call <code>Base#test</code> in the <code>Descendant</code> instance context, outside from the <code>Descendant#test</code>? In other words, how woud you access <code>super</code> for some secific instance method outside from the override?</p>
 
-<p><strong>Updating Bundler:</strong></p>
-<div class="highlight"><pre class="highlight shell"><code>bundle update <span class="nt">--bundler</span>
-</code></pre></div>
-<p>Note:
-- <code>Gemfile.lock</code> may lock Bundler version with <code>BUNDLED WITH</code> value.
-- <code>Gemfile.lock</code> may cause an alternative bundler version installation during <code>bundle install</code>.</p>
+<p>There is a way:</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="k">class</span> <span class="nc">Descendant</span> <span class="o">&lt;</span> <span class="no">Base</span>
+  <span class="k">def</span> <span class="nf">test</span>
+    <span class="s2">"overridden result"</span>
+  <span class="k">end</span>
 
-<p>Update system gems:</p>
-<div class="highlight"><pre class="highlight shell"><code>gem update <span class="nt">--system</span>
+  <span class="k">def</span> <span class="nf">original_test</span>
+    <span class="n">super_test</span> <span class="o">=</span> <span class="no">Base</span><span class="p">.</span><span class="nf">instance_method</span><span class="p">(</span><span class="ss">:test</span><span class="p">).</span><span class="nf">bind</span><span class="p">(</span><span class="nb">self</span><span class="p">)</span>
+    <span class="n">super_test</span><span class="p">.</span><span class="nf">call</span>
+  <span class="k">end</span>
+<span class="k">end</span>
 </code></pre></div>
-<p>Getting gem paths and other environment variables:</p>
-<div class="highlight"><pre class="highlight shell"><code>gem <span class="nb">env</span>
+<p><code>Descendant#original_test</code> will call the <code>Base#test</code>:</p>
+<div class="highlight"><pre class="highlight ruby"><code><span class="no">Descendant</span><span class="p">.</span><span class="nf">new</span><span class="p">.</span><span class="nf">original_test</span>
+<span class="c1"># =&gt; "original result"</span>
 </code></pre></div>
-<p>Updating rbenv with Homenrew:</p>
-<div class="highlight"><pre class="highlight shell"><code>brew update
-brew upgrade rbenv
-</code></pre></div>
-<p>Installing new Ruby version with rbenv:</p>
-<div class="highlight"><pre class="highlight shell"><code>rbenv <span class="nb">install </span>3.2.2
-bundle <span class="nb">install</span>
-</code></pre></div>
+<p>Same approach works for module methods: <code>ImportedModule.instance_method(:method_name).bind(self).call</code></p>
+
   <hr class="!my-8">
   <div class="flex flex-row flex-wrap items-stretch !my-8">
     <a href="/tags/ruby" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">ruby</a>
@@ -163,9 +174,6 @@ bundle <span class="nb">install</span>
     <hr class="!my-8">
     <p>Somewhat related:</p>
     <ul><li>
-  <a href="/20231023_4812/override-an-override-in-ruby">Calling the original instance method after overriding in Ruby</a>
-  <small class="text-slate-400"><time datetime="2023-10-23 00:00:00 +0200">2023/10/23</time></small>
-</li><li>
   <a href="/20230818_4452/rspec-stub-environment-variables">Stubbing environment variables in RSpec</a>
   <small class="text-slate-400"><time datetime="2023-08-18 00:00:00 +0200">2023/08/18</time></small>
 </li><li>
@@ -195,6 +203,12 @@ bundle <span class="nb">install</span>
 </li><li>
   <a href="/20230713_4251/rspec-snippet-for-sublime-text">RSpec snippet for Sublime Text</a>
   <small class="text-slate-400"><time datetime="2023-07-13 00:00:00 +0200">2023/07/13</time></small>
+</li><li>
+  <a href="/20230618_4153/updating-gems">Updating gems</a>
+  <small class="text-slate-400"><time datetime="2023-06-18 00:00:00 +0200">2023/06/18</time></small>
+</li><li>
+  <a href="/20230618_4153/updating-gems">Updating gems</a>
+  <small class="text-slate-400"><time datetime="2023-06-18 00:00:00 +0200">2023/06/18</time></small>
 </li></ul>
   
 
@@ -202,7 +216,7 @@ bundle <span class="nb">install</span>
     <footer>
       <hr class="!my-8">
       <p class="not-prose text-slate-400">
-        <time datetime="2023-06-18 00:00:00 +0200">18 June 2023</time> &middot; <a href="/feed.xml">RSS</a>
+        <time datetime="2023-10-23 00:00:00 +0200">23 October 2023</time> &middot; <a href="/feed.xml">RSS</a>
       </p>
     </footer>
   </div>
