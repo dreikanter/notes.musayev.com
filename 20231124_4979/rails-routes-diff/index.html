@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="author" content="Alex Musayev">
   <meta name="description" content="" />
-  <title>Updating Ruby with asdf - Alex Musayev Notes</title>
+  <title>Comparing Rails routing configuration with git - Alex Musayev Notes</title>
   <link rel="alternate" type="application/rss+xml" title="Alex Musayev Notes" href="https://notes.musayev.com/feed.xml">
   <link rel="icon" href="data:," />
   <link href="/style.css" rel="stylesheet" type="text/css">
@@ -129,48 +129,54 @@
       <a href="/">Alex Musayev Notes</a>
     </nav>
     <main>
-      <h1 class="!my-8 !leading-tight"><a href="/20230725_4324/updating-ruby-with-asdf" class="no-underline">Updating Ruby with asdf</a></h1>
+      <h1 class="!my-8 !leading-tight"><a href="/20231124_4979/rails-routes-diff" class="no-underline">Comparing Rails routing configuration with git</a></h1>
 
-<p>Assuming, it is macOS, and <code>asdf</code> was installed with Homebrew.</p>
-<div class="highlight"><pre class="highlight shell"><code>brew update
-asdf plugin update ruby
-asdf <span class="nb">install </span>ruby 3.2.2
+<p>This onelinel will show the list of changed routes between two git branches, the <code>main</code>, and the current one:</p>
+<div class="highlight"><pre class="highlight shell"><code>git checkout main <span class="o">&amp;&amp;</span> rails routes <span class="o">&gt;</span> before.txt <span class="o">&amp;&amp;</span> git checkout internal/commentable-communication <span class="o">&amp;&amp;</span> rails routes <span class="o">&gt;</span> after.txt <span class="o">&amp;&amp;</span> diff <span class="nt">-u</span> <span class="nt">-b</span> before.txt after.txt | diff-so-fancy
 </code></pre></div>
-<p>In case <code>asdf</code> was installed manually, use this instead of the brew commend to update to the lates stable release:</p>
-<div class="highlight"><pre class="highlight shell"><code>asdf update
-</code></pre></div>
-<p>References:</p>
-
-<ul>
-<li><a href="https://asdf-vm.com/"><code>asdf</code></a></li>
-</ul>
+<p>(<code>diff-so-fancy</code> is optional.)</p>
 
   <hr class="!my-8">
   <div class="flex flex-row flex-wrap items-stretch !my-8">
-    <a href="/tags/ruby" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">ruby</a>
+    <a href="/tags/git" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">git</a><a href="/tags/rails" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">rails</a>
   </div>
 
   
     <hr class="!my-8">
     <p>Somewhat related:</p>
     <ul><li>
-  <a href="/20231023_4812/override-an-override-in-ruby">Calling the original instance method after overriding in Ruby</a>
-  <small class="text-slate-400"><time datetime="2023-10-23 00:00:00 +0200">2023/10/23</time></small>
+  <a href="/20230912_4619/git-whatchanged">List changed files for the current git branch</a>
+  <small class="text-slate-400"><time datetime="2023-09-12 00:00:00 +0200">2023/09/12</time></small>
 </li><li>
   <a href="/20230818_4452/rspec-stub-environment-variables">Stubbing environment variables in RSpec</a>
   <small class="text-slate-400"><time datetime="2023-08-18 00:00:00 +0200">2023/08/18</time></small>
 </li><li>
-  <a href="/20230806_4387/downloading-cleanshot-images-with-ruby">Downloading CleanShot images with Ruby</a>
-  <small class="text-slate-400"><time datetime="2023-08-06 00:00:00 +0200">2023/08/06</time></small>
+  <a href="/20230815_4443/fixing-activerecord-unknownmigrationversionerror">Fixing ActiveRecord::UnknownMigrationVersionError</a>
+  <small class="text-slate-400"><time datetime="2023-08-15 00:00:00 +0200">2023/08/15</time></small>
 </li><li>
-  <a href="/20230723_4310/preserving-ruby-exception-backtrace">Preserving backtrace during exceptions wrapping in Ruby</a>
-  <small class="text-slate-400"><time datetime="2023-07-23 00:00:00 +0200">2023/07/23</time></small>
+  <a href="/20230814_4433/rails-model-validators-list">How to list all validators in a Rails model</a>
+  <small class="text-slate-400"><time datetime="2023-08-14 00:00:00 +0200">2023/08/14</time></small>
 </li><li>
-  <a href="/20230713_4251/rspec-snippet-for-sublime-text">RSpec snippet for Sublime Text</a>
-  <small class="text-slate-400"><time datetime="2023-07-13 00:00:00 +0200">2023/07/13</time></small>
+  <a href="/20230811_4426/git-push-tags">How to push git tags</a>
+  <small class="text-slate-400"><time datetime="2023-08-11 00:00:00 +0200">2023/08/11</time></small>
 </li><li>
-  <a href="/20230618_4153/updating-gems">Updating gems</a>
-  <small class="text-slate-400"><time datetime="2023-06-18 00:00:00 +0200">2023/06/18</time></small>
+  <a href="/20230810_4418/starting-git-branch-in-the-past">Starting a new git branch in the past</a>
+  <small class="text-slate-400"><time datetime="2023-08-10 00:00:00 +0200">2023/08/10</time></small>
+</li><li>
+  <a href="/20230809_4414/reapplying-rails-db-migration">Reapplying Rails DB migration</a>
+  <small class="text-slate-400"><time datetime="2023-08-09 00:00:00 +0200">2023/08/09</time></small>
+</li><li>
+  <a href="/20230802_4369/rails-order-by-array-position">Customizing enum fields order for ActiveRecord</a>
+  <small class="text-slate-400"><time datetime="2023-08-02 00:00:00 +0200">2023/08/02</time></small>
+</li><li>
+  <a href="/20230622_4169/rails-class-names">Rails class_names helper</a>
+  <small class="text-slate-400"><time datetime="2023-06-22 00:00:00 +0200">2023/06/22</time></small>
+</li><li>
+  <a href="/20230620_4165/git-head-revision-id">Getting head revision id from Git</a>
+  <small class="text-slate-400"><time datetime="2023-06-20 00:00:00 +0200">2023/06/20</time></small>
+</li><li>
+  <a href="/20230130_3961/rails-devise-manula-password-change">Hot to change password manually with Rails and Devise</a>
+  <small class="text-slate-400"><time datetime="2023-01-30 00:00:00 +0100">2023/01/30</time></small>
 </li></ul>
   
 
@@ -178,7 +184,7 @@ asdf <span class="nb">install </span>ruby 3.2.2
     <footer>
       <hr class="!my-8">
       <p class="not-prose text-slate-400">
-        <time datetime="2023-07-25 00:00:00 +0200">25 July 2023</time> &middot; <a href="/feed.xml">RSS</a>
+        <time datetime="2023-11-24 00:00:00 +0100">24 November 2023</time> &middot; <a href="/feed.xml">RSS</a>
       </p>
     </footer>
   </div>
