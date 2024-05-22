@@ -134,8 +134,8 @@
 <p>List files, changed in the current branch (<code>HEAD</code>), comparing to the source branch (<code>main</code>):</p>
 <div class="highlight"><pre class="highlight shell"><code>git diff <span class="nt">--name-only</span> main HEAD
 </code></pre></div>
-<p>Alternatively:</p>
-<div class="highlight"><pre class="highlight shell"><code>git whatchanged <span class="nt">--name-only</span> <span class="nt">--pretty</span><span class="o">=</span><span class="s2">""</span> main..HEAD
+<p>Comparing with the current branch:</p>
+<div class="highlight"><pre class="highlight shell"><code>git diff <span class="nt">--name-only</span> main..
 </code></pre></div>
   <hr class="!my-8">
   <div class="flex flex-row flex-wrap items-stretch !my-8">
