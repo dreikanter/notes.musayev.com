@@ -138,131 +138,118 @@
 
 <p><strong>Specification:</strong></p>
 
-<table><thead>
-<tr>
-<th>Smell</th>
-<th>What it signals</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>You keep correcting AI mid-task instead of front-loading intent</td>
-<td>Specs are undercooked</td>
-</tr>
-<tr>
-<td>You accept &quot;close enough&quot; output and manually patch it</td>
-<td>Acceptance criteria are vague</td>
-</tr>
-<tr>
-<td>You can&#39;t tell if output is correct without running it</td>
-<td>Lost architectural grip on the area</td>
-</tr>
-</tbody></table>
+<ul>
+<li>You keep correcting AI mid-task instead of front-loading intent
+
+<ul>
+<li>Specs are undercooked</li>
+</ul></li>
+<li>You accept &quot;close enough&quot; output and manually patch it
+
+<ul>
+<li>Acceptance criteria are vague</li>
+</ul></li>
+<li>You can&#39;t tell if output is correct without running it
+
+<ul>
+<li>Lost architectural grip on the area</li>
+</ul></li>
+</ul>
 
 <p><strong>Context Management:</strong></p>
 
-<table><thead>
-<tr>
-<th>Smell</th>
-<th>What it signals</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>You re-explain the same project context across sessions</td>
-<td>Missing a persistent briefing doc</td>
-</tr>
-<tr>
-<td>You forget where a parallel thread left off</td>
-<td>No re-entry protocol</td>
-</tr>
-<tr>
-<td>You hold task state in your head instead of externalizing it</td>
-<td>Doesn&#39;t scale past ~3 threads</td>
-</tr>
-</tbody></table>
+<ul>
+<li>You re-explain the same project context across sessions
+
+<ul>
+<li>Missing a persistent briefing doc</li>
+</ul></li>
+<li>You forget where a parallel thread left off
+
+<ul>
+<li>No re-entry protocol</li>
+</ul></li>
+<li>You hold task state in your head instead of externalizing it
+
+<ul>
+<li>Doesn&#39;t scale past ~3 threads</li>
+</ul></li>
+</ul>
 
 <p><strong>Delegation:</strong></p>
 
-<table><thead>
-<tr>
-<th>Smell</th>
-<th>What it signals</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>You do a task manually because &quot;it&#39;s faster than explaining it to AI&quot;</td>
-<td>Avoiding the spec investment (fine if one-off, smell if recurring)</td>
-</tr>
-<tr>
-<td>You micromanage AI output token-by-token instead of reviewing at the outcome level</td>
-<td>Haven&#39;t let go of the maker identity</td>
-</tr>
-<tr>
-<td>You can&#39;t walk away from a running agent session</td>
-<td>Trust/verification pipeline isn&#39;t set up</td>
-</tr>
-</tbody></table>
+<ul>
+<li>You do a task manually because &quot;it&#39;s faster than explaining it to AI&quot;
+
+<ul>
+<li>Avoiding the spec investment (fine if one-off, smell if recurring)</li>
+</ul></li>
+<li>You micromanage AI output token-by-token instead of reviewing at the outcome level
+
+<ul>
+<li>Haven&#39;t let go of the maker identity</li>
+</ul></li>
+<li>You can&#39;t walk away from a running agent session
+
+<ul>
+<li>Trust/verification pipeline isn&#39;t set up</li>
+</ul></li>
+</ul>
 
 <p><strong>Verification:</strong></p>
 
-<table><thead>
-<tr>
-<th>Smell</th>
-<th>What it signals</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>You approve AI PRs faster than you&#39;d approve a junior&#39;s</td>
-<td>Calibration drift</td>
-</tr>
-<tr>
-<td>You review diffs line-by-line when you should be checking behavior</td>
-<td>Wrong verification level</td>
-</tr>
-<tr>
-<td>You skip testing because &quot;it looked right&quot;</td>
-<td>False fluency problem</td>
-</tr>
-</tbody></table>
+<ul>
+<li>You approve AI PRs faster than you&#39;d approve a junior&#39;s
+
+<ul>
+<li>Calibration drift</li>
+</ul></li>
+<li>You review diffs line-by-line when you should be checking behavior
+
+<ul>
+<li>Wrong verification level</li>
+</ul></li>
+<li>You skip testing because &quot;it looked right&quot;
+
+<ul>
+<li>False fluency problem</li>
+</ul></li>
+</ul>
 
 <p><strong>Prioritization:</strong></p>
 
-<table><thead>
-<tr>
-<th>Smell</th>
-<th>What it signals</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>You start new AI tasks before verifying completed ones</td>
-<td>Generation is more fun than review</td>
-</tr>
-<tr>
-<td>You optimize tooling instead of shipping</td>
-<td>Meta-work trap</td>
-</tr>
-<tr>
-<td>You can&#39;t articulate what you&#39;re blocked on</td>
-<td>Planning debt</td>
-</tr>
-</tbody></table>
+<ul>
+<li>You start new AI tasks before verifying completed ones
+
+<ul>
+<li>Generation is more fun than review</li>
+</ul></li>
+<li>You optimize tooling instead of shipping
+
+<ul>
+<li>Meta-work trap</li>
+</ul></li>
+<li>You can&#39;t articulate what you&#39;re blocked on
+
+<ul>
+<li>Planning debt</li>
+</ul></li>
+</ul>
 
 <p><strong>Energy:</strong></p>
 
-<table><thead>
-<tr>
-<th>Smell</th>
-<th>What it signals</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>You feel busy but can&#39;t point to what you shipped</td>
-<td>Motion vs. progress</td>
-</tr>
-<tr>
-<td>You&#39;re fatigued from reading, not writing</td>
-<td>Verification exhaustion (needs different recovery than creative fatigue)</td>
-</tr>
-</tbody></table>
+<ul>
+<li>You feel busy but can&#39;t point to what you shipped
+
+<ul>
+<li>Motion vs. progress</li>
+</ul></li>
+<li>You&#39;re fatigued from reading, not writing
+
+<ul>
+<li>Verification exhaustion (needs different recovery than creative fatigue)</li>
+</ul></li>
+</ul>
 
   <hr class="!my-8">
   <div class="flex flex-row flex-wrap items-stretch !my-8">
