@@ -10,9 +10,7 @@
       <title>Process Smells in AI-Assisted Workflows</title>
       <link>https://notes.musayev.com/20260329_9444/publishing-notes</link>
       <guid>20260329_9444</guid>
-      <description><![CDATA[<h1 id="ai-assisted-workflow-process-smells">AI-Assisted Workflow: Process Smells</h1>
-
-<p><strong>Specification:</strong></p>
+      <description><![CDATA[<p><strong>Specification:</strong></p>
 
 <ul>
 <li>You keep correcting AI mid-task instead of front-loading intent
