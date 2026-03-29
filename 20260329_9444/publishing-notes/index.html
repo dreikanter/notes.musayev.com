@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="author" content="Alex Musayev">
   <meta name="description" content="" />
-  <title>Alex Musayev on Code</title>
+  <title>Process Smells in AI-Assisted Workflows - Alex Musayev on Code</title>
   
-    <link rel="canonical" href="https://notes.musayev.comtags/opinion">
+    <link rel="canonical" href="https://notes.musayev.com/20260329_9444/publishing-notes">
   
   <link rel="alternate" type="application/rss+xml" title="Alex Musayev on Code" href="https://notes.musayev.com/feed.xml">
   <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIiB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCI+CiAgPGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iNDgiIGZpbGw9IiM0YTkwZTIiLz4KICA8cGF0aCBkPSJNMjUgNTAgTDc1IDUwIE03NSA1MCBMNTcgMzIgTTc1IDUwIEw1NyA2OCIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBmaWxsPSJub25lIi8+Cjwvc3ZnPg==">
@@ -132,21 +132,53 @@
       <a href="/">Alex Musayev on Code</a>
     </nav>
     <main>
-      <div class="flex flex-row flex-wrap items-stretch !my-8">
-  <a href="/tags/bash" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">bash</a><a href="/tags/cli" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">cli</a><a href="/tags/deployment" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">deployment</a><a href="/tags/git" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">git</a><a href="/tags/macos" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">macos</a><a href="/tags/notes" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">notes</a><a href="/tags/opinion" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">opinion</a><a href="/tags/ops" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">ops</a><a href="/tags/performance" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">performance</a><a href="/tags/postgresql" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">postgresql</a><a href="/tags/rails" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">rails</a><a href="/tags/ruby" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">ruby</a><a href="/tags/static_site_generators" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">static_site_generators</a><a href="/tags/sublimetext" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">sublimetext</a><a href="/tags/thoughts" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">thoughts</a><a href="/tags/tools" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">tools</a><a href="/tags/vim" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">vim</a><a href="/tags/writing" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">writing</a>
-</div>
+      <h1 class="!my-8 !leading-tight"><a href="/20260329_9444/publishing-notes" class="no-underline">Process Smells in AI-Assisted Workflows</a></h1>
 
-<p>Tagged with <a href="/tags/opinion">opinion</a>:</p>
+<p>| Category | Smell | What it signals |
+|---|---|---|
+| <strong>Specification</strong> | You keep correcting AI mid-task instead of front-loading intent | Specs are undercooked |
+| | You accept &quot;close enough&quot; output and manually patch it | Acceptance criteria are vague |
+| | You can&#39;t tell if output is correct without running it | Lost architectural grip on the area |
+| <strong>Context management</strong> | You re-explain the same project context across sessions | Missing a persistent briefing doc |
+| | You forget where a parallel thread left off | No re-entry protocol |
+| | You hold task state in your head instead of externalizing it | Doesn&#39;t scale past ~3 threads |
+| <strong>Delegation</strong> | You do a task manually because &quot;it&#39;s faster than explaining it to AI&quot; | Avoiding the spec investment (fine if one-off, smell if recurring) |
+| | You micromanage AI output token-by-token instead of reviewing at the outcome level | Haven&#39;t let go of the maker identity |
+| | You can&#39;t walk away from a running agent session | Trust/verification pipeline isn&#39;t set up |
+| <strong>Verification</strong> | You approve AI PRs faster than you&#39;d approve a junior&#39;s | Calibration drift |
+| | You review diffs line-by-line when you should be checking behavior | Wrong verification level |
+| | You skip testing because &quot;it looked right&quot; | False fluency problem |
+| <strong>Prioritization</strong> | You start new AI tasks before verifying completed ones | Generation is more fun than review |
+| | You optimize tooling instead of shipping | Meta-work trap |
+| | You can&#39;t articulate what you&#39;re blocked on | Planning debt |
+| <strong>Energy</strong> | You feel busy but can&#39;t point to what you shipped | Motion vs. progress |
+| | You&#39;re fatigued from reading, not writing | Verification exhaustion (needs different recovery than creative fatigue) |</p>
 
-<ul><li>
-  <a href="/20230819_4462/doherty-threshold">The 512KB Club</a>
-  <small class="text-slate-400"><time datetime="2023-08-19 00:00:00 +0200">2023/08/19</time></small>
+  <hr class="!my-8">
+  <div class="flex flex-row flex-wrap items-stretch !my-8">
+    <a href="/tags/notes" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">notes</a>
+  </div>
+
+  
+    <hr class="!my-8">
+    <p>Somewhat related:</p>
+    <ul><li>
+  <a href="/20230821_4474/static-site-images-2">Automating image management for a static site</a>
+  <small class="text-slate-400"><time datetime="2023-08-21 00:00:00 +0200">2023/08/21</time></small>
+</li><li>
+  <a href="/20230820_4464/static-site-images">Images management for a static site is tedious</a>
+  <small class="text-slate-400"><time datetime="2023-08-20 00:00:00 +0200">2023/08/20</time></small>
+</li><li>
+  <a href="/20230526_4105/publishing-notes">Publishing notes</a>
+  <small class="text-slate-400"><time datetime="2023-05-26 00:00:00 +0200">2023/05/26</time></small>
 </li></ul>
+  
+
     </main>
     <footer>
       <hr class="!my-8">
       <p class="not-prose text-slate-400">
-        <a href="/feed.xml">RSS</a>
+        <time datetime="2026-03-29 00:00:00 +0100">29 March 2026</time> &middot; <a href="/feed.xml">RSS</a>
       </p>
     </footer>
   </div>

@@ -1,258 +1,154 @@
-<DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="author" content="Alex Musayev">
   <meta name="description" content="" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
-  <link rel="icon" href="data:," />
-  <style>
-    :root {
-      --bs-link-color-rgb: 30,90,180;
-    }
-    .container { max-width: 780px; }
-    .text-muted { color: var(--bs-gray-600) !important; }
-    pre.highlight { padding: 0.5em 1em; }
-    .highlight table td { padding: 5px; }
+  <title>Alex Musayev on Code</title>
+  
+    <link rel="canonical" href="https://notes.musayev.comtags/cli">
+  
+  <link rel="alternate" type="application/rss+xml" title="Alex Musayev on Code" href="https://notes.musayev.com/feed.xml">
+  <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIiB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCI+CiAgPGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iNDgiIGZpbGw9IiM0YTkwZTIiLz4KICA8cGF0aCBkPSJNMjUgNTAgTDc1IDUwIE03NSA1MCBMNTcgMzIgTTc1IDUwIEw1NyA2OCIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBmaWxsPSJub25lIi8+Cjwvc3ZnPg==">
+  <link href="/style.css" rel="stylesheet" type="text/css">
+  <style>.highlight table td { padding: 5px; }
 .highlight table pre { margin: 0; }
-.highlight {
-  color: #faf6e4;
-  background-color: #122b3b;
+.highlight, .highlight .w {
+  color: #24292f;
+  background-color: #f6f8fa;
 }
-.highlight .gl {
-  color: #dee5e7;
-  background-color: #4e5d62;
-}
-.highlight .gp {
-  color: #a8e1fe;
-  font-weight: bold;
-}
-.highlight .c, .highlight .ch, .highlight .cd, .highlight .cm, .highlight .cpf, .highlight .c1, .highlight .cs {
-  color: #6c8b9f;
-  font-style: italic;
-}
-.highlight .cp {
-  color: #b2fd6d;
-  font-weight: bold;
-}
-.highlight .err {
-  color: #fefeec;
-  background-color: #cc0000;
+.highlight .k, .highlight .kd, .highlight .kn, .highlight .kp, .highlight .kr, .highlight .kt, .highlight .kv {
+  color: #cf222e;
 }
 .highlight .gr {
-  color: #cc0000;
-  font-weight: bold;
-  font-style: italic;
-}
-.highlight .k, .highlight .kd, .highlight .kv {
-  color: #f6dd62;
-  font-weight: bold;
-}
-.highlight .o, .highlight .ow {
-  color: #4df4ff;
-  font-weight: bold;
-}
-.highlight .p, .highlight .pi {
-  color: #4df4ff;
+  color: #f6f8fa;
 }
 .highlight .gd {
-  color: #cc0000;
+  color: #82071e;
+  background-color: #ffebe9;
+}
+.highlight .nb {
+  color: #953800;
+}
+.highlight .nc {
+  color: #953800;
+}
+.highlight .no {
+  color: #953800;
+}
+.highlight .nn {
+  color: #953800;
+}
+.highlight .sr {
+  color: #116329;
+}
+.highlight .na {
+  color: #116329;
+}
+.highlight .nt {
+  color: #116329;
 }
 .highlight .gi {
-  color: #b2fd6d;
-}
-.highlight .ge {
-  font-style: italic;
-}
-.highlight .gs {
-  font-weight: bold;
-}
-.highlight .gt {
-  color: #dee5e7;
-  background-color: #4e5d62;
+  color: #116329;
+  background-color: #dafbe1;
 }
 .highlight .kc {
-  color: #f696db;
-  font-weight: bold;
+  color: #0550ae;
 }
-.highlight .kn {
-  color: #ffb000;
-  font-weight: bold;
+.highlight .l, .highlight .ld, .highlight .m, .highlight .mb, .highlight .mf, .highlight .mh, .highlight .mi, .highlight .il, .highlight .mo, .highlight .mx {
+  color: #0550ae;
 }
-.highlight .kp {
-  color: #ffb000;
-  font-weight: bold;
+.highlight .sb {
+  color: #0550ae;
 }
-.highlight .kr {
-  color: #ffb000;
-  font-weight: bold;
+.highlight .bp {
+  color: #0550ae;
+}
+.highlight .ne {
+  color: #0550ae;
+}
+.highlight .nl {
+  color: #0550ae;
+}
+.highlight .py {
+  color: #0550ae;
+}
+.highlight .nv, .highlight .vc, .highlight .vg, .highlight .vi, .highlight .vm {
+  color: #0550ae;
+}
+.highlight .o, .highlight .ow {
+  color: #0550ae;
 }
 .highlight .gh {
-  color: #ffb000;
+  color: #0550ae;
   font-weight: bold;
 }
 .highlight .gu {
-  color: #ffb000;
+  color: #0550ae;
   font-weight: bold;
 }
-.highlight .kt {
-  color: #b2fd6d;
-  font-weight: bold;
-}
-.highlight .no {
-  color: #b2fd6d;
-  font-weight: bold;
-}
-.highlight .nc {
-  color: #b2fd6d;
-  font-weight: bold;
+.highlight .s, .highlight .sa, .highlight .sc, .highlight .dl, .highlight .sd, .highlight .s2, .highlight .se, .highlight .sh, .highlight .sx, .highlight .s1, .highlight .ss {
+  color: #0a3069;
 }
 .highlight .nd {
-  color: #b2fd6d;
-  font-weight: bold;
-}
-.highlight .nn {
-  color: #b2fd6d;
-  font-weight: bold;
-}
-.highlight .bp {
-  color: #b2fd6d;
-  font-weight: bold;
-}
-.highlight .ne {
-  color: #b2fd6d;
-  font-weight: bold;
-}
-.highlight .nl {
-  color: #ffb000;
-  font-weight: bold;
-}
-.highlight .nt {
-  color: #ffb000;
-  font-weight: bold;
-}
-.highlight .m, .highlight .mb, .highlight .mf, .highlight .mh, .highlight .mi, .highlight .il, .highlight .mo, .highlight .mx {
-  color: #f696db;
-  font-weight: bold;
-}
-.highlight .ld {
-  color: #f696db;
-  font-weight: bold;
-}
-.highlight .ss {
-  color: #f696db;
-  font-weight: bold;
-}
-.highlight .s, .highlight .sb, .highlight .dl, .highlight .sd, .highlight .s2, .highlight .sh, .highlight .sx, .highlight .sr, .highlight .s1 {
-  color: #fff0a6;
-  font-weight: bold;
-}
-.highlight .sa {
-  color: #f6dd62;
-  font-weight: bold;
-}
-.highlight .se {
-  color: #4df4ff;
-  font-weight: bold;
-}
-.highlight .sc {
-  color: #4df4ff;
-  font-weight: bold;
-}
-.highlight .si {
-  color: #4df4ff;
-  font-weight: bold;
-}
-.highlight .nb {
-  font-weight: bold;
-}
-.highlight .ni {
-  color: #999999;
-  font-weight: bold;
-}
-.highlight .w {
-  color: #BBBBBB;
-}
-.highlight .go {
-  color: #BBBBBB;
+  color: #8250df;
 }
 .highlight .nf, .highlight .fm {
-  color: #a8e1fe;
+  color: #8250df;
 }
-.highlight .py {
-  color: #a8e1fe;
+.highlight .err {
+  color: #f6f8fa;
+  background-color: #82071e;
 }
-.highlight .na {
-  color: #a8e1fe;
+.highlight .c, .highlight .ch, .highlight .cd, .highlight .cm, .highlight .cp, .highlight .cpf, .highlight .c1, .highlight .cs {
+  color: #6e7781;
 }
-.highlight .nv, .highlight .vc, .highlight .vg, .highlight .vi, .highlight .vm {
-  color: #a8e1fe;
+.highlight .gl {
+  color: #6e7781;
+}
+.highlight .gt {
+  color: #6e7781;
+}
+.highlight .ni {
+  color: #24292f;
+}
+.highlight .si {
+  color: #24292f;
+}
+.highlight .ge {
+  color: #24292f;
+  font-style: italic;
+}
+.highlight .gs {
+  color: #24292f;
   font-weight: bold;
-}
-  </style>
+}</style>
+  <script src="https://cdn.counter.dev/script.js" data-id="d94a1231-14bd-47f9-ad32-cf1a9b40d2a5" data-utcoffset="2"></script>
 </head>
 <body>
-  <div class="container layout py-4 px-4">
-    <nav class="my-4">
-      <a href="https://notes.musayev.com/" class="text-muted">Alex Musayev Notes</a>
+  <div class="prose prose-slate lg:prose-lg prose-h1:text-4xl prose-headings:font-semibold prose-a:text-sky-800 container mx-auto !px-4 !py-4">
+    <nav class="!my-8">
+      <a href="/">Alex Musayev on Code</a>
     </nav>
-    <main class="my-4">
-  <p class="my-4">Tags:</p>
-  <ul class="list-inline my-4">
-    
-      <li class="list-inline-item">
-        <a href="/tags/ruby" class="btn btn-sm btn-outline-secondary">ruby</a>
-      </li>
-    
-      <li class="list-inline-item">
-        <a href="/tags/cli" class="btn btn-sm btn-dark">cli</a>
-      </li>
-    
-      <li class="list-inline-item">
-        <a href="/tags/git" class="btn btn-sm btn-outline-secondary">git</a>
-      </li>
-    
-      <li class="list-inline-item">
-        <a href="/tags/rails" class="btn btn-sm btn-outline-secondary">rails</a>
-      </li>
-    
-      <li class="list-inline-item">
-        <a href="/tags/code" class="btn btn-sm btn-outline-secondary">code</a>
-      </li>
-    
-      <li class="list-inline-item">
-        <a href="/tags/postgresql" class="btn btn-sm btn-outline-secondary">postgresql</a>
-      </li>
-    
-      <li class="list-inline-item">
-        <a href="/tags/sublime text" class="btn btn-sm btn-outline-secondary">sublime text</a>
-      </li>
-    
-  </ul>
-  <p class="my-4">Tagged with <a href="/tags/cli">cli</a>:</p>
-  <ul>
-    
-      <li class="my-2">
-        <a href="/20230618_4153/updating-gems">Updating gems</a>
-        
-          <small class="text-muted"><time datetime="2023-06-18 00:00:00 +0200">2023/06/18</time></small>
-        
-      </li>
-    
-      <li class="my-2">
-        <a href="/20230620_4165/get-head-revision-id">Get head revision id</a>
-        
-          <small class="text-muted"><time datetime="2023-06-20 00:00:00 +0200">2023/06/20</time></small>
-        
-      </li>
-    
-  </ul>
-</main>
+    <main>
+      <div class="flex flex-row flex-wrap items-stretch !my-8">
+  <a href="/tags/bash" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">bash</a><a href="/tags/cli" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">cli</a><a href="/tags/deployment" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">deployment</a><a href="/tags/git" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">git</a><a href="/tags/macos" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">macos</a><a href="/tags/notes" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">notes</a><a href="/tags/opinion" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">opinion</a><a href="/tags/ops" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">ops</a><a href="/tags/performance" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">performance</a><a href="/tags/postgresql" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">postgresql</a><a href="/tags/rails" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">rails</a><a href="/tags/ruby" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">ruby</a><a href="/tags/static_site_generators" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">static_site_generators</a><a href="/tags/sublimetext" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">sublimetext</a><a href="/tags/thoughts" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">thoughts</a><a href="/tags/tools" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">tools</a><a href="/tags/vim" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">vim</a><a href="/tags/writing" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">writing</a>
+</div>
 
-    <footer class="my-4 text-muted">
-      
+<p>Tagged with <a href="/tags/cli">cli</a>:</p>
+
+<ul><li>
+  <a href="/20250902_8066/til">A command-line TIL (Today I Learned) script</a>
+  <small class="text-slate-400"><time datetime="2025-09-02 00:00:00 +0200">2025/09/02</time></small>
+</li></ul>
+    </main>
+    <footer>
+      <hr class="!my-8">
+      <p class="not-prose text-slate-400">
+        <a href="/feed.xml">RSS</a>
+      </p>
     </footer>
   </div>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 </body>
 </html>

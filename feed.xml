@@ -7,6 +7,151 @@
     <description></description>
     
     <item>
+      <title>Process Smells in AI-Assisted Workflows</title>
+      <link>https://notes.musayev.com/20260329_9444/publishing-notes</link>
+      <guid>20260329_9444</guid>
+      <description><![CDATA[<p>| Category | Smell | What it signals |
+|---|---|---|
+| <strong>Specification</strong> | You keep correcting AI mid-task instead of front-loading intent | Specs are undercooked |
+| | You accept &quot;close enough&quot; output and manually patch it | Acceptance criteria are vague |
+| | You can&#39;t tell if output is correct without running it | Lost architectural grip on the area |
+| <strong>Context management</strong> | You re-explain the same project context across sessions | Missing a persistent briefing doc |
+| | You forget where a parallel thread left off | No re-entry protocol |
+| | You hold task state in your head instead of externalizing it | Doesn&#39;t scale past ~3 threads |
+| <strong>Delegation</strong> | You do a task manually because &quot;it&#39;s faster than explaining it to AI&quot; | Avoiding the spec investment (fine if one-off, smell if recurring) |
+| | You micromanage AI output token-by-token instead of reviewing at the outcome level | Haven&#39;t let go of the maker identity |
+| | You can&#39;t walk away from a running agent session | Trust/verification pipeline isn&#39;t set up |
+| <strong>Verification</strong> | You approve AI PRs faster than you&#39;d approve a junior&#39;s | Calibration drift |
+| | You review diffs line-by-line when you should be checking behavior | Wrong verification level |
+| | You skip testing because &quot;it looked right&quot; | False fluency problem |
+| <strong>Prioritization</strong> | You start new AI tasks before verifying completed ones | Generation is more fun than review |
+| | You optimize tooling instead of shipping | Meta-work trap |
+| | You can&#39;t articulate what you&#39;re blocked on | Planning debt |
+| <strong>Energy</strong> | You feel busy but can&#39;t point to what you shipped | Motion vs. progress |
+| | You&#39;re fatigued from reading, not writing | Verification exhaustion (needs different recovery than creative fatigue) |</p>
+]]></description>
+    </item>
+    
+    <item>
+      <title>Basic Vim Motions</title>
+      <link>https://notes.musayev.com/20250903_8070/learning-vim</link>
+      <guid>20250903_8070</guid>
+      <description><![CDATA[<p>Things to remember.</p>
+
+<p>Modes:</p>
+
+<ul>
+<li><code>i</code> - insert mode</li>
+<li><code>esc</code> - normal mode</li>
+<li><code>v</code>/<code>V</code> - visual mode</li>
+<li><code>:</code>- command mode</li>
+</ul>
+
+<p>Motions:</p>
+
+<ul>
+<li><code>h</code>, <code>j</code>, <code>k</code>, <code>l</code></li>
+<li><code>0</code> - home, <code>^</code> - first chr, <code>$</code> - eol</li>
+<li><code>w</code>/<code>W</code> - next word</li>
+<li><code>e</code>/<code>E</code> - next word-end</li>
+<li><code>b</code>/<code>B</code> - backward</li>
+</ul>
+
+<p>Insert mode:</p>
+
+<ul>
+<li><code>i</code> - insert before chr</li>
+<li><code>I</code> - beginning of line</li>
+<li><code>a</code> - append after chr</li>
+<li><code>A</code> - EOL</li>
+</ul>
+
+<p>Horsing around:</p>
+
+<ul>
+<li><code>zz</code>/<code>zt</code>/<code>zb</code> - scroll rel cursor</li>
+<li><code>H</code>/<code>M</code>/<code>L</code> - jump to first/mid/last line on screen</li>
+<li><code>ZZ</code> - quick exit</li>
+</ul>
+
+<p>Text modification:</p>
+
+<ul>
+<li><code>d</code> - delete</li>
+<li><code>dd</code> - delete line</li>
+<li><code>D</code> - delete till EOL</li>
+<li><code>diw</code> - &quot;delete in word&quot;</li>
+<li><code>ciw</code> - &quot;change in word&quot; (delete word + INS)</li>
+<li><code>x</code> - delete chr</li>
+<li><code>r</code> - replace</li>
+<li><code>.</code> - replay</li>
+</ul>
+
+<p>Clipboard:</p>
+
+<ul>
+<li><code>y</code> - yank</li>
+<li><code>yy</code> - yank line</li>
+<li><code>p</code> - paste before, <code>P</code> - paste after</li>
+<li><code>&quot;1y</code> - yank to register 1</li>
+<li><code>&quot;1p</code> - paste from register 1</li>
+<li><code>&quot;+y</code>/<code>&quot;+p</code> - system clipboard</li>
+<li><code>&quot;%p</code> - current file name</li>
+<li><code>*</code> - select current word matches → <code>n</code>/<code>N</code> - jump to next/prev</li>
+<li><code>viw</code> - select word</li>
+</ul>
+
+<p>Macros:</p>
+
+<ul>
+<li><code>q1</code> - record macro to reg 1</li>
+<li><code>q</code> - stop recording</li>
+<li><code>@1</code> - replay macro</li>
+</ul>
+
+<p>Time travel:</p>
+
+<ul>
+<li><code>u</code> - undo</li>
+<li><code>Ctrl+r</code> - redo</li>
+</ul>
+
+<p>Commands:</p>
+
+<p><code>:w</code> - save
+<code>:q</code>/<code>:q!</code> - quit
+<code>:noh</code> - reset search highlights
+<code>:%s//NEW/gc</code> - replace *-selected substring with confirmation
+<code>:reg</code> - show registers</p>
+]]></description>
+    </item>
+    
+    <item>
+      <title>A command-line TIL (Today I Learned) script</title>
+      <link>https://notes.musayev.com/20250902_8066/til</link>
+      <guid>20250902_8066</guid>
+      <description><![CDATA[<p>I built a simple Ruby script to collect random things I learn throughout the day. It&#39;s deliberately minimal—no UI, no database, no dependencies, just a text file and timestamps.</p>
+
+<p>The script lives in my <code>$PATH</code> and works like this:</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="c"># Save a new learning</span>
+til <span class="s2">"You can use git log --oneline --graph for a nice commit tree"</span>
+</code></pre></div>
+<p>New note gets appended to <code>~/notes/til.md</code> with a timestamp.</p>
+<div class="highlight"><pre class="highlight plaintext"><code>- 2024-12-16 09:12: vim ggVG selects all text
+- 2024-12-16 11:30: Rob Pike: A little copying is better than a little dependency
+- 2024-12-16 14:15: Private methods in Rails helper models are still available in views
+- 2024-12-16 16:42: Stimulus auto-typecasts action parameters that look like JSON
+- 2024-12-17 08:05: One can't just cd "~/New folder". It should be cd "$HOME/New folder" or cd $HOME/"New folder" instead.
+</code></pre></div>
+<p>I’ll probably change it to a random one if the initiative survives the test of time.</p>
+
+<p>The script expects a <code>NOTES_PATH</code> environment variable and fails fast if it&#39;s not set or doesn&#39;t exist. When called without arguments, it shows the last 10 entries with timestamps stripped for cleaner reading.</p>
+
+<p>It&#39;s not meant to be a sophisticated knowledge management system. Just a frictionless way to capture small discoveries before they disappear. Sometimes the best tools are the simplest ones.</p>
+]]></description>
+    </item>
+    
+    <item>
       <title>How to Pick a Proper Noun for Your Work</title>
       <link>https://notes.musayev.com/20240504_5727/naming-things</link>
       <guid>20240504_5727</guid>
@@ -501,44 +646,6 @@ git push origin TAG_NAME
     </item>
     
     <item>
-      <title>Filter out specific paths from Recents in macOS Finder</title>
-      <link>https://notes.musayev.com/20230806_4381/macos-finder-recents-filter</link>
-      <guid>20230806_4381</guid>
-      <description><![CDATA[<p><a href="https://apps.apple.com/us/app/arc-app-location-activity/id1063151918">Arc</a> generates a lot of JSON files remaining visible in the &quot;Recents&quot; folder in Finder, making it less usable.</p>
-
-<p>It is possible to filter out specified paths to reduce noise in the Recents:</p>
-
-<ol>
-<li>Open System Settings → Siri &amp; Spotlight → Spotlight Privacy...</li>
-<li>Add <code>~/Library/Mobile Documents/com~apple~CloudDocs/Arc App</code> to the Privacy list.</li>
-<li>Click Done.</li>
-</ol>
-
-<p>(I&#39;ve added <code>~/Library/Mobile Documents/</code> since in my opinion, this folder is an ephemeral files dumpster that does not contain anything valuable in general.)</p>
-
-<p><img src="e28f897f968246dbbd45c25aabc3fbf8.jpg" alt="" title=""></p>
-]]></description>
-    </item>
-    
-    <item>
-      <title>Kill a process that occupies a port</title>
-      <link>https://notes.musayev.com/20230806_4380/bash-kill-process-by-port</link>
-      <guid>20230806_4380</guid>
-      <description><![CDATA[<p>This command lists process ids listening on a specified port:</p>
-<div class="highlight"><pre class="highlight shell"><code>lsof <span class="nt">-t</span> <span class="nt">-i</span>:PORT_NUMBER
-</code></pre></div>
-<p>You can use it to kill processes:</p>
-<div class="highlight"><pre class="highlight shell"><code><span class="nb">kill</span> <span class="nt">-9</span> <span class="o">(</span>lsof <span class="nt">-t</span> <span class="nt">-i</span>:PORT_NUMBER<span class="o">)</span>
-</code></pre></div>
-<p>Here is a Bash function making this command easier to use:</p>
-<div class="highlight"><pre class="highlight shell"><code>killport<span class="o">()</span> <span class="o">{</span> <span class="nb">kill</span> <span class="nt">-9</span> <span class="si">$(</span>lsof <span class="nt">-t</span> <span class="nt">-i</span>:<span class="nv">$1</span><span class="si">)</span> <span class="o">}</span>
-</code></pre></div>
-<p>Usage example:</p>
-<div class="highlight"><pre class="highlight shell"><code>killport 3000
-</code></pre></div>]]></description>
-    </item>
-    
-    <item>
       <title>Downloading CleanShot images with Ruby</title>
       <link>https://notes.musayev.com/20230806_4387/downloading-cleanshot-images-with-ruby</link>
       <guid>20230806_4387</guid>
@@ -683,6 +790,44 @@ git push origin TAG_NAME
     </item>
     
     <item>
+      <title>Filter out specific paths from Recents in macOS Finder</title>
+      <link>https://notes.musayev.com/20230806_4381/macos-finder-recents-filter</link>
+      <guid>20230806_4381</guid>
+      <description><![CDATA[<p><a href="https://apps.apple.com/us/app/arc-app-location-activity/id1063151918">Arc</a> generates a lot of JSON files remaining visible in the &quot;Recents&quot; folder in Finder, making it less usable.</p>
+
+<p>It is possible to filter out specified paths to reduce noise in the Recents:</p>
+
+<ol>
+<li>Open System Settings → Siri &amp; Spotlight → Spotlight Privacy...</li>
+<li>Add <code>~/Library/Mobile Documents/com~apple~CloudDocs/Arc App</code> to the Privacy list.</li>
+<li>Click Done.</li>
+</ol>
+
+<p>(I&#39;ve added <code>~/Library/Mobile Documents/</code> since in my opinion, this folder is an ephemeral files dumpster that does not contain anything valuable in general.)</p>
+
+<p><img src="e28f897f968246dbbd45c25aabc3fbf8.jpg" alt="" title=""></p>
+]]></description>
+    </item>
+    
+    <item>
+      <title>Kill a process that occupies a port</title>
+      <link>https://notes.musayev.com/20230806_4380/bash-kill-process-by-port</link>
+      <guid>20230806_4380</guid>
+      <description><![CDATA[<p>This command lists process ids listening on a specified port:</p>
+<div class="highlight"><pre class="highlight shell"><code>lsof <span class="nt">-t</span> <span class="nt">-i</span>:PORT_NUMBER
+</code></pre></div>
+<p>You can use it to kill processes:</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="nb">kill</span> <span class="nt">-9</span> <span class="o">(</span>lsof <span class="nt">-t</span> <span class="nt">-i</span>:PORT_NUMBER<span class="o">)</span>
+</code></pre></div>
+<p>Here is a Bash function making this command easier to use:</p>
+<div class="highlight"><pre class="highlight shell"><code>killport<span class="o">()</span> <span class="o">{</span> <span class="nb">kill</span> <span class="nt">-9</span> <span class="si">$(</span>lsof <span class="nt">-t</span> <span class="nt">-i</span>:<span class="nv">$1</span><span class="si">)</span> <span class="o">}</span>
+</code></pre></div>
+<p>Usage example:</p>
+<div class="highlight"><pre class="highlight shell"><code>killport 3000
+</code></pre></div>]]></description>
+    </item>
+    
+    <item>
       <title>Customizing enum fields order for ActiveRecord</title>
       <link>https://notes.musayev.com/20230802_4369/rails-order-by-array-position</link>
       <guid>20230802_4369</guid>
@@ -739,65 +884,6 @@ asdf <span class="nb">install </span>ruby 3.2.2
 
 <ul>
 <li><a href="https://asdf-vm.com/"><code>asdf</code></a></li>
-</ul>
-]]></description>
-    </item>
-    
-    <item>
-      <title>Reading list</title>
-      <link>https://notes.musayev.com/20230724_4313/readlist</link>
-      <guid>20230724_4313</guid>
-      <description><![CDATA[<p>2024:</p>
-
-<ul>
-<li><a href="https://ru.wikipedia.org/wiki/%D0%9A%D1%80%D1%83%D1%82%D1%8C_(%D1%80%D0%BE%D0%BC%D0%B0%D0%BD)">Круть</a>, Виктор Пелевин</li>
-<li><a href="https://en.wikipedia.org/wiki/Journey_to_the_West">Journey to the West</a>, vol. 1</li>
-<li><a href="https://en.wikipedia.org/wiki/The_Culture#Bibliography">Consider Phlebas</a>, Iain Banks (1987) (<a href="https://en.wikipedia.org/wiki/Culture_series">Culture series</a>, book 1)</li>
-<li>All Systems Red, Martha Wells (2017)</li>
-</ul>
-
-<p>2023:</p>
-
-<ul>
-<li>Modern Front-End Development for Rails, Noel Rappin</li>
-<li>Layered Design for Ruby on Rails Applications: Discover practical design patterns for maintainable web applications Paperback (Vladimir Dementyev) [<a href="https://www.amazon.ca/Layered-Design-Ruby-Rails-Applications/dp/1801813787/">1</a>]</li>
-<li>Быть собой: Новая теория сознания (Анил Сет)</li>
-<li>⭐ The Creative Act: A Way of Being (Rick Rubin) [<a href="https://www.abebooks.com/servlet/SearchResults?isbn=0593652886&clickid=RwHxaRzPsxyPRp40SdwIk1m9UkF3lMzH40UcVY0&cm_mmc=aff-_-ir-_-64613-_-77416&ref=imprad64613&afn_sr=impact&ref_=aff_ir_64613_77416">1</a>] [<a href="https://www.goodreads.com/book/show/60965426-the-creative-act">2</a>]</li>
-<li>CLI text processing with GNU awk [<a href="https://learnbyexample.github.io/learn_gnuawk/">1</a>]</li>
-<li>GNU Parallel 2018 (Ole Tange) [<a href="https://zenodo.org/record/1146014">1</a>], [<a href="https://alexplescan.com/posts/2023/08/20/gnu-parallel/">2</a>]</li>
-</ul>
-
-<p>2022:</p>
-
-<ul>
-<li>⭐ Clean Code, Code of conduct (Robert Martin)</li>
-<li>⭐ Sustainable Web Development with Ruby on Rails (David Bryant Copeland)</li>
-<li>⭐ Resilient management (Lara Hogan)</li>
-<li>Век тревожности (Скотт Стоссел)</li>
-<li>Почему я отвлекаюсь (Эдвард Хэлловэлл, Джон Рэйти)</li>
-<li>⭐ The Art of Learning (Josh Waitzkin)</li>
-<li>Книга ленивого гуру (Лоуренс Шортер)</li>
-<li>Junior to Senior (Yuri Karabatov) [<a href="https://norikitech.gumroad.com/l/junior-to-senior">1</a>]</li>
-</ul>
-
-<p>2021:</p>
-
-<ul>
-<li>Designing DataIntensive Applications (Martin Kleppmann)</li>
-<li>Go Recipes (Shiju Varghese)</li>
-<li>Go Design Patterns (Mario Castro Contreras)</li>
-<li>The Little Book of Stoicism (Jonas Salzgeber)</li>
-<li>Structure and Interpretation of Computer Programs</li>
-<li>⭐ The Art of PostgreSQL (Dimitri Fontaine)</li>
-<li>Webapps in Go, the anti textbook (Suraj Patil)</li>
-<li>⭐ Язык шаблонов (Кристофер Александер)</li>
-</ul>
-
-<p>2018:</p>
-
-<ul>
-<li>⭐ Practical Object-Oriented Design: An Agile Primer Using Ruby Paperback (Sandi Metz)</li>
-<li>⭐ Designing Data-Intensive Applications: The Big Ideas Behind Reliable, Scalable, and Maintainable Systems (Martin Kleppmann)</li>
 </ul>
 ]]></description>
     </item>
