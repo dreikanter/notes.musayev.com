@@ -134,95 +134,131 @@
     <main>
       <h1 class="!my-8 !leading-tight"><a href="/20260329_9444/publishing-notes" class="no-underline">Process Smells in AI-Assisted Workflows</a></h1>
 
+<h1 id="ai-assisted-workflow-process-smells">AI-Assisted Workflow: Process Smells</h1>
+
+<h2 id="specification">Specification</h2>
+
 <table><thead>
 <tr>
-<th>Category</th>
 <th>Smell</th>
 <th>What it signals</th>
 </tr>
 </thead><tbody>
 <tr>
-<td><strong>Specification</strong></td>
 <td>You keep correcting AI mid-task instead of front-loading intent</td>
 <td>Specs are undercooked</td>
 </tr>
 <tr>
-<td></td>
 <td>You accept &quot;close enough&quot; output and manually patch it</td>
 <td>Acceptance criteria are vague</td>
 </tr>
 <tr>
-<td></td>
 <td>You can&#39;t tell if output is correct without running it</td>
 <td>Lost architectural grip on the area</td>
 </tr>
+</tbody></table>
+
+<h2 id="context-management">Context Management</h2>
+
+<table><thead>
 <tr>
-<td><strong>Context management</strong></td>
+<th>Smell</th>
+<th>What it signals</th>
+</tr>
+</thead><tbody>
+<tr>
 <td>You re-explain the same project context across sessions</td>
 <td>Missing a persistent briefing doc</td>
 </tr>
 <tr>
-<td></td>
 <td>You forget where a parallel thread left off</td>
 <td>No re-entry protocol</td>
 </tr>
 <tr>
-<td></td>
 <td>You hold task state in your head instead of externalizing it</td>
 <td>Doesn&#39;t scale past ~3 threads</td>
 </tr>
+</tbody></table>
+
+<h2 id="delegation">Delegation</h2>
+
+<table><thead>
 <tr>
-<td><strong>Delegation</strong></td>
+<th>Smell</th>
+<th>What it signals</th>
+</tr>
+</thead><tbody>
+<tr>
 <td>You do a task manually because &quot;it&#39;s faster than explaining it to AI&quot;</td>
 <td>Avoiding the spec investment (fine if one-off, smell if recurring)</td>
 </tr>
 <tr>
-<td></td>
 <td>You micromanage AI output token-by-token instead of reviewing at the outcome level</td>
 <td>Haven&#39;t let go of the maker identity</td>
 </tr>
 <tr>
-<td></td>
 <td>You can&#39;t walk away from a running agent session</td>
 <td>Trust/verification pipeline isn&#39;t set up</td>
 </tr>
+</tbody></table>
+
+<h2 id="verification">Verification</h2>
+
+<table><thead>
 <tr>
-<td><strong>Verification</strong></td>
+<th>Smell</th>
+<th>What it signals</th>
+</tr>
+</thead><tbody>
+<tr>
 <td>You approve AI PRs faster than you&#39;d approve a junior&#39;s</td>
 <td>Calibration drift</td>
 </tr>
 <tr>
-<td></td>
 <td>You review diffs line-by-line when you should be checking behavior</td>
 <td>Wrong verification level</td>
 </tr>
 <tr>
-<td></td>
 <td>You skip testing because &quot;it looked right&quot;</td>
 <td>False fluency problem</td>
 </tr>
+</tbody></table>
+
+<h2 id="prioritization">Prioritization</h2>
+
+<table><thead>
 <tr>
-<td><strong>Prioritization</strong></td>
+<th>Smell</th>
+<th>What it signals</th>
+</tr>
+</thead><tbody>
+<tr>
 <td>You start new AI tasks before verifying completed ones</td>
 <td>Generation is more fun than review</td>
 </tr>
 <tr>
-<td></td>
 <td>You optimize tooling instead of shipping</td>
 <td>Meta-work trap</td>
 </tr>
 <tr>
-<td></td>
 <td>You can&#39;t articulate what you&#39;re blocked on</td>
 <td>Planning debt</td>
 </tr>
+</tbody></table>
+
+<h2 id="energy">Energy</h2>
+
+<table><thead>
 <tr>
-<td><strong>Energy</strong></td>
+<th>Smell</th>
+<th>What it signals</th>
+</tr>
+</thead><tbody>
+<tr>
 <td>You feel busy but can&#39;t point to what you shipped</td>
 <td>Motion vs. progress</td>
 </tr>
 <tr>
-<td></td>
 <td>You&#39;re fatigued from reading, not writing</td>
 <td>Verification exhaustion (needs different recovery than creative fatigue)</td>
 </tr>
