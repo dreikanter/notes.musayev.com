@@ -10,25 +10,99 @@
       <title>Process Smells in AI-Assisted Workflows</title>
       <link>https://notes.musayev.com/20260329_9444/publishing-notes</link>
       <guid>20260329_9444</guid>
-      <description><![CDATA[<p>| Category | Smell | What it signals |
-|---|---|---|
-| <strong>Specification</strong> | You keep correcting AI mid-task instead of front-loading intent | Specs are undercooked |
-| | You accept &quot;close enough&quot; output and manually patch it | Acceptance criteria are vague |
-| | You can&#39;t tell if output is correct without running it | Lost architectural grip on the area |
-| <strong>Context management</strong> | You re-explain the same project context across sessions | Missing a persistent briefing doc |
-| | You forget where a parallel thread left off | No re-entry protocol |
-| | You hold task state in your head instead of externalizing it | Doesn&#39;t scale past ~3 threads |
-| <strong>Delegation</strong> | You do a task manually because &quot;it&#39;s faster than explaining it to AI&quot; | Avoiding the spec investment (fine if one-off, smell if recurring) |
-| | You micromanage AI output token-by-token instead of reviewing at the outcome level | Haven&#39;t let go of the maker identity |
-| | You can&#39;t walk away from a running agent session | Trust/verification pipeline isn&#39;t set up |
-| <strong>Verification</strong> | You approve AI PRs faster than you&#39;d approve a junior&#39;s | Calibration drift |
-| | You review diffs line-by-line when you should be checking behavior | Wrong verification level |
-| | You skip testing because &quot;it looked right&quot; | False fluency problem |
-| <strong>Prioritization</strong> | You start new AI tasks before verifying completed ones | Generation is more fun than review |
-| | You optimize tooling instead of shipping | Meta-work trap |
-| | You can&#39;t articulate what you&#39;re blocked on | Planning debt |
-| <strong>Energy</strong> | You feel busy but can&#39;t point to what you shipped | Motion vs. progress |
-| | You&#39;re fatigued from reading, not writing | Verification exhaustion (needs different recovery than creative fatigue) |</p>
+      <description><![CDATA[<table><thead>
+<tr>
+<th>Category</th>
+<th>Smell</th>
+<th>What it signals</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>Specification</strong></td>
+<td>You keep correcting AI mid-task instead of front-loading intent</td>
+<td>Specs are undercooked</td>
+</tr>
+<tr>
+<td></td>
+<td>You accept &quot;close enough&quot; output and manually patch it</td>
+<td>Acceptance criteria are vague</td>
+</tr>
+<tr>
+<td></td>
+<td>You can&#39;t tell if output is correct without running it</td>
+<td>Lost architectural grip on the area</td>
+</tr>
+<tr>
+<td><strong>Context management</strong></td>
+<td>You re-explain the same project context across sessions</td>
+<td>Missing a persistent briefing doc</td>
+</tr>
+<tr>
+<td></td>
+<td>You forget where a parallel thread left off</td>
+<td>No re-entry protocol</td>
+</tr>
+<tr>
+<td></td>
+<td>You hold task state in your head instead of externalizing it</td>
+<td>Doesn&#39;t scale past ~3 threads</td>
+</tr>
+<tr>
+<td><strong>Delegation</strong></td>
+<td>You do a task manually because &quot;it&#39;s faster than explaining it to AI&quot;</td>
+<td>Avoiding the spec investment (fine if one-off, smell if recurring)</td>
+</tr>
+<tr>
+<td></td>
+<td>You micromanage AI output token-by-token instead of reviewing at the outcome level</td>
+<td>Haven&#39;t let go of the maker identity</td>
+</tr>
+<tr>
+<td></td>
+<td>You can&#39;t walk away from a running agent session</td>
+<td>Trust/verification pipeline isn&#39;t set up</td>
+</tr>
+<tr>
+<td><strong>Verification</strong></td>
+<td>You approve AI PRs faster than you&#39;d approve a junior&#39;s</td>
+<td>Calibration drift</td>
+</tr>
+<tr>
+<td></td>
+<td>You review diffs line-by-line when you should be checking behavior</td>
+<td>Wrong verification level</td>
+</tr>
+<tr>
+<td></td>
+<td>You skip testing because &quot;it looked right&quot;</td>
+<td>False fluency problem</td>
+</tr>
+<tr>
+<td><strong>Prioritization</strong></td>
+<td>You start new AI tasks before verifying completed ones</td>
+<td>Generation is more fun than review</td>
+</tr>
+<tr>
+<td></td>
+<td>You optimize tooling instead of shipping</td>
+<td>Meta-work trap</td>
+</tr>
+<tr>
+<td></td>
+<td>You can&#39;t articulate what you&#39;re blocked on</td>
+<td>Planning debt</td>
+</tr>
+<tr>
+<td><strong>Energy</strong></td>
+<td>You feel busy but can&#39;t point to what you shipped</td>
+<td>Motion vs. progress</td>
+</tr>
+<tr>
+<td></td>
+<td>You&#39;re fatigued from reading, not writing</td>
+<td>Verification exhaustion (needs different recovery than creative fatigue)</td>
+</tr>
+</tbody></table>
 ]]></description>
     </item>
     
