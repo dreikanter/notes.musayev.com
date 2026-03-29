@@ -143,7 +143,7 @@ fi
 </code></pre></div>
 <p>Unlike <code>~/.zshrc</code>, <code>~/.zshenv</code> loads for non-interactive context. And the <code>--shims</code> flag is specifically designed for cases like that. It just prepends the shims directory to PATH without hooking into the shell, so it&#39;s safe for non-interactive contexts.</p>
 
-<p>Alternative solution fixing Ruby availability for <a href="https://github.com/evilmartians/lefthook">Lefthook</a>-managed git callback:</p>
+<p>Alternative solution for <a href="https://github.com/evilmartians/lefthook">Lefthook</a>-managed git callback:</p>
 <div class="highlight"><pre class="highlight plaintext"><code># lefthook-local.yml
 rc: eval "$(/opt/homebrew/bin/mise activate bash --shims)"
 </code></pre></div>
