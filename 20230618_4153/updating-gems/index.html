@@ -139,9 +139,12 @@
 <p><strong>Updating Bundler:</strong></p>
 <div class="highlight"><pre class="highlight shell"><code>bundle update <span class="nt">--bundler</span>
 </code></pre></div>
-<p>Note:
-- <code>Gemfile.lock</code> may lock Bundler version with <code>BUNDLED WITH</code> value.
-- <code>Gemfile.lock</code> may cause an alternative bundler version installation during <code>bundle install</code>.</p>
+<p>Note:</p>
+
+<ul>
+<li><code>Gemfile.lock</code> may lock Bundler version with <code>BUNDLED WITH</code> value.</li>
+<li><code>Gemfile.lock</code> may cause an alternative bundler version installation during <code>bundle install</code>.</li>
+</ul>
 
 <p>Update system gems:</p>
 <div class="highlight"><pre class="highlight shell"><code>gem update <span class="nt">--system</span>
@@ -166,6 +169,9 @@ bundle <span class="nb">install</span>
     <hr class="!my-8">
     <p>Somewhat related:</p>
     <ul><li>
+  <a href="/20260325_9403/fixing-ruby-environment-for-non-interactive-shells">Fixing Ruby environment for non-interactive shells</a>
+  <small class="text-slate-400"><time datetime="2026-03-25 00:00:00 +0100">2026/03/25</time></small>
+</li><li>
   <a href="/20231023_4812/override-an-override-in-ruby">Calling the original instance method after overriding in Ruby</a>
   <small class="text-slate-400"><time datetime="2023-10-23 00:00:00 +0200">2023/10/23</time></small>
 </li><li>

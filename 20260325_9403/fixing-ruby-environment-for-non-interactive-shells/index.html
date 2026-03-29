@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="author" content="Alex Musayev">
   <meta name="description" content="" />
-  <title>Alex Musayev on Code</title>
+  <title>Fixing Ruby environment for non-interactive shells - Alex Musayev on Code</title>
   
-    <link rel="canonical" href="https://notes.musayev.comtags/ruby">
+    <link rel="canonical" href="https://notes.musayev.com/20260325_9403/fixing-ruby-environment-for-non-interactive-shells">
   
   <link rel="alternate" type="application/rss+xml" title="Alex Musayev on Code" href="https://notes.musayev.com/feed.xml">
   <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIiB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCI+CiAgPGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iNDgiIGZpbGw9IiM0YTkwZTIiLz4KICA8cGF0aCBkPSJNMjUgNTAgTDc1IDUwIE03NSA1MCBMNTcgMzIgTTc1IDUwIEw1NyA2OCIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBmaWxsPSJub25lIi8+Cjwvc3ZnPg==">
@@ -132,16 +132,41 @@
       <a href="/">Alex Musayev on Code</a>
     </nav>
     <main>
-      <div class="flex flex-row flex-wrap items-stretch !my-8">
-  <a href="/tags/bash" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">bash</a><a href="/tags/cli" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">cli</a><a href="/tags/deployment" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">deployment</a><a href="/tags/git" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">git</a><a href="/tags/macos" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">macos</a><a href="/tags/mise" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">mise</a><a href="/tags/notes" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">notes</a><a href="/tags/opinion" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">opinion</a><a href="/tags/ops" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">ops</a><a href="/tags/performance" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">performance</a><a href="/tags/postgresql" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">postgresql</a><a href="/tags/rails" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">rails</a><a href="/tags/ruby" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">ruby</a><a href="/tags/shell" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">shell</a><a href="/tags/static_site_generators" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">static_site_generators</a><a href="/tags/sublimetext" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">sublimetext</a><a href="/tags/thoughts" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">thoughts</a><a href="/tags/tools" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">tools</a><a href="/tags/vim" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">vim</a><a href="/tags/writing" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">writing</a><a href="/tags/zsh" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">zsh</a>
-</div>
+      <h1 class="!my-8 !leading-tight"><a href="/20260325_9403/fixing-ruby-environment-for-non-interactive-shells" class="no-underline">Fixing Ruby environment for non-interactive shells</a></h1>
 
-<p>Tagged with <a href="/tags/ruby">ruby</a>:</p>
+<p>If you ever encountered <code>Gem::GemNotFoundException</code> when git hooks try to run Rubocop, Reek, or other tools from within a GUI git client, it&#39;s because the correct shell profile didn&#39;t get sourced in a non-interactive shell, so mise/asdf/rbenv/another Ruby version manager never activated and the system Ruby kicks in.</p>
 
-<ul><li>
-  <a href="/20260325_9403/fixing-ruby-environment-for-non-interactive-shells">Fixing Ruby environment for non-interactive shells</a>
-  <small class="text-slate-400"><time datetime="2026-03-25 00:00:00 +0100">2026/03/25</time></small>
-</li><li>
+<p>Quick fix: add Ruby env init to <code>~/.zshenv</code> (or <a href="https://mise.jdx.dev/dev-tools/shims.html">officially recommended</a> <code>~/.zprofile</code>). Here is mise example:</p>
+<div class="highlight"><pre class="highlight plaintext"><code>if [[ -x "/opt/homebrew/bin/mise" ]]; then
+  eval "$(/opt/homebrew/bin/mise activate zsh --shims)"
+fi
+</code></pre></div>
+<p>Unlike <code>~/.zshrc</code>, <code>~/.zshenv</code> loads for non-interactive context. And the <code>--shims</code> flag is specifically designed for cases like that. It just prepends the shims directory to PATH without hooking into the shell, so it&#39;s safe for non-interactive contexts.</p>
+
+<p>Alternative project-specific fix: add Ruby env initialization to your gitignored <code>lefthook-local.yml</code>. Again, mise example:</p>
+<div class="highlight"><pre class="highlight plaintext"><code>rc: eval "$(/opt/homebrew/bin/mise activate bash --shims)"
+</code></pre></div>
+<p>How to test:</p>
+<div class="highlight"><pre class="highlight plaintext"><code># Before (system default Ruby)
+$ zsh -lc "which ruby"
+/usr/bin/ruby
+
+# After (proper override)
+$ zsh -lc "which ruby"
+/Users/alex/.local/share/mise/installs/ruby/3.3.10/bin/ruby
+</code></pre></div>
+<p>For findability:</p>
+<div class="highlight"><pre class="highlight plaintext"><code>Could not find 'bundler' ... required by your .../Gemfile.lock. Gem::GemNotFoundException
+</code></pre></div>
+  <hr class="!my-8">
+  <div class="flex flex-row flex-wrap items-stretch !my-8">
+    <a href="/tags/mise" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">mise</a><a href="/tags/ruby" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">ruby</a><a href="/tags/shell" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">shell</a><a href="/tags/zsh" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">zsh</a>
+  </div>
+
+  
+    <hr class="!my-8">
+    <p>Somewhat related:</p>
+    <ul><li>
   <a href="/20231023_4812/override-an-override-in-ruby">Calling the original instance method after overriding in Ruby</a>
   <small class="text-slate-400"><time datetime="2023-10-23 00:00:00 +0200">2023/10/23</time></small>
 </li><li>
@@ -163,11 +188,13 @@
   <a href="/20230618_4153/updating-gems">Updating gems</a>
   <small class="text-slate-400"><time datetime="2023-06-18 00:00:00 +0200">2023/06/18</time></small>
 </li></ul>
+  
+
     </main>
     <footer>
       <hr class="!my-8">
       <p class="not-prose text-slate-400">
-        <a href="/feed.xml">RSS</a>
+        <time datetime="2026-03-25 00:00:00 +0100">25 March 2026</time> &middot; <a href="/feed.xml">RSS</a>
       </p>
     </footer>
   </div>

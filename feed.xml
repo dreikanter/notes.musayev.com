@@ -128,6 +128,36 @@
     </item>
     
     <item>
+      <title>Fixing Ruby environment for non-interactive shells</title>
+      <link>https://notes.musayev.com/20260325_9403/fixing-ruby-environment-for-non-interactive-shells</link>
+      <guid>20260325_9403</guid>
+      <description><![CDATA[<p>If you ever encountered <code>Gem::GemNotFoundException</code> when git hooks try to run Rubocop, Reek, or other tools from within a GUI git client, it&#39;s because the correct shell profile didn&#39;t get sourced in a non-interactive shell, so mise/asdf/rbenv/another Ruby version manager never activated and the system Ruby kicks in.</p>
+
+<p>Quick fix: add Ruby env init to <code>~/.zshenv</code> (or <a href="https://mise.jdx.dev/dev-tools/shims.html">officially recommended</a> <code>~/.zprofile</code>). Here is mise example:</p>
+<div class="highlight"><pre class="highlight plaintext"><code>if [[ -x "/opt/homebrew/bin/mise" ]]; then
+  eval "$(/opt/homebrew/bin/mise activate zsh --shims)"
+fi
+</code></pre></div>
+<p>Unlike <code>~/.zshrc</code>, <code>~/.zshenv</code> loads for non-interactive context. And the <code>--shims</code> flag is specifically designed for cases like that. It just prepends the shims directory to PATH without hooking into the shell, so it&#39;s safe for non-interactive contexts.</p>
+
+<p>Alternative project-specific fix: add Ruby env initialization to your gitignored <code>lefthook-local.yml</code>. Again, mise example:</p>
+<div class="highlight"><pre class="highlight plaintext"><code>rc: eval "$(/opt/homebrew/bin/mise activate bash --shims)"
+</code></pre></div>
+<p>How to test:</p>
+<div class="highlight"><pre class="highlight plaintext"><code># Before (system default Ruby)
+$ zsh -lc "which ruby"
+/usr/bin/ruby
+
+# After (proper override)
+$ zsh -lc "which ruby"
+/Users/alex/.local/share/mise/installs/ruby/3.3.10/bin/ruby
+</code></pre></div>
+<p>For findability:</p>
+<div class="highlight"><pre class="highlight plaintext"><code>Could not find 'bundler' ... required by your .../Gemfile.lock. Gem::GemNotFoundException
+</code></pre></div>]]></description>
+    </item>
+    
+    <item>
       <title>Basic Vim Motions</title>
       <link>https://notes.musayev.com/20250903_8070/learning-vim</link>
       <guid>20250903_8070</guid>
@@ -1292,9 +1322,12 @@ Y.Y.Y.Y | SUCCESS =&gt; {
 <p><strong>Updating Bundler:</strong></p>
 <div class="highlight"><pre class="highlight shell"><code>bundle update <span class="nt">--bundler</span>
 </code></pre></div>
-<p>Note:
-- <code>Gemfile.lock</code> may lock Bundler version with <code>BUNDLED WITH</code> value.
-- <code>Gemfile.lock</code> may cause an alternative bundler version installation during <code>bundle install</code>.</p>
+<p>Note:</p>
+
+<ul>
+<li><code>Gemfile.lock</code> may lock Bundler version with <code>BUNDLED WITH</code> value.</li>
+<li><code>Gemfile.lock</code> may cause an alternative bundler version installation during <code>bundle install</code>.</li>
+</ul>
 
 <p>Update system gems:</p>
 <div class="highlight"><pre class="highlight shell"><code>gem update <span class="nt">--system</span>
