@@ -12,122 +12,84 @@
   <link rel="alternate" type="application/rss+xml" title="Alex Musayev on Code" href="https://notes.musayev.com/feed.xml">
   <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIiB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCI+CiAgPGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iNDgiIGZpbGw9IiM0YTkwZTIiLz4KICA8cGF0aCBkPSJNMjUgNTAgTDc1IDUwIE03NSA1MCBMNTcgMzIgTTc1IDUwIEw1NyA2OCIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBmaWxsPSJub25lIi8+Cjwvc3ZnPg==">
   <link href="/style.css" rel="stylesheet" type="text/css">
-  <style>.highlight table td { padding: 5px; }
-.highlight table pre { margin: 0; }
-.highlight, .highlight .w {
-  color: #24292f;
-  background-color: #f6f8fa;
-}
-.highlight .k, .highlight .kd, .highlight .kn, .highlight .kp, .highlight .kr, .highlight .kt, .highlight .kv {
-  color: #cf222e;
-}
-.highlight .gr {
-  color: #f6f8fa;
-}
-.highlight .gd {
-  color: #82071e;
-  background-color: #ffebe9;
-}
-.highlight .nb {
-  color: #953800;
-}
-.highlight .nc {
-  color: #953800;
-}
-.highlight .no {
-  color: #953800;
-}
-.highlight .nn {
-  color: #953800;
-}
-.highlight .sr {
-  color: #116329;
-}
-.highlight .na {
-  color: #116329;
-}
-.highlight .nt {
-  color: #116329;
-}
-.highlight .gi {
-  color: #116329;
-  background-color: #dafbe1;
-}
-.highlight .kc {
-  color: #0550ae;
-}
-.highlight .l, .highlight .ld, .highlight .m, .highlight .mb, .highlight .mf, .highlight .mh, .highlight .mi, .highlight .il, .highlight .mo, .highlight .mx {
-  color: #0550ae;
-}
-.highlight .sb {
-  color: #0550ae;
-}
-.highlight .bp {
-  color: #0550ae;
-}
-.highlight .ne {
-  color: #0550ae;
-}
-.highlight .nl {
-  color: #0550ae;
-}
-.highlight .py {
-  color: #0550ae;
-}
-.highlight .nv, .highlight .vc, .highlight .vg, .highlight .vi, .highlight .vm {
-  color: #0550ae;
-}
-.highlight .o, .highlight .ow {
-  color: #0550ae;
-}
-.highlight .gh {
-  color: #0550ae;
-  font-weight: bold;
-}
-.highlight .gu {
-  color: #0550ae;
-  font-weight: bold;
-}
-.highlight .s, .highlight .sa, .highlight .sc, .highlight .dl, .highlight .sd, .highlight .s2, .highlight .se, .highlight .sh, .highlight .sx, .highlight .s1, .highlight .ss {
-  color: #0a3069;
-}
-.highlight .nd {
-  color: #8250df;
-}
-.highlight .nf, .highlight .fm {
-  color: #8250df;
-}
-.highlight .err {
-  color: #f6f8fa;
-  background-color: #82071e;
-}
-.highlight .c, .highlight .ch, .highlight .cd, .highlight .cm, .highlight .cp, .highlight .cpf, .highlight .c1, .highlight .cs {
-  color: #6e7781;
-}
-.highlight .gl {
-  color: #6e7781;
-}
-.highlight .gt {
-  color: #6e7781;
-}
-.highlight .ni {
-  color: #24292f;
-}
-.highlight .si {
-  color: #24292f;
-}
-.highlight .ge {
-  color: #24292f;
-  font-style: italic;
-}
-.highlight .gs {
-  color: #24292f;
-  font-weight: bold;
-}</style>
+  <style>/* Background */ .bg { color: #272822; background-color: #fafafa; }
+/* PreWrapper */ .chroma { color: #272822; background-color: #fafafa; -webkit-text-size-adjust: none; }
+/* Error */ .chroma .err { color: #960050; background-color: #1e0010 }
+/* LineLink */ .chroma .lnlinks { outline: none; text-decoration: none; color: inherit }
+/* LineTableTD */ .chroma .lntd { vertical-align: top; padding: 0; margin: 0; border: 0; }
+/* LineTable */ .chroma .lntable { border-spacing: 0; padding: 0; margin: 0; border: 0; }
+/* LineHighlight */ .chroma .hl { background-color: #e1e1e1 }
+/* LineNumbersTable */ .chroma .lnt { white-space: pre; -webkit-user-select: none; user-select: none; margin-right: 0.4em; padding: 0 0.4em 0 0.4em;color: #7f7f7f }
+/* LineNumbers */ .chroma .ln { white-space: pre; -webkit-user-select: none; user-select: none; margin-right: 0.4em; padding: 0 0.4em 0 0.4em;color: #7f7f7f }
+/* Line */ .chroma .line { display: flex; }
+/* Keyword */ .chroma .k { color: #00a8c8 }
+/* KeywordConstant */ .chroma .kc { color: #00a8c8 }
+/* KeywordDeclaration */ .chroma .kd { color: #00a8c8 }
+/* KeywordNamespace */ .chroma .kn { color: #f92672 }
+/* KeywordPseudo */ .chroma .kp { color: #00a8c8 }
+/* KeywordReserved */ .chroma .kr { color: #00a8c8 }
+/* KeywordType */ .chroma .kt { color: #00a8c8 }
+/* Name */ .chroma .n { color: #111111 }
+/* NameAttribute */ .chroma .na { color: #75af00 }
+/* NameClass */ .chroma .nc { color: #75af00 }
+/* NameConstant */ .chroma .no { color: #00a8c8 }
+/* NameDecorator */ .chroma .nd { color: #75af00 }
+/* NameEntity */ .chroma .ni { color: #111111 }
+/* NameException */ .chroma .ne { color: #75af00 }
+/* NameLabel */ .chroma .nl { color: #111111 }
+/* NameNamespace */ .chroma .nn { color: #111111 }
+/* NameOther */ .chroma .nx { color: #75af00 }
+/* NameProperty */ .chroma .py { color: #111111 }
+/* NameTag */ .chroma .nt { color: #f92672 }
+/* NameBuiltin */ .chroma .nb { color: #111111 }
+/* NameBuiltinPseudo */ .chroma .bp { color: #111111 }
+/* NameVariable */ .chroma .nv { color: #111111 }
+/* NameVariableClass */ .chroma .vc { color: #111111 }
+/* NameVariableGlobal */ .chroma .vg { color: #111111 }
+/* NameVariableInstance */ .chroma .vi { color: #111111 }
+/* NameVariableMagic */ .chroma .vm { color: #111111 }
+/* NameFunction */ .chroma .nf { color: #75af00 }
+/* NameFunctionMagic */ .chroma .fm { color: #75af00 }
+/* Literal */ .chroma .l { color: #ae81ff }
+/* LiteralDate */ .chroma .ld { color: #d88200 }
+/* LiteralString */ .chroma .s { color: #d88200 }
+/* LiteralStringAffix */ .chroma .sa { color: #d88200 }
+/* LiteralStringBacktick */ .chroma .sb { color: #d88200 }
+/* LiteralStringChar */ .chroma .sc { color: #d88200 }
+/* LiteralStringDelimiter */ .chroma .dl { color: #d88200 }
+/* LiteralStringDoc */ .chroma .sd { color: #d88200 }
+/* LiteralStringDouble */ .chroma .s2 { color: #d88200 }
+/* LiteralStringEscape */ .chroma .se { color: #8045ff }
+/* LiteralStringHeredoc */ .chroma .sh { color: #d88200 }
+/* LiteralStringInterpol */ .chroma .si { color: #d88200 }
+/* LiteralStringOther */ .chroma .sx { color: #d88200 }
+/* LiteralStringRegex */ .chroma .sr { color: #d88200 }
+/* LiteralStringSingle */ .chroma .s1 { color: #d88200 }
+/* LiteralStringSymbol */ .chroma .ss { color: #d88200 }
+/* LiteralNumber */ .chroma .m { color: #ae81ff }
+/* LiteralNumberBin */ .chroma .mb { color: #ae81ff }
+/* LiteralNumberFloat */ .chroma .mf { color: #ae81ff }
+/* LiteralNumberHex */ .chroma .mh { color: #ae81ff }
+/* LiteralNumberInteger */ .chroma .mi { color: #ae81ff }
+/* LiteralNumberIntegerLong */ .chroma .il { color: #ae81ff }
+/* LiteralNumberOct */ .chroma .mo { color: #ae81ff }
+/* Operator */ .chroma .o { color: #f92672 }
+/* OperatorWord */ .chroma .ow { color: #f92672 }
+/* Punctuation */ .chroma .p { color: #111111 }
+/* Comment */ .chroma .c { color: #75715e }
+/* CommentHashbang */ .chroma .ch { color: #75715e }
+/* CommentMultiline */ .chroma .cm { color: #75715e }
+/* CommentSingle */ .chroma .c1 { color: #75715e }
+/* CommentSpecial */ .chroma .cs { color: #75715e }
+/* CommentPreproc */ .chroma .cp { color: #75715e }
+/* CommentPreprocFile */ .chroma .cpf { color: #75715e }
+/* GenericEmph */ .chroma .ge { font-style: italic }
+/* GenericStrong */ .chroma .gs { font-weight: bold }
+</style>
   <script src="https://cdn.counter.dev/script.js" data-id="d94a1231-14bd-47f9-ad32-cf1a9b40d2a5" data-utcoffset="2"></script>
 </head>
 <body>
-  <div class="prose prose-slate lg:prose-lg prose-h1:text-4xl prose-headings:font-semibold prose-a:text-sky-800 container mx-auto !px-4 !py-4">
+  <div class="prose prose-slate lg:prose-lg prose-h1:text-4xl prose-headings:font-semibold prose-a:text-sky-800 container mx-auto !px-4 !pt-4 !pb-6">
     <nav class="!my-8">
       <a href="/">Alex Musayev on Code</a>
     </nav>
@@ -135,111 +97,111 @@
       <h1 class="!my-8 !leading-tight"><a href="/20230821_4474/static-site-images-2" class="no-underline">Automating image management for a static site</a></h1>
 
 <p><strong>TLDR:</strong> This post demonstrates using an arbitrary image-sharing tool and some custom code (like a one-hour effort) to simplify picture publishing with a static site generator.</p>
-
-<p>Okay, let&#39;s make the <a href="/20230820_4464/">images publishing process</a> less tedious for a generic static site.</p>
-
+<p>Okay, let's make the <a href="/20230820_4464/">images publishing process</a> less tedious for a generic static site.</p>
 <p>There are two primary use cases involved:</p>
-
 <p><strong>1. Capturing an image</strong> from an arbitrary external source to some interim storage.</p>
-
 <p>This is already an automated operation. There are tools for that. My recent favorite is <a href="https://cleanshot.com/">CleanShot X</a>, which can take screenshots and upload arbitrary images from a file or clipboard to the cloud, providing a quick short link for sharing. Silky-smooth UX. Do recommend.</p>
-
 <p><strong>2. Adding images on a page.</strong></p>
-
-<p>Generally, adding an image to a Markdown page is as easy as pasting its URL into contents like so: <code>![](https://example.com/image.jpg)</code>. Let&#39;s make this work with CleanShot short URLs.</p>
-
+<p>Generally, adding an image to a Markdown page is as easy as pasting its URL into contents like so: <code>![](https://example.com/image.jpg)</code>. Let's make this work with CleanShot short URLs.</p>
 <p>CleanShot URLs open an HTML page that downscales your screenshot to fit the browser window, adds your branding, etc.</p>
-
-<p><img src="cbcab44c52974d23b90c11bab68829c0.jpg" alt="" title=""></p>
-
+<p><img src="cbcab44c52974d23b90c11bab68829c0.jpg" alt=""></p>
 <p>So here is the flow:</p>
-
 <ul>
 <li>Download the image file from the CleanShot share page.</li>
 <li>Replace CleanShot URLs with local image paths during HTML generation.</li>
 </ul>
-
 <p>Turn <code>![](https://share.cleanshot.com/gnNSXtJx)</code> into <code>&lt;img src=&quot;/image.jpg&quot; alt=&quot;&quot;&gt;</code>.</p>
-
 <p>The following example demonstrates how to use <a href="https://github.com/vmg/redcarpet">redcarpet gem</a>, a popular Markdown parser for Ruby, for this purpose:</p>
-<div class="highlight"><pre class="highlight ruby"><code><span class="c1"># Markdown renderer class with a custom processing logic for image tags</span>
-<span class="k">class</span> <span class="nc">CustomMarkdownRenderer</span> <span class="o">&lt;</span> <span class="no">Redcarpet</span><span class="o">::</span><span class="no">Render</span><span class="o">::</span><span class="no">HTML</span>
-  <span class="kp">include</span> <span class="no">Rouge</span><span class="o">::</span><span class="no">Plugins</span><span class="o">::</span><span class="no">Redcarpet</span>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl"><span class="c1"># Markdown renderer class with a custom processing logic for image tags</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">CustomMarkdownRenderer</span> <span class="o">&lt;</span> <span class="no">Redcarpet</span><span class="o">::</span><span class="no">Render</span><span class="o">::</span><span class="no">HTML</span>
+</span></span><span class="line"><span class="cl">  <span class="kp">include</span> <span class="no">Rouge</span><span class="o">::</span><span class="no">Plugins</span><span class="o">::</span><span class="no">Redcarpet</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="kp">attr_reader</span> <span class="ss">:images_cache</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="ss">images_cache</span><span class="p">:,</span> <span class="ss">extensions</span><span class="p">:</span> <span class="p">{})</span>
+</span></span><span class="line"><span class="cl">    <span class="k">super</span><span class="p">(</span><span class="n">extensions</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="vi">@images_cache</span> <span class="o">=</span> <span class="n">images_cache</span>
+</span></span><span class="line"><span class="cl">  <span class="k">end</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">def</span> <span class="nf">image</span><span class="p">(</span><span class="n">link</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">alt_text</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">file_name</span> <span class="o">=</span> <span class="n">images_cache</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">link</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&lt;img src=</span><span class="se">\&#34;</span><span class="si">#{</span><span class="n">file_name</span><span class="si">}</span><span class="se">\&#34;</span><span class="s2"> alt=</span><span class="se">\&#34;</span><span class="si">#{</span><span class="n">alt_text</span><span class="si">}</span><span class="se">\&#34;</span><span class="s2"> title=</span><span class="se">\&#34;</span><span class="si">#{</span><span class="n">title</span><span class="si">}</span><span class="se">\&#34;</span><span class="s2">&gt;&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">end</span>
+</span></span><span class="line"><span class="cl"><span class="k">end</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">ImagesCache</span>
+</span></span><span class="line"><span class="cl">  <span class="k">def</span> <span class="nf">fetch</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># If URL is not found in the local cache</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#   Download the image file from CleanShot</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#   Save the image to a local directory</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># Return relative path to the local image copy, suitable for &lt;img&gt; tag</span>
+</span></span><span class="line"><span class="cl">  <span class="k">end</span>
+</span></span><span class="line"><span class="cl"><span class="k">end</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Rendering HTML for a sample page</span>
+</span></span><span class="line"><span class="cl"><span class="no">Redcarpet</span><span class="o">::</span><span class="no">Markdown</span><span class="o">.</span><span class="n">new</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">  <span class="no">CustomMarkdownRenderer</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">images_cache</span><span class="p">:</span> <span class="no">ImagesCache</span><span class="o">.</span><span class="n">new</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">  <span class="ss">fenced_code_blocks</span><span class="p">:</span> <span class="kp">true</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="ss">highlight</span><span class="p">:</span> <span class="kp">true</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="no">File</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s2">&#34;site-content/page.md&#34;</span><span class="p">))</span>
+</span></span></code></pre><p><code>ImagesCache</code> class suppose to build an arbitrary local directory structure to keep image files with unique URL-friendly names:</p>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl">$ tree ~/Dropbox/Images
+</span></span><span class="line"><span class="cl">.
+</span></span><span class="line"><span class="cl">├── 20230720_4288
+</span></span><span class="line"><span class="cl">│   └── 43688db1c5851f1a8382a311bd0dc72b.jpg
+</span></span><span class="line"><span class="cl">├── 20230730_4361
+</span></span><span class="line"><span class="cl">│   └── 6c53cf2f2916480f9374471f64a7640b.jpg
+</span></span><span class="line"><span class="cl">│   └── e28f897f968246d1bd45c25aabc32bf8.jpg
+</span></span><span class="line"><span class="cl">└── index.json
+</span></span></code></pre><p>And an index for quick look-up for the cached files using the original URL from the Markdown source as the key. DB table, or a CSV, or JSON file, whatever:</p>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl">$ cat index.json
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">  &#34;https://share.cleanshot.com/Yp166HDZ&#34;: &#34;20230720_4288/43688db1c5851f1a8382a311bd0dc72b.jpg&#34;,
+</span></span><span class="line"><span class="cl">  &#34;https://share.cleanshot.com/qZ5T6q7g&#34;: &#34;20230730_4361/6c53cf2f2916480f9374471f64a7640b.jpg&#34;,
+</span></span><span class="line"><span class="cl">  &#34;https://share.cleanshot.com/35WJDTGz&#34;: &#34;20230730_4361/e28f897f968246d1bd45c25aabc32bf8.jpg&#34;
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre><p>The example above explains how the images appear on this site pages. So far, so good.</p>
 
-  <span class="nb">attr_reader</span> <span class="ss">:images_cache</span>
 
-  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">images_cache</span><span class="p">:,</span> <span class="ss">extensions: </span><span class="p">{})</span>
-    <span class="k">super</span><span class="p">(</span><span class="n">extensions</span><span class="p">)</span>
-    <span class="vi">@images_cache</span> <span class="o">=</span> <span class="n">images_cache</span>
-  <span class="k">end</span>
 
-  <span class="k">def</span> <span class="nf">image</span><span class="p">(</span><span class="n">link</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">alt_text</span><span class="p">)</span>
-    <span class="n">file_name</span> <span class="o">=</span> <span class="n">images_cache</span><span class="p">.</span><span class="nf">fetch</span><span class="p">(</span><span class="n">link</span><span class="p">)</span>
-    <span class="s2">"&lt;img src=</span><span class="se">\"</span><span class="si">#{</span><span class="n">file_name</span><span class="si">}</span><span class="se">\"</span><span class="s2"> alt=</span><span class="se">\"</span><span class="si">#{</span><span class="n">alt_text</span><span class="si">}</span><span class="se">\"</span><span class="s2"> title=</span><span class="se">\"</span><span class="si">#{</span><span class="n">title</span><span class="si">}</span><span class="se">\"</span><span class="s2">&gt;"</span>
-  <span class="k">end</span>
-<span class="k">end</span>
-
-<span class="k">class</span> <span class="nc">ImagesCache</span>
-  <span class="k">def</span> <span class="nf">fetch</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-    <span class="c1"># If URL is not found in the local cache</span>
-    <span class="c1">#   Download the image file from CleanShot</span>
-    <span class="c1">#   Save the image to a local directory</span>
-    <span class="c1"># Return relative path to the local image copy, suitable for &lt;img&gt; tag</span>
-  <span class="k">end</span>
-<span class="k">end</span>
-
-<span class="c1"># Rendering HTML for a sample page</span>
-<span class="no">Redcarpet</span><span class="o">::</span><span class="no">Markdown</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span>
-  <span class="no">CustomMarkdownRenderer</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">images_cache: </span><span class="no">ImagesCache</span><span class="p">.</span><span class="nf">new</span><span class="p">),</span>
-  <span class="ss">fenced_code_blocks: </span><span class="kp">true</span><span class="p">,</span>
-  <span class="ss">highlight: </span><span class="kp">true</span>
-<span class="p">).</span><span class="nf">render</span><span class="p">(</span><span class="no">File</span><span class="p">.</span><span class="nf">read</span><span class="p">(</span><span class="s2">"site-content/page.md"</span><span class="p">))</span>
-</code></pre></div>
-<p><code>ImagesCache</code> class suppose to build an arbitrary local directory structure to keep image files with unique URL-friendly names:</p>
-<div class="highlight"><pre class="highlight plaintext"><code>$ tree ~/Dropbox/Images
-.
-├── 20230720_4288
-│   └── 43688db1c5851f1a8382a311bd0dc72b.jpg
-├── 20230730_4361
-│   └── 6c53cf2f2916480f9374471f64a7640b.jpg
-│   └── e28f897f968246d1bd45c25aabc32bf8.jpg
-└── index.json
-</code></pre></div>
-<p>And an index for quick look-up for the cached files using the original URL from the Markdown source as the key. DB table, or a CSV, or JSON file, whatever:</p>
-<div class="highlight"><pre class="highlight plaintext"><code>$ cat index.json
-{
-  "https://share.cleanshot.com/Yp166HDZ": "20230720_4288/43688db1c5851f1a8382a311bd0dc72b.jpg",
-  "https://share.cleanshot.com/qZ5T6q7g": "20230730_4361/6c53cf2f2916480f9374471f64a7640b.jpg",
-  "https://share.cleanshot.com/35WJDTGz": "20230730_4361/e28f897f968246d1bd45c25aabc32bf8.jpg"
-}
-</code></pre></div>
-<p>The example above explains how the images appear on this site pages. So far, so good.</p>
-
-  <hr class="!my-8">
-  <div class="flex flex-row flex-wrap items-stretch !my-8">
-    <a href="/tags/notes" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">notes</a><a href="/tags/static_site_generators" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">static_site_generators</a>
+  <hr class="!my-6">
+  <div class="flex flex-row flex-wrap items-stretch !my-6">
+    
+      <a href="/tags/static_site_generators" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">static_site_generators</a>
+    
+      <a href="/tags/notes" class="block border rounded-md py-0 px-2 my-1 mr-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">notes</a>
+    
   </div>
 
-  
-    <hr class="!my-8">
-    <p>Somewhat related:</p>
-    <ul><li>
-  <a href="/20260329_9444/publishing-notes">Process Smells in AI-Assisted Workflows</a>
-  <small class="text-slate-400"><time datetime="2026-03-29 00:00:00 +0100">2026/03/29</time></small>
-</li><li>
-  <a href="/20230820_4464/static-site-images">Images management for a static site is tedious</a>
-  <small class="text-slate-400"><time datetime="2023-08-20 00:00:00 +0200">2023/08/20</time></small>
-</li><li>
-  <a href="/20230526_4105/publishing-notes">Publishing notes</a>
-  <small class="text-slate-400"><time datetime="2023-05-26 00:00:00 +0200">2023/05/26</time></small>
-</li></ul>
-  
+
+
+  <hr class="!my-6">
+  <p>Somewhat related:</p>
+  <ul>
+    
+      <li>
+        <a href="/20260329_9444/publishing-notes">Process Smells in AI-Assisted Workflows</a>
+        <small class="text-slate-400"><time datetime="2026-03-29">2026/03/29</time></small>
+      </li>
+    
+      <li>
+        <a href="/20230820_4464/static-site-images">Images management for a static site is tedious</a>
+        <small class="text-slate-400"><time datetime="2023-08-20">2023/08/20</time></small>
+      </li>
+    
+      <li>
+        <a href="/20230526_4105/publishing-notes">Publishing notes</a>
+        <small class="text-slate-400"><time datetime="2023-05-26">2023/05/26</time></small>
+      </li>
+    
+  </ul>
+
 
     </main>
     <footer>
-      <hr class="!my-8">
+      <hr class="!my-6">
       <p class="not-prose text-slate-400">
-        <time datetime="2023-08-21 00:00:00 +0200">21 August 2023</time> &middot; <a href="/feed.xml">RSS</a>
+        <time datetime="2023-08-21">21 August 2023</time> &middot; <a href="/feed.xml">RSS</a>
       </p>
     </footer>
   </div>

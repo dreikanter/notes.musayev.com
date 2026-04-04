@@ -11,118 +11,107 @@
       <link>https://notes.musayev.com/20260329_9444/publishing-notes</link>
       <guid>20260329_9444</guid>
       <description><![CDATA[<p><strong>Specification:</strong></p>
-
 <ul>
 <li>You keep correcting AI mid-task instead of front-loading intent
-
 <ul>
 <li>Specs are undercooked</li>
-</ul></li>
+</ul>
+</li>
 <li>You accept &quot;close enough&quot; output and manually patch it
-
 <ul>
 <li>Acceptance criteria are vague</li>
-</ul></li>
-<li>You can&#39;t tell if output is correct without running it
-
+</ul>
+</li>
+<li>You can't tell if output is correct without running it
 <ul>
 <li>Lost architectural grip on the area</li>
-</ul></li>
 </ul>
-
+</li>
+</ul>
 <p><strong>Context Management:</strong></p>
-
 <ul>
 <li>You re-explain the same project context across sessions
-
 <ul>
 <li>Missing a persistent briefing doc</li>
-</ul></li>
+</ul>
+</li>
 <li>You forget where a parallel thread left off
-
 <ul>
 <li>No re-entry protocol</li>
-</ul></li>
-<li>You hold task state in your head instead of externalizing it
-
-<ul>
-<li>Doesn&#39;t scale past ~3 threads</li>
-</ul></li>
 </ul>
-
-<p><strong>Delegation:</strong></p>
-
+</li>
+<li>You hold task state in your head instead of externalizing it
 <ul>
-<li>You do a task manually because &quot;it&#39;s faster than explaining it to AI&quot;
-
+<li>Doesn't scale past ~3 threads</li>
+</ul>
+</li>
+</ul>
+<p><strong>Delegation:</strong></p>
+<ul>
+<li>You do a task manually because &quot;it's faster than explaining it to AI&quot;
 <ul>
 <li>Avoiding the spec investment (fine if one-off, smell if recurring)</li>
-</ul></li>
-<li>You micromanage AI output token-by-token instead of reviewing at the outcome level
-
-<ul>
-<li>Haven&#39;t let go of the maker identity</li>
-</ul></li>
-<li>You can&#39;t walk away from a running agent session
-
-<ul>
-<li>Trust/verification pipeline isn&#39;t set up</li>
-</ul></li>
 </ul>
-
-<p><strong>Verification:</strong></p>
-
+</li>
+<li>You micromanage AI output token-by-token instead of reviewing at the outcome level
 <ul>
-<li>You approve AI PRs faster than you&#39;d approve a junior&#39;s
-
+<li>Haven't let go of the maker identity</li>
+</ul>
+</li>
+<li>You can't walk away from a running agent session
+<ul>
+<li>Trust/verification pipeline isn't set up</li>
+</ul>
+</li>
+</ul>
+<p><strong>Verification:</strong></p>
+<ul>
+<li>You approve AI PRs faster than you'd approve a junior's
 <ul>
 <li>Calibration drift</li>
-</ul></li>
+</ul>
+</li>
 <li>You review diffs line-by-line when you should be checking behavior
-
 <ul>
 <li>Wrong verification level</li>
-</ul></li>
+</ul>
+</li>
 <li>You skip testing because &quot;it looked right&quot;
-
 <ul>
 <li>False fluency problem</li>
-</ul></li>
 </ul>
-
+</li>
+</ul>
 <p><strong>Prioritization:</strong></p>
-
 <ul>
 <li>You start new AI tasks before verifying completed ones
-
 <ul>
 <li>Generation is more fun than review</li>
-</ul></li>
+</ul>
+</li>
 <li>You optimize tooling instead of shipping
-
 <ul>
 <li>Meta-work trap</li>
-</ul></li>
-<li>You can&#39;t articulate what you&#39;re blocked on
-
+</ul>
+</li>
+<li>You can't articulate what you're blocked on
 <ul>
 <li>Planning debt</li>
-</ul></li>
 </ul>
-
+</li>
+</ul>
 <p><strong>Energy:</strong></p>
-
 <ul>
-<li>You feel busy but can&#39;t point to what you shipped
-
+<li>You feel busy but can't point to what you shipped
 <ul>
 <li>Motion vs. progress</li>
-</ul></li>
-<li>You&#39;re fatigued from reading, not writing
-
+</ul>
+</li>
+<li>You're fatigued from reading, not writing
 <ul>
 <li>Verification exhaustion (needs different recovery than creative fatigue)</li>
-</ul></li>
+</ul>
+</li>
 </ul>
 ]]></description>
     </item>
@@ -131,31 +120,26 @@
       <title>Fixing Ruby environment for non-interactive shells</title>
       <link>https://notes.musayev.com/20260325_9403/fixing-ruby-environment-for-non-interactive-shells</link>
       <guid>20260325_9403</guid>
-      <description><![CDATA[<p>If you ever encountered <code>Gem::GemNotFoundException</code> when git hooks try to run Rubocop, Reek, or other tools from within a GUI git client, it&#39;s because the correct shell profile didn&#39;t get sourced in a non-interactive shell, so mise/asdf/rbenv/another Ruby version manager never activated and the system Ruby kicks in.</p>
-
+      <description><![CDATA[<p>If you ever encountered <code>Gem::GemNotFoundException</code> when git hooks try to run Rubocop, Reek, or other tools from within a GUI git client, it's because the correct shell profile didn't get sourced in a non-interactive shell, so mise/asdf/rbenv/another Ruby version manager never activated and the system Ruby kicks in.</p>
 <p>Quick fix: add Ruby env init to <code>~/.zshenv</code> (or <a href="https://mise.jdx.dev/dev-tools/shims.html">officially recommended</a> <code>~/.zprofile</code>). Here is mise example:</p>
-<div class="highlight"><pre class="highlight plaintext"><code>if [[ -x "/opt/homebrew/bin/mise" ]]; then
-  eval "$(/opt/homebrew/bin/mise activate zsh --shims)"
-fi
-</code></pre></div>
-<p>Unlike <code>~/.zshrc</code>, <code>~/.zshenv</code> loads for non-interactive context. And the <code>--shims</code> flag is specifically designed for cases like that. It just prepends the shims directory to PATH without hooking into the shell, so it&#39;s safe for non-interactive contexts.</p>
-
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl">if [[ -x &#34;/opt/homebrew/bin/mise&#34; ]]; then
+</span></span><span class="line"><span class="cl">  eval &#34;$(/opt/homebrew/bin/mise activate zsh --shims)&#34;
+</span></span><span class="line"><span class="cl">fi
+</span></span></code></pre><p>Unlike <code>~/.zshrc</code>, <code>~/.zshenv</code> loads for non-interactive context. And the <code>--shims</code> flag is specifically designed for cases like that. It just prepends the shims directory to PATH without hooking into the shell, so it's safe for non-interactive contexts.</p>
 <p>Alternative solution for <a href="https://github.com/evilmartians/lefthook">Lefthook</a>-managed git callback:</p>
-<div class="highlight"><pre class="highlight plaintext"><code># lefthook-local.yml
-rc: eval "$(/opt/homebrew/bin/mise activate bash --shims)"
-</code></pre></div>
-<p>How to test:</p>
-<div class="highlight"><pre class="highlight plaintext"><code># Before (system default Ruby)
-$ zsh -lc "which ruby"
-/usr/bin/ruby
-
-# After (proper override)
-$ zsh -lc "which ruby"
-/Users/alex/.local/share/mise/installs/ruby/&lt;version&gt;/bin/ruby
-</code></pre></div>
-<p>For findability:</p>
-<div class="highlight"><pre class="highlight plaintext"><code>Could not find 'bundler' ... required by your .../Gemfile.lock. Gem::GemNotFoundException
-</code></pre></div>]]></description>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl"># lefthook-local.yml
+</span></span><span class="line"><span class="cl">rc: eval &#34;$(/opt/homebrew/bin/mise activate bash --shims)&#34;
+</span></span></code></pre><p>How to test:</p>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl"># Before (system default Ruby)
+</span></span><span class="line"><span class="cl">$ zsh -lc &#34;which ruby&#34;
+</span></span><span class="line"><span class="cl">/usr/bin/ruby
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># After (proper override)
+</span></span><span class="line"><span class="cl">$ zsh -lc &#34;which ruby&#34;
+</span></span><span class="line"><span class="cl">/Users/alex/.local/share/mise/installs/ruby/&lt;version&gt;/bin/ruby
+</span></span></code></pre><p>For findability:</p>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl">Could not find &#39;bundler&#39; ... required by your .../Gemfile.lock. Gem::GemNotFoundException
+</span></span></code></pre>]]></description>
     </item>
     
     <item>
@@ -163,18 +147,14 @@ $ zsh -lc "which ruby"
       <link>https://notes.musayev.com/20250903_8070/learning-vim</link>
       <guid>20250903_8070</guid>
       <description><![CDATA[<p>Things to remember.</p>
-
 <p>Modes:</p>
-
 <ul>
 <li><code>i</code> - insert mode</li>
 <li><code>esc</code> - normal mode</li>
 <li><code>v</code>/<code>V</code> - visual mode</li>
 <li><code>:</code>- command mode</li>
 </ul>
-
 <p>Motions:</p>
-
 <ul>
 <li><code>h</code>, <code>j</code>, <code>k</code>, <code>l</code></li>
 <li><code>0</code> - home, <code>^</code> - first chr, <code>$</code> - eol</li>
@@ -182,26 +162,20 @@ $ zsh -lc "which ruby"
 <li><code>e</code>/<code>E</code> - next word-end</li>
 <li><code>b</code>/<code>B</code> - backward</li>
 </ul>
-
 <p>Insert mode:</p>
-
 <ul>
 <li><code>i</code> - insert before chr</li>
 <li><code>I</code> - beginning of line</li>
 <li><code>a</code> - append after chr</li>
 <li><code>A</code> - EOL</li>
 </ul>
-
 <p>Horsing around:</p>
-
 <ul>
 <li><code>zz</code>/<code>zt</code>/<code>zb</code> - scroll rel cursor</li>
 <li><code>H</code>/<code>M</code>/<code>L</code> - jump to first/mid/last line on screen</li>
 <li><code>ZZ</code> - quick exit</li>
 </ul>
-
 <p>Text modification:</p>
-
 <ul>
 <li><code>d</code> - delete</li>
 <li><code>dd</code> - delete line</li>
@@ -212,9 +186,7 @@ $ zsh -lc "which ruby"
 <li><code>r</code> - replace</li>
 <li><code>.</code> - replay</li>
 </ul>
-
 <p>Clipboard:</p>
-
 <ul>
 <li><code>y</code> - yank</li>
 <li><code>yy</code> - yank line</li>
@@ -226,24 +198,18 @@ $ zsh -lc "which ruby"
 <li><code>*</code> - select current word matches → <code>n</code>/<code>N</code> - jump to next/prev</li>
 <li><code>viw</code> - select word</li>
 </ul>
-
 <p>Macros:</p>
-
 <ul>
 <li><code>q1</code> - record macro to reg 1</li>
 <li><code>q</code> - stop recording</li>
 <li><code>@1</code> - replay macro</li>
 </ul>
-
 <p>Time travel:</p>
-
 <ul>
 <li><code>u</code> - undo</li>
 <li><code>Ctrl+r</code> - redo</li>
 </ul>
-
 <p>Commands:</p>
-
 <p><code>:w</code> - save
 <code>:q</code>/<code>:q!</code> - quit
 <code>:noh</code> - reset search highlights
@@ -256,24 +222,19 @@ $ zsh -lc "which ruby"
       <title>A command-line TIL (Today I Learned) script</title>
       <link>https://notes.musayev.com/20250902_8066/til</link>
       <guid>20250902_8066</guid>
-      <description><![CDATA[<p>I built a simple Ruby script to collect random things I learn throughout the day. It&#39;s deliberately minimal—no UI, no database, no dependencies, just a text file and timestamps.</p>
-
+      <description><![CDATA[<p>I built a simple Ruby script to collect random things I learn throughout the day. It's deliberately minimal—no UI, no database, no dependencies, just a text file and timestamps.</p>
 <p>The script lives in my <code>$PATH</code> and works like this:</p>
-<div class="highlight"><pre class="highlight shell"><code><span class="c"># Save a new learning</span>
-til <span class="s2">"You can use git log --oneline --graph for a nice commit tree"</span>
-</code></pre></div>
-<p>New note gets appended to <code>~/notes/til.md</code> with a timestamp.</p>
-<div class="highlight"><pre class="highlight plaintext"><code>- 2024-12-16 09:12: vim ggVG selects all text
-- 2024-12-16 11:30: Rob Pike: A little copying is better than a little dependency
-- 2024-12-16 14:15: Private methods in Rails helper models are still available in views
-- 2024-12-16 16:42: Stimulus auto-typecasts action parameters that look like JSON
-- 2024-12-17 08:05: One can't just cd "~/New folder". It should be cd "$HOME/New folder" or cd $HOME/"New folder" instead.
-</code></pre></div>
-<p>I’ll probably change it to a random one if the initiative survives the test of time.</p>
-
-<p>The script expects a <code>NOTES_PATH</code> environment variable and fails fast if it&#39;s not set or doesn&#39;t exist. When called without arguments, it shows the last 10 entries with timestamps stripped for cleaner reading.</p>
-
-<p>It&#39;s not meant to be a sophisticated knowledge management system. Just a frictionless way to capture small discoveries before they disappear. Sometimes the best tools are the simplest ones.</p>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl"><span class="c1"># Save a new learning</span>
+</span></span><span class="line"><span class="cl">til <span class="s2">&#34;You can use git log --oneline --graph for a nice commit tree&#34;</span>
+</span></span></code></pre><p>New note gets appended to <code>~/notes/til.md</code> with a timestamp.</p>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl">- 2024-12-16 09:12: vim ggVG selects all text
+</span></span><span class="line"><span class="cl">- 2024-12-16 11:30: Rob Pike: A little copying is better than a little dependency
+</span></span><span class="line"><span class="cl">- 2024-12-16 14:15: Private methods in Rails helper models are still available in views
+</span></span><span class="line"><span class="cl">- 2024-12-16 16:42: Stimulus auto-typecasts action parameters that look like JSON
+</span></span><span class="line"><span class="cl">- 2024-12-17 08:05: One can&#39;t just cd &#34;~/New folder&#34;. It should be cd &#34;$HOME/New folder&#34; or cd $HOME/&#34;New folder&#34; instead.
+</span></span></code></pre><p>I’ll probably change it to a random one if the initiative survives the test of time.</p>
+<p>The script expects a <code>NOTES_PATH</code> environment variable and fails fast if it's not set or doesn't exist. When called without arguments, it shows the last 10 entries with timestamps stripped for cleaner reading.</p>
+<p>It's not meant to be a sophisticated knowledge management system. Just a frictionless way to capture small discoveries before they disappear. Sometimes the best tools are the simplest ones.</p>
 ]]></description>
     </item>
     
@@ -282,9 +243,7 @@ til <span class="s2">"You can use git log --oneline --graph for a nice commit tr
       <link>https://notes.musayev.com/20240504_5727/naming-things</link>
       <guid>20240504_5727</guid>
       <description><![CDATA[<p>Choose a name you favor.</p>
-
 <p>Start using it consistently when referring to the subject of your work.</p>
-
 <p>Recognize that initially, the name may seem insignificant and lacking meaningful associations with what it represents. Allow it to settle and take hold. As the new name matures, it will gradually take shape to fit the subject.</p>
 ]]></description>
     </item>
@@ -294,9 +253,8 @@ til <span class="s2">"You can use git log --oneline --graph for a nice commit tr
       <link>https://notes.musayev.com/20231124_4979/rails-routes-diff</link>
       <guid>20231124_4979</guid>
       <description><![CDATA[<p>This onelinel will show the list of changed routes between two git branches, the <code>main</code>, and the current one:</p>
-<div class="highlight"><pre class="highlight shell"><code>git checkout main <span class="o">&amp;&amp;</span> rails routes <span class="o">&gt;</span> before.txt <span class="o">&amp;&amp;</span> git checkout internal/commentable-communication <span class="o">&amp;&amp;</span> rails routes <span class="o">&gt;</span> after.txt <span class="o">&amp;&amp;</span> diff <span class="nt">-u</span> <span class="nt">-b</span> before.txt after.txt | diff-so-fancy
-</code></pre></div>
-<p>(<code>diff-so-fancy</code> is optional.)</p>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl">git checkout main <span class="o">&amp;&amp;</span> rails routes &gt; before.txt <span class="o">&amp;&amp;</span> git checkout internal/commentable-communication <span class="o">&amp;&amp;</span> rails routes &gt; after.txt <span class="o">&amp;&amp;</span> diff -u -b before.txt after.txt <span class="p">|</span> diff-so-fancy
+</span></span></code></pre><p>(<code>diff-so-fancy</code> is optional.)</p>
 ]]></description>
     </item>
     
@@ -305,38 +263,33 @@ til <span class="s2">"You can use git log --oneline --graph for a nice commit tr
       <link>https://notes.musayev.com/20231023_4812/override-an-override-in-ruby</link>
       <guid>20231023_4812</guid>
       <description><![CDATA[<p>Say, there is a class:</p>
-<div class="highlight"><pre class="highlight ruby"><code><span class="k">class</span> <span class="nc">Base</span>
-  <span class="k">def</span> <span class="nf">test</span>
-    <span class="s2">"original result"</span>
-  <span class="k">end</span>
-<span class="k">end</span>
-</code></pre></div>
-<p>And a descendant that overrides base class method:</p>
-<div class="highlight"><pre class="highlight ruby"><code><span class="k">class</span> <span class="nc">Descendant</span> <span class="o">&lt;</span> <span class="no">Base</span>
-  <span class="k">def</span> <span class="nf">test</span>
-    <span class="s2">"overridden result"</span>
-  <span class="k">end</span>
-<span class="k">end</span>
-</code></pre></div>
-<p>How to call <code>Base#test</code> in the <code>Descendant</code> instance context, outside from the <code>Descendant#test</code>? In other words, how woud you access <code>super</code> for some secific instance method outside from the override?</p>
-
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Base</span>
+</span></span><span class="line"><span class="cl">  <span class="k">def</span> <span class="nf">test</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;original result&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">end</span>
+</span></span><span class="line"><span class="cl"><span class="k">end</span>
+</span></span></code></pre><p>And a descendant that overrides base class method:</p>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Descendant</span> <span class="o">&lt;</span> <span class="no">Base</span>
+</span></span><span class="line"><span class="cl">  <span class="k">def</span> <span class="nf">test</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;overridden result&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">end</span>
+</span></span><span class="line"><span class="cl"><span class="k">end</span>
+</span></span></code></pre><p>How to call <code>Base#test</code> in the <code>Descendant</code> instance context, outside from the <code>Descendant#test</code>? In other words, how woud you access <code>super</code> for some secific instance method outside from the override?</p>
 <p>There is a way:</p>
-<div class="highlight"><pre class="highlight ruby"><code><span class="k">class</span> <span class="nc">Descendant</span> <span class="o">&lt;</span> <span class="no">Base</span>
-  <span class="k">def</span> <span class="nf">test</span>
-    <span class="s2">"overridden result"</span>
-  <span class="k">end</span>
-
-  <span class="k">def</span> <span class="nf">original_test</span>
-    <span class="n">super_test</span> <span class="o">=</span> <span class="no">Base</span><span class="p">.</span><span class="nf">instance_method</span><span class="p">(</span><span class="ss">:test</span><span class="p">).</span><span class="nf">bind</span><span class="p">(</span><span class="nb">self</span><span class="p">)</span>
-    <span class="n">super_test</span><span class="p">.</span><span class="nf">call</span>
-  <span class="k">end</span>
-<span class="k">end</span>
-</code></pre></div>
-<p><code>Descendant#original_test</code> will call the <code>Base#test</code>:</p>
-<div class="highlight"><pre class="highlight ruby"><code><span class="no">Descendant</span><span class="p">.</span><span class="nf">new</span><span class="p">.</span><span class="nf">original_test</span>
-<span class="c1"># =&gt; "original result"</span>
-</code></pre></div>
-<p>Same approach works for module methods: <code>ImportedModule.instance_method(:method_name).bind(self).call</code></p>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Descendant</span> <span class="o">&lt;</span> <span class="no">Base</span>
+</span></span><span class="line"><span class="cl">  <span class="k">def</span> <span class="nf">test</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;overridden result&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">end</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">def</span> <span class="nf">original_test</span>
+</span></span><span class="line"><span class="cl">    <span class="n">super_test</span> <span class="o">=</span> <span class="no">Base</span><span class="o">.</span><span class="n">instance_method</span><span class="p">(</span><span class="ss">:test</span><span class="p">)</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="nb">self</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">super_test</span><span class="o">.</span><span class="n">call</span>
+</span></span><span class="line"><span class="cl">  <span class="k">end</span>
+</span></span><span class="line"><span class="cl"><span class="k">end</span>
+</span></span></code></pre><p><code>Descendant#original_test</code> will call the <code>Base#test</code>:</p>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl"><span class="no">Descendant</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">original_test</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># =&gt; &#34;original result&#34;</span>
+</span></span></code></pre><p>Same approach works for module methods: <code>ImportedModule.instance_method(:method_name).bind(self).call</code></p>
 ]]></description>
     </item>
     
@@ -345,11 +298,10 @@ til <span class="s2">"You can use git log --oneline --graph for a nice commit tr
       <link>https://notes.musayev.com/20230912_4619/git-whatchanged</link>
       <guid>20230912_4619</guid>
       <description><![CDATA[<p>List files, changed in the current branch (<code>HEAD</code>), comparing to the source branch (<code>main</code>):</p>
-<div class="highlight"><pre class="highlight shell"><code>git diff <span class="nt">--name-only</span> main HEAD
-</code></pre></div>
-<p>Comparing with the current branch:</p>
-<div class="highlight"><pre class="highlight shell"><code>git diff <span class="nt">--name-only</span> main..
-</code></pre></div>]]></description>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl">git diff --name-only main HEAD
+</span></span></code></pre><p>Comparing with the current branch:</p>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl">git diff --name-only main..
+</span></span></code></pre>]]></description>
     </item>
     
     <item>
@@ -357,85 +309,70 @@ til <span class="s2">"You can use git log --oneline --graph for a nice commit tr
       <link>https://notes.musayev.com/20230821_4474/static-site-images-2</link>
       <guid>20230821_4474</guid>
       <description><![CDATA[<p><strong>TLDR:</strong> This post demonstrates using an arbitrary image-sharing tool and some custom code (like a one-hour effort) to simplify picture publishing with a static site generator.</p>
-
-<p>Okay, let&#39;s make the <a href="/20230820_4464/">images publishing process</a> less tedious for a generic static site.</p>
-
+<p>Okay, let's make the <a href="/20230820_4464/">images publishing process</a> less tedious for a generic static site.</p>
 <p>There are two primary use cases involved:</p>
-
 <p><strong>1. Capturing an image</strong> from an arbitrary external source to some interim storage.</p>
-
 <p>This is already an automated operation. There are tools for that. My recent favorite is <a href="https://cleanshot.com/">CleanShot X</a>, which can take screenshots and upload arbitrary images from a file or clipboard to the cloud, providing a quick short link for sharing. Silky-smooth UX. Do recommend.</p>
-
 <p><strong>2. Adding images on a page.</strong></p>
-
-<p>Generally, adding an image to a Markdown page is as easy as pasting its URL into contents like so: <code>![](https://example.com/image.jpg)</code>. Let&#39;s make this work with CleanShot short URLs.</p>
-
+<p>Generally, adding an image to a Markdown page is as easy as pasting its URL into contents like so: <code>![](https://example.com/image.jpg)</code>. Let's make this work with CleanShot short URLs.</p>
 <p>CleanShot URLs open an HTML page that downscales your screenshot to fit the browser window, adds your branding, etc.</p>
-
-<p><img src="cbcab44c52974d23b90c11bab68829c0.jpg" alt="" title=""></p>
-
+<p><img src="cbcab44c52974d23b90c11bab68829c0.jpg" alt=""></p>
 <p>So here is the flow:</p>
-
 <ul>
 <li>Download the image file from the CleanShot share page.</li>
 <li>Replace CleanShot URLs with local image paths during HTML generation.</li>
 </ul>
-
 <p>Turn <code>![](https://share.cleanshot.com/gnNSXtJx)</code> into <code>&lt;img src=&quot;/image.jpg&quot; alt=&quot;&quot;&gt;</code>.</p>
-
 <p>The following example demonstrates how to use <a href="https://github.com/vmg/redcarpet">redcarpet gem</a>, a popular Markdown parser for Ruby, for this purpose:</p>
-<div class="highlight"><pre class="highlight ruby"><code><span class="c1"># Markdown renderer class with a custom processing logic for image tags</span>
-<span class="k">class</span> <span class="nc">CustomMarkdownRenderer</span> <span class="o">&lt;</span> <span class="no">Redcarpet</span><span class="o">::</span><span class="no">Render</span><span class="o">::</span><span class="no">HTML</span>
-  <span class="kp">include</span> <span class="no">Rouge</span><span class="o">::</span><span class="no">Plugins</span><span class="o">::</span><span class="no">Redcarpet</span>
-
-  <span class="nb">attr_reader</span> <span class="ss">:images_cache</span>
-
-  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">images_cache</span><span class="p">:,</span> <span class="ss">extensions: </span><span class="p">{})</span>
-    <span class="k">super</span><span class="p">(</span><span class="n">extensions</span><span class="p">)</span>
-    <span class="vi">@images_cache</span> <span class="o">=</span> <span class="n">images_cache</span>
-  <span class="k">end</span>
-
-  <span class="k">def</span> <span class="nf">image</span><span class="p">(</span><span class="n">link</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">alt_text</span><span class="p">)</span>
-    <span class="n">file_name</span> <span class="o">=</span> <span class="n">images_cache</span><span class="p">.</span><span class="nf">fetch</span><span class="p">(</span><span class="n">link</span><span class="p">)</span>
-    <span class="s2">"&lt;img src=</span><span class="se">\"</span><span class="si">#{</span><span class="n">file_name</span><span class="si">}</span><span class="se">\"</span><span class="s2"> alt=</span><span class="se">\"</span><span class="si">#{</span><span class="n">alt_text</span><span class="si">}</span><span class="se">\"</span><span class="s2"> title=</span><span class="se">\"</span><span class="si">#{</span><span class="n">title</span><span class="si">}</span><span class="se">\"</span><span class="s2">&gt;"</span>
-  <span class="k">end</span>
-<span class="k">end</span>
-
-<span class="k">class</span> <span class="nc">ImagesCache</span>
-  <span class="k">def</span> <span class="nf">fetch</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-    <span class="c1"># If URL is not found in the local cache</span>
-    <span class="c1">#   Download the image file from CleanShot</span>
-    <span class="c1">#   Save the image to a local directory</span>
-    <span class="c1"># Return relative path to the local image copy, suitable for &lt;img&gt; tag</span>
-  <span class="k">end</span>
-<span class="k">end</span>
-
-<span class="c1"># Rendering HTML for a sample page</span>
-<span class="no">Redcarpet</span><span class="o">::</span><span class="no">Markdown</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span>
-  <span class="no">CustomMarkdownRenderer</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">images_cache: </span><span class="no">ImagesCache</span><span class="p">.</span><span class="nf">new</span><span class="p">),</span>
-  <span class="ss">fenced_code_blocks: </span><span class="kp">true</span><span class="p">,</span>
-  <span class="ss">highlight: </span><span class="kp">true</span>
-<span class="p">).</span><span class="nf">render</span><span class="p">(</span><span class="no">File</span><span class="p">.</span><span class="nf">read</span><span class="p">(</span><span class="s2">"site-content/page.md"</span><span class="p">))</span>
-</code></pre></div>
-<p><code>ImagesCache</code> class suppose to build an arbitrary local directory structure to keep image files with unique URL-friendly names:</p>
-<div class="highlight"><pre class="highlight plaintext"><code>$ tree ~/Dropbox/Images
-.
-├── 20230720_4288
-│   └── 43688db1c5851f1a8382a311bd0dc72b.jpg
-├── 20230730_4361
-│   └── 6c53cf2f2916480f9374471f64a7640b.jpg
-│   └── e28f897f968246d1bd45c25aabc32bf8.jpg
-└── index.json
-</code></pre></div>
-<p>And an index for quick look-up for the cached files using the original URL from the Markdown source as the key. DB table, or a CSV, or JSON file, whatever:</p>
-<div class="highlight"><pre class="highlight plaintext"><code>$ cat index.json
-{
-  "https://share.cleanshot.com/Yp166HDZ": "20230720_4288/43688db1c5851f1a8382a311bd0dc72b.jpg",
-  "https://share.cleanshot.com/qZ5T6q7g": "20230730_4361/6c53cf2f2916480f9374471f64a7640b.jpg",
-  "https://share.cleanshot.com/35WJDTGz": "20230730_4361/e28f897f968246d1bd45c25aabc32bf8.jpg"
-}
-</code></pre></div>
-<p>The example above explains how the images appear on this site pages. So far, so good.</p>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl"><span class="c1"># Markdown renderer class with a custom processing logic for image tags</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">CustomMarkdownRenderer</span> <span class="o">&lt;</span> <span class="no">Redcarpet</span><span class="o">::</span><span class="no">Render</span><span class="o">::</span><span class="no">HTML</span>
+</span></span><span class="line"><span class="cl">  <span class="kp">include</span> <span class="no">Rouge</span><span class="o">::</span><span class="no">Plugins</span><span class="o">::</span><span class="no">Redcarpet</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="kp">attr_reader</span> <span class="ss">:images_cache</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="ss">images_cache</span><span class="p">:,</span> <span class="ss">extensions</span><span class="p">:</span> <span class="p">{})</span>
+</span></span><span class="line"><span class="cl">    <span class="k">super</span><span class="p">(</span><span class="n">extensions</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="vi">@images_cache</span> <span class="o">=</span> <span class="n">images_cache</span>
+</span></span><span class="line"><span class="cl">  <span class="k">end</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">def</span> <span class="nf">image</span><span class="p">(</span><span class="n">link</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">alt_text</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">file_name</span> <span class="o">=</span> <span class="n">images_cache</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">link</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&lt;img src=</span><span class="se">\&#34;</span><span class="si">#{</span><span class="n">file_name</span><span class="si">}</span><span class="se">\&#34;</span><span class="s2"> alt=</span><span class="se">\&#34;</span><span class="si">#{</span><span class="n">alt_text</span><span class="si">}</span><span class="se">\&#34;</span><span class="s2"> title=</span><span class="se">\&#34;</span><span class="si">#{</span><span class="n">title</span><span class="si">}</span><span class="se">\&#34;</span><span class="s2">&gt;&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">end</span>
+</span></span><span class="line"><span class="cl"><span class="k">end</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">ImagesCache</span>
+</span></span><span class="line"><span class="cl">  <span class="k">def</span> <span class="nf">fetch</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># If URL is not found in the local cache</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#   Download the image file from CleanShot</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#   Save the image to a local directory</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># Return relative path to the local image copy, suitable for &lt;img&gt; tag</span>
+</span></span><span class="line"><span class="cl">  <span class="k">end</span>
+</span></span><span class="line"><span class="cl"><span class="k">end</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Rendering HTML for a sample page</span>
+</span></span><span class="line"><span class="cl"><span class="no">Redcarpet</span><span class="o">::</span><span class="no">Markdown</span><span class="o">.</span><span class="n">new</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">  <span class="no">CustomMarkdownRenderer</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">images_cache</span><span class="p">:</span> <span class="no">ImagesCache</span><span class="o">.</span><span class="n">new</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">  <span class="ss">fenced_code_blocks</span><span class="p">:</span> <span class="kp">true</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="ss">highlight</span><span class="p">:</span> <span class="kp">true</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="no">File</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s2">&#34;site-content/page.md&#34;</span><span class="p">))</span>
+</span></span></code></pre><p><code>ImagesCache</code> class suppose to build an arbitrary local directory structure to keep image files with unique URL-friendly names:</p>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl">$ tree ~/Dropbox/Images
+</span></span><span class="line"><span class="cl">.
+</span></span><span class="line"><span class="cl">├── 20230720_4288
+</span></span><span class="line"><span class="cl">│   └── 43688db1c5851f1a8382a311bd0dc72b.jpg
+</span></span><span class="line"><span class="cl">├── 20230730_4361
+</span></span><span class="line"><span class="cl">│   └── 6c53cf2f2916480f9374471f64a7640b.jpg
+</span></span><span class="line"><span class="cl">│   └── e28f897f968246d1bd45c25aabc32bf8.jpg
+</span></span><span class="line"><span class="cl">└── index.json
+</span></span></code></pre><p>And an index for quick look-up for the cached files using the original URL from the Markdown source as the key. DB table, or a CSV, or JSON file, whatever:</p>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl">$ cat index.json
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">  &#34;https://share.cleanshot.com/Yp166HDZ&#34;: &#34;20230720_4288/43688db1c5851f1a8382a311bd0dc72b.jpg&#34;,
+</span></span><span class="line"><span class="cl">  &#34;https://share.cleanshot.com/qZ5T6q7g&#34;: &#34;20230730_4361/6c53cf2f2916480f9374471f64a7640b.jpg&#34;,
+</span></span><span class="line"><span class="cl">  &#34;https://share.cleanshot.com/35WJDTGz&#34;: &#34;20230730_4361/e28f897f968246d1bd45c25aabc32bf8.jpg&#34;
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre><p>The example above explains how the images appear on this site pages. So far, so good.</p>
 ]]></description>
     </item>
     
@@ -444,27 +381,20 @@ til <span class="s2">"You can use git log --oneline --graph for a nice commit tr
       <link>https://notes.musayev.com/20230820_4464/static-site-images</link>
       <guid>20230820_4464</guid>
       <description><![CDATA[<p>How do people add images to a Markdown-based static site page?</p>
-
 <p>Typically this workflow requires some preparation and a bunch of manual operations.</p>
-
 <p>Prep work:</p>
-
 <ul>
 <li>Create a directory in the site source tree.</li>
 <li>Ideally, develop a naming convention for image files to keep them associated with the related pages and maintain findability.</li>
 </ul>
-
 <p>Adding an image:</p>
-
 <ul>
 <li>Add an image file to the source tree.</li>
 <li>Ensure the file has a conventional and unique URL-friendly name.</li>
 <li>Reference this file from the Markdown page source, minding the correct relative path to the image file.</li>
 </ul>
-
 <p>Subjectively, this workflow is quicker and more robust than dragging things with a mouse over some WYSIWYG web UI. But imagine you need to add ten images this way. It is still tedious and boring 🚢 Not automated enough if you will.</p>
-
-<p><a href="/20230821_4474/">Let&#39;s make this flow less boring</a>.</p>
+<p><a href="/20230821_4474/">Let's make this flow less boring</a>.</p>
 ]]></description>
     </item>
     
@@ -473,21 +403,13 @@ til <span class="s2">"You can use git log --oneline --graph for a nice commit tr
       <link>https://notes.musayev.com/20230819_4462/doherty-threshold</link>
       <guid>20230819_4462</guid>
       <description><![CDATA[<p>Responsive UI is one of the essential attributes of quality software.</p>
-
-<p>Good apps, sites, and services don&#39;t make you wait. And this is why assets bloat in the recent web history royally sucks.</p>
-
+<p>Good apps, sites, and services don't make you wait. And this is why assets bloat in the recent web history royally sucks.</p>
 <p>The situation is not going to change anytime soon. Though when it is up to me, I always mind web page performance, as I was one of the end-users.</p>
-
-<p>It won&#39;t &quot;change the world.&quot; But it will make the user experience a little better. Performance is good developer karma.</p>
-
-<p>If you have a choice, please don&#39;t make users wait. 400 ms is a buttload of time to display a web page.</p>
-
-<p>This site joined <a href="https://512kb.club">512kb.club</a> today. It&#39;s mostly a symbolic gesture. Not a petition or a campaign of any kind, god forbid.</p>
-
-<p><a href="https://gtmetrix.com/reports/notes.musayev.com/RKCsJuw5/"><img src="e2e5ea9bb4b54258815218560c78f832.jpg" alt="" title=""></a></p>
-
+<p>It won't &quot;change the world.&quot; But it will make the user experience a little better. Performance is good developer karma.</p>
+<p>If you have a choice, please don't make users wait. 400 ms is a buttload of time to display a web page.</p>
+<p>This site joined <a href="https://512kb.club">512kb.club</a> today. It's mostly a symbolic gesture. Not a petition or a campaign of any kind, god forbid.</p>
+<p><a href="https://gtmetrix.com/reports/notes.musayev.com/RKCsJuw5/"><img src="e2e5ea9bb4b54258815218560c78f832.jpg" alt=""></a></p>
 <p>References:</p>
-
 <ul>
 <li><a href="https://lawsofux.com/doherty-threshold/">Laws of UX: Doherty Threshold</a></li>
 <li><a href="https://developer.mozilla.org/en-US/docs/Web/Performance/How_long_is_too_long">Recommended Web Performance Timings: How long is too long?</a> at <a href="https://developer.mozilla.org/">developer.mozilla.org</a></li>
@@ -501,71 +423,63 @@ til <span class="s2">"You can use git log --oneline --graph for a nice commit tr
       <link>https://notes.musayev.com/20230819_4459/add-directory-to-existing-sublime-text-window</link>
       <guid>20230819_4459</guid>
       <description><![CDATA[<p>I created couple of very simple command line aliases today, and I like them both very much.</p>
-
 <p>This one introduce <code>s</code> command that opens current directory in a new Sublime Text window:</p>
-<div class="highlight"><pre class="highlight shell"><code><span class="nb">alias </span><span class="nv">s</span><span class="o">=</span><span class="s2">"subl ."</span>
-</code></pre></div>
-<p>And this one does the same thing, but it will add current directory to an existing Sublime Text window if it is already open:</p>
-<div class="highlight"><pre class="highlight shell"><code><span class="nb">alias </span><span class="nv">ss</span><span class="o">=</span><span class="s2">"subl --add ."</span>
-</code></pre></div>]]></description>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl"><span class="nb">alias</span> <span class="nv">s</span><span class="o">=</span><span class="s2">&#34;subl .&#34;</span>
+</span></span></code></pre><p>And this one does the same thing, but it will add current directory to an existing Sublime Text window if it is already open:</p>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl"><span class="nb">alias</span> <span class="nv">ss</span><span class="o">=</span><span class="s2">&#34;subl --add .&#34;</span>
+</span></span></code></pre>]]></description>
     </item>
     
     <item>
       <title>Stubbing environment variables in RSpec</title>
       <link>https://notes.musayev.com/20230818_4452/rspec-stub-environment-variables</link>
       <guid>20230818_4452</guid>
-      <description><![CDATA[<p>To test code based on some <a href="https://12factor.net/config">environment variables configuration</a>, you usually need a way to define environment variables on an individual test case level and be sure this configuration won&#39;t leak from test to test.</p>
-
-<p>In this scenario, RSpec&#39;s <a href="https://github.com/rspec/rspec-mocks#method-stubs">method stubbing</a> comes in handy:</p>
-<div class="highlight"><pre class="highlight ruby"><code><span class="c1"># spec/support/env_helpers.rb</span>
-<span class="k">module</span> <span class="nn">EnvHelpers</span>
-  <span class="k">def</span> <span class="nf">stub_env</span><span class="p">(</span><span class="n">variable_name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
-    <span class="n">allow</span><span class="p">(</span><span class="no">ENV</span><span class="p">).</span><span class="nf">to</span> <span class="n">receive</span><span class="p">(</span><span class="ss">:[]</span><span class="p">).</span><span class="nf">and_call_original</span>
-    <span class="n">allow</span><span class="p">(</span><span class="no">ENV</span><span class="p">).</span><span class="nf">to</span> <span class="n">receive</span><span class="p">(</span><span class="ss">:[]</span><span class="p">).</span><span class="nf">with</span><span class="p">(</span><span class="n">variable_name</span><span class="p">).</span><span class="nf">and_return</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
-    <span class="n">allow</span><span class="p">(</span><span class="no">ENV</span><span class="p">).</span><span class="nf">to</span> <span class="n">receive</span><span class="p">(</span><span class="ss">:fetch</span><span class="p">).</span><span class="nf">and_call_original</span>
-    <span class="n">allow</span><span class="p">(</span><span class="no">ENV</span><span class="p">).</span><span class="nf">to</span> <span class="n">receive</span><span class="p">(</span><span class="ss">:fetch</span><span class="p">).</span><span class="nf">with</span><span class="p">(</span><span class="n">variable_name</span><span class="p">).</span><span class="nf">and_return</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
-  <span class="k">end</span>
-
-  <span class="no">RSpec</span><span class="p">.</span><span class="nf">configure</span> <span class="p">{</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span> <span class="n">config</span><span class="p">.</span><span class="nf">include</span> <span class="nb">self</span> <span class="p">}</span>
-<span class="k">end</span>
-</code></pre></div>
-<p>Require this module from <code>spec/spec_helper.rb</code> for new helpers availability in the specs:</p>
-<div class="highlight"><pre class="highlight ruby"><code><span class="nb">require_relative</span> <span class="s2">"./support/env_helpers"</span>
-</code></pre></div>
-<p>Usage example with custom configuration file in a Rails project:</p>
-<div class="highlight"><pre class="highlight yaml"><code><span class="c1"># config/external_api.yml</span>
-<span class="na">development</span><span class="pi">:</span>
-  <span class="na">api_key</span><span class="pi">:</span> <span class="s2">"</span><span class="s">non_secret_api_key"</span>
-<span class="na">test</span><span class="pi">:</span>
-  <span class="na">api_key</span><span class="pi">:</span> <span class="s">&lt;%= ENV["API_KEY"] %&gt;</span>
-<span class="na">production</span><span class="pi">:</span>
-  <span class="na">api_key</span><span class="pi">:</span> <span class="s">&lt;%= ENV["API_KEY"] %&gt;</span>
-</code></pre></div>
-<p>The spec:</p>
-<div class="highlight"><pre class="highlight ruby"><code><span class="c1"># specs/configuration/external_api_spec.rb</span>
-<span class="no">RSpec</span><span class="p">.</span><span class="nf">describe</span> <span class="s2">"external api configuration"</span> <span class="k">do</span>
-  <span class="n">subject</span><span class="p">(</span><span class="ss">:configuration</span><span class="p">)</span> <span class="p">{</span> <span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">config_for</span><span class="p">(</span><span class="s2">"external_api"</span><span class="p">)</span> <span class="p">}</span>
-
-  <span class="n">context</span> <span class="s2">"with sample configuration"</span> <span class="k">do</span>
-    <span class="n">before</span> <span class="p">{</span> <span class="n">stub_env</span><span class="p">(</span><span class="s2">"API_KEY"</span><span class="p">,</span> <span class="s2">"test_api_key"</span><span class="p">)</span> <span class="p">}</span>
-
-    <span class="n">it</span> <span class="p">{</span> <span class="n">expect</span><span class="p">(</span><span class="n">configuration</span><span class="p">.</span><span class="nf">api_key</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="s2">"test_api_key"</span><span class="p">)</span> <span class="p">}</span>
-  <span class="k">end</span>
-
-  <span class="n">context</span> <span class="s2">"with no configuration"</span> <span class="k">do</span>
-    <span class="n">it</span> <span class="p">{</span> <span class="n">expect</span><span class="p">(</span><span class="n">configuration</span><span class="p">.</span><span class="nf">api_key</span><span class="p">).</span><span class="nf">to</span> <span class="n">be_nil</span> <span class="p">}</span>
-  <span class="k">end</span>
-
-  <span class="n">context</span> <span class="s2">"with direct environment variables access"</span> <span class="k">do</span>
-    <span class="n">before</span> <span class="p">{</span> <span class="n">stub_env</span><span class="p">(</span><span class="s2">"SAMPLE"</span><span class="p">,</span> <span class="s2">"value"</span><span class="p">)</span> <span class="p">}</span>
-
-    <span class="n">it</span> <span class="p">{</span> <span class="n">expect</span><span class="p">(</span><span class="no">ENV</span><span class="p">[</span><span class="s2">"SAMPLE"</span><span class="p">]).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="s2">"value"</span><span class="p">)</span> <span class="p">}</span>
-    <span class="n">it</span> <span class="p">{</span> <span class="n">expect</span><span class="p">(</span><span class="no">ENV</span><span class="p">.</span><span class="nf">fetch</span><span class="p">(</span><span class="s2">"SAMPLE"</span><span class="p">)).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="s2">"value"</span><span class="p">)</span> <span class="p">}</span>
-  <span class="k">end</span>
-<span class="k">end</span>
-</code></pre></div>
-<p>References:</p>
-
+      <description><![CDATA[<p>To test code based on some <a href="https://12factor.net/config">environment variables configuration</a>, you usually need a way to define environment variables on an individual test case level and be sure this configuration won't leak from test to test.</p>
+<p>In this scenario, RSpec's <a href="https://github.com/rspec/rspec-mocks#method-stubs">method stubbing</a> comes in handy:</p>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl"><span class="c1"># spec/support/env_helpers.rb</span>
+</span></span><span class="line"><span class="cl"><span class="k">module</span> <span class="nn">EnvHelpers</span>
+</span></span><span class="line"><span class="cl">  <span class="k">def</span> <span class="nf">stub_env</span><span class="p">(</span><span class="n">variable_name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">allow</span><span class="p">(</span><span class="no">ENV</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">receive</span><span class="p">(</span><span class="ss">:[]</span><span class="p">)</span><span class="o">.</span><span class="n">and_call_original</span>
+</span></span><span class="line"><span class="cl">    <span class="n">allow</span><span class="p">(</span><span class="no">ENV</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">receive</span><span class="p">(</span><span class="ss">:[]</span><span class="p">)</span><span class="o">.</span><span class="n">with</span><span class="p">(</span><span class="n">variable_name</span><span class="p">)</span><span class="o">.</span><span class="n">and_return</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">allow</span><span class="p">(</span><span class="no">ENV</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">receive</span><span class="p">(</span><span class="ss">:fetch</span><span class="p">)</span><span class="o">.</span><span class="n">and_call_original</span>
+</span></span><span class="line"><span class="cl">    <span class="n">allow</span><span class="p">(</span><span class="no">ENV</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">receive</span><span class="p">(</span><span class="ss">:fetch</span><span class="p">)</span><span class="o">.</span><span class="n">with</span><span class="p">(</span><span class="n">variable_name</span><span class="p">)</span><span class="o">.</span><span class="n">and_return</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="k">end</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="no">RSpec</span><span class="o">.</span><span class="n">configure</span> <span class="p">{</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span> <span class="n">config</span><span class="o">.</span><span class="n">include</span> <span class="nb">self</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">end</span>
+</span></span></code></pre><p>Require this module from <code>spec/spec_helper.rb</code> for new helpers availability in the specs:</p>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl"><span class="n">require_relative</span> <span class="s2">&#34;./support/env_helpers&#34;</span>
+</span></span></code></pre><p>Usage example with custom configuration file in a Rails project:</p>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl"><span class="c"># config/external_api.yml</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nt">development</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">api_key</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;non_secret_api_key&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nt">test</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">api_key</span><span class="p">:</span><span class="w"> </span><span class="l">&lt;%= ENV[&#34;API_KEY&#34;] %&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nt">production</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">api_key</span><span class="p">:</span><span class="w"> </span><span class="l">&lt;%= ENV[&#34;API_KEY&#34;] %&gt;</span><span class="w">
+</span></span></span></code></pre><p>The spec:</p>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl"><span class="c1"># specs/configuration/external_api_spec.rb</span>
+</span></span><span class="line"><span class="cl"><span class="no">RSpec</span><span class="o">.</span><span class="n">describe</span> <span class="s2">&#34;external api configuration&#34;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">  <span class="n">subject</span><span class="p">(</span><span class="ss">:configuration</span><span class="p">)</span> <span class="p">{</span> <span class="no">Rails</span><span class="o">.</span><span class="n">application</span><span class="o">.</span><span class="n">config_for</span><span class="p">(</span><span class="s2">&#34;external_api&#34;</span><span class="p">)</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="n">context</span> <span class="s2">&#34;with sample configuration&#34;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">    <span class="n">before</span> <span class="p">{</span> <span class="n">stub_env</span><span class="p">(</span><span class="s2">&#34;API_KEY&#34;</span><span class="p">,</span> <span class="s2">&#34;test_api_key&#34;</span><span class="p">)</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">it</span> <span class="p">{</span> <span class="n">expect</span><span class="p">(</span><span class="n">configuration</span><span class="o">.</span><span class="n">api_key</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">eq</span><span class="p">(</span><span class="s2">&#34;test_api_key&#34;</span><span class="p">)</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="k">end</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="n">context</span> <span class="s2">&#34;with no configuration&#34;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">    <span class="n">it</span> <span class="p">{</span> <span class="n">expect</span><span class="p">(</span><span class="n">configuration</span><span class="o">.</span><span class="n">api_key</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">be_nil</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="k">end</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="n">context</span> <span class="s2">&#34;with direct environment variables access&#34;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">    <span class="n">before</span> <span class="p">{</span> <span class="n">stub_env</span><span class="p">(</span><span class="s2">&#34;SAMPLE&#34;</span><span class="p">,</span> <span class="s2">&#34;value&#34;</span><span class="p">)</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">it</span> <span class="p">{</span> <span class="n">expect</span><span class="p">(</span><span class="no">ENV</span><span class="o">[</span><span class="s2">&#34;SAMPLE&#34;</span><span class="o">]</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">eq</span><span class="p">(</span><span class="s2">&#34;value&#34;</span><span class="p">)</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">it</span> <span class="p">{</span> <span class="n">expect</span><span class="p">(</span><span class="no">ENV</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="s2">&#34;SAMPLE&#34;</span><span class="p">))</span><span class="o">.</span><span class="n">to</span> <span class="n">eq</span><span class="p">(</span><span class="s2">&#34;value&#34;</span><span class="p">)</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="k">end</span>
+</span></span><span class="line"><span class="cl"><span class="k">end</span>
+</span></span></code></pre><p>References:</p>
 <ul>
 <li><a href="https://github.com/rspec/rspec-mocks#method-stubs"><code>rspec-mocks</code> gem</a></li>
 <li><a href="https://12factor.net/config">The Twelve-Factor App: Store config in the environment</a></li>
@@ -578,33 +492,24 @@ til <span class="s2">"You can use git log --oneline --graph for a nice commit tr
       <link>https://notes.musayev.com/20230815_4443/fixing-activerecord-unknownmigrationversionerror</link>
       <guid>20230815_4443</guid>
       <description><![CDATA[<p>Usual cause: deleting a Rails migration file without a rollback.</p>
-
 <p>Error message example:</p>
-<div class="highlight"><pre class="highlight plaintext"><code>ActiveRecord::UnknownMigrationVersionError:
-No migration with version number 20230815162103.
-</code></pre></div>
-<p>That means Rails can&#39;t find a migration file matching specific record in the <code>schema_migrations</code> table.</p>
-
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl">ActiveRecord::UnknownMigrationVersionError:
+</span></span><span class="line"><span class="cl">No migration with version number 20230815162103.
+</span></span></code></pre><p>That means Rails can't find a migration file matching specific record in the <code>schema_migrations</code> table.</p>
 <p>To fix this error, open DB console:</p>
-<div class="highlight"><pre class="highlight plaintext"><code>rails dbconsole
-</code></pre></div>
-<p>Drop the missing migration:</p>
-<div class="highlight"><pre class="highlight sql"><code><span class="k">delete</span> <span class="k">from</span> <span class="n">schema_migrations</span> <span class="k">where</span> <span class="k">version</span> <span class="o">=</span> <span class="s1">'20230815162103'</span><span class="p">;</span>
-</code></pre></div>
-<p>Type <code>quit</code> to exit.</p>
-
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl">rails dbconsole
+</span></span></code></pre><p>Drop the missing migration:</p>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl"><span class="k">delete</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">schema_migrations</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="k">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;20230815162103&#39;</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre><p>Type <code>quit</code> to exit.</p>
 <p>Done!</p>
-
 <p>Tracking missing migration:</p>
-<div class="highlight"><pre class="highlight plaintext"><code>$ bin/rails db:migrate:status
-</code></pre></div><div class="highlight"><pre class="highlight plaintext"><code>...
-up     20230801199444  Create users table
-up     20230801223219  Create Messages table
-up     20230802211438  ********** NO FILE **********
-up     20230802210508  Update users table
-</code></pre></div>
-<p>References:</p>
-
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl">$ bin/rails db:migrate:status
+</span></span></code></pre><pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl">...
+</span></span><span class="line"><span class="cl">up     20230801199444  Create users table
+</span></span><span class="line"><span class="cl">up     20230801223219  Create Messages table
+</span></span><span class="line"><span class="cl">up     20230802211438  ********** NO FILE **********
+</span></span><span class="line"><span class="cl">up     20230802210508  Update users table
+</span></span></code></pre><p>References:</p>
 <ul>
 <li><a href="https://edgeguides.rubyonrails.org/active_record_migrations.html#old-migrations">Active Record Migrations - Old Migrations</a></li>
 </ul>
@@ -616,28 +521,23 @@ up     20230802210508  Update users table
       <link>https://notes.musayev.com/20230814_4434/insert-current-date-sublime-text</link>
       <guid>20230814_4434</guid>
       <description><![CDATA[<p>Open <a href="https://www.sublimetext.com/docs/packages.html">packages directory</a>: Quick menu → <code>Preferences: Browse Packages</code></p>
-
 <p>Create <code>User/insert_date.py</code></p>
-<div class="highlight"><pre class="highlight python"><code><span class="kn">import</span> <span class="n">datetime</span>
-<span class="kn">import</span> <span class="n">sublime_plugin</span>
-
-
-<span class="k">class</span> <span class="nc">InsertDateCommand</span><span class="p">(</span><span class="n">sublime_plugin</span><span class="p">.</span><span class="n">TextCommand</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">edit</span><span class="p">):</span>
-        <span class="n">timestamp_str</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">.</span><span class="n">datetime</span><span class="p">.</span><span class="nf">now</span><span class="p">().</span><span class="nf">strftime</span><span class="p">(</span><span class="sh">"</span><span class="s">%Y-%m-%d:</span><span class="se">\n</span><span class="sh">"</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="nf">sel</span><span class="p">():</span>
-            <span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="nf">insert</span><span class="p">(</span><span class="n">edit</span><span class="p">,</span> <span class="n">r</span><span class="p">.</span><span class="nf">begin</span><span class="p">(),</span> <span class="n">timestamp_str</span><span class="p">)</span>
-</code></pre></div>
-<p>Add new key binding to the keymap file: Quick menu → <code>Preferences: Key Bindings</code></p>
-<div class="highlight"><pre class="highlight json"><code><span class="p">{</span><span class="w">
-  </span><span class="nl">"keys"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"super+k"</span><span class="p">,</span><span class="w"> </span><span class="s2">"super+t"</span><span class="p">],</span><span class="w">
-  </span><span class="nl">"command"</span><span class="p">:</span><span class="w"> </span><span class="s2">"insert_date"</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div>
-<p>This example defines <kbd>Cmd</kbd>+<kbd>K</kbd>, <kbd>Cmd</kbd>+<kbd>T</kbd> sequence to call the new command.</p>
-
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">datetime</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">sublime_plugin</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">InsertDateCommand</span><span class="p">(</span><span class="n">sublime_plugin</span><span class="o">.</span><span class="n">TextCommand</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">edit</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">timestamp_str</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&#34;%Y-%m-</span><span class="si">%d</span><span class="s2">:</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">sel</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">edit</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">timestamp_str</span><span class="p">)</span>
+</span></span></code></pre><p>Add new key binding to the keymap file: Quick menu → <code>Preferences: Key Bindings</code></p>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;keys&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;super+k&#34;</span><span class="p">,</span> <span class="s2">&#34;super+t&#34;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;command&#34;</span><span class="p">:</span> <span class="s2">&#34;insert_date&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre><p>This example defines <!-- raw HTML omitted -->Cmd<!-- raw HTML omitted -->+<!-- raw HTML omitted -->K<!-- raw HTML omitted -->, <!-- raw HTML omitted -->Cmd<!-- raw HTML omitted -->+<!-- raw HTML omitted -->T<!-- raw HTML omitted --> sequence to call the new command.</p>
 <p><img src="d5cb9237cb0b41f0ab52c3f15ed85517.gif" alt="Demo" title="Inserting current date in Sublime Text"></p>
-
 <p>Done!</p>
 ]]></description>
     </item>
@@ -647,27 +547,23 @@ up     20230802210508  Update users table
       <link>https://notes.musayev.com/20230814_4433/rails-model-validators-list</link>
       <guid>20230814_4433</guid>
       <description><![CDATA[<p>Rails models have a <a href="https://api.rubyonrails.org/classes/ActiveModel/Validations/ClassMethods.html#method-i-validators"><code>validators</code></a> class method. It comes in handy to review validation rules distributed over multiple classes and modules in a larger codebase.</p>
-
 <p>Official example:</p>
-<div class="highlight"><pre class="highlight ruby"><code><span class="k">class</span> <span class="nc">Person</span>
-  <span class="kp">include</span> <span class="no">ActiveModel</span><span class="o">::</span><span class="no">Validations</span>
-
-  <span class="n">validates_with</span> <span class="no">MyValidator</span>
-  <span class="n">validates_with</span> <span class="no">OtherValidator</span><span class="p">,</span> <span class="ss">on: :create</span>
-  <span class="n">validates_with</span> <span class="no">StrictValidator</span><span class="p">,</span> <span class="ss">strict: </span><span class="kp">true</span>
-<span class="k">end</span>
-
-<span class="no">Person</span><span class="p">.</span><span class="nf">validators</span>
-<span class="c1"># =&gt; [</span>
-<span class="c1">#      #&lt;MyValidator:0x007fbff403e808 @options={}&gt;,</span>
-<span class="c1">#      #&lt;OtherValidator:0x007fbff403d930 @options={on: :create}&gt;,</span>
-<span class="c1">#      #&lt;StrictValidator:0x007fbff3204a30 @options={strict:true}&gt;</span>
-<span class="c1">#    ]</span>
-</code></pre></div>
-<p>There is also <a href="https://api.rubyonrails.org/classes/ActiveModel/Validations/ClassMethods.html#method-i-validators_on"><code>#validators_on(:attribute)</code></a> to fetch attribute-specific validators.</p>
-
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Person</span>
+</span></span><span class="line"><span class="cl">  <span class="kp">include</span> <span class="no">ActiveModel</span><span class="o">::</span><span class="no">Validations</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="n">validates_with</span> <span class="no">MyValidator</span>
+</span></span><span class="line"><span class="cl">  <span class="n">validates_with</span> <span class="no">OtherValidator</span><span class="p">,</span> <span class="ss">on</span><span class="p">:</span> <span class="ss">:create</span>
+</span></span><span class="line"><span class="cl">  <span class="n">validates_with</span> <span class="no">StrictValidator</span><span class="p">,</span> <span class="ss">strict</span><span class="p">:</span> <span class="kp">true</span>
+</span></span><span class="line"><span class="cl"><span class="k">end</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="no">Person</span><span class="o">.</span><span class="n">validators</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># =&gt; [</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#      #&lt;MyValidator:0x007fbff403e808 @options={}&gt;,</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#      #&lt;OtherValidator:0x007fbff403d930 @options={on: :create}&gt;,</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#      #&lt;StrictValidator:0x007fbff3204a30 @options={strict:true}&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#    ]</span>
+</span></span></code></pre><p>There is also <a href="https://api.rubyonrails.org/classes/ActiveModel/Validations/ClassMethods.html#method-i-validators_on"><code>#validators_on(:attribute)</code></a> to fetch attribute-specific validators.</p>
 <p>References:</p>
-
 <ul>
 <li><a href="https://api.rubyonrails.org/classes/ActiveModel/Validations/ClassMethods.html#method-i-validators"><code>ActiveModel::Validations::ClassMethods</code></a></li>
 </ul>
@@ -679,8 +575,8 @@ up     20230802210508  Update users table
       <link>https://notes.musayev.com/20230811_4427/macos-coreaudiod-bluetooth-reset</link>
       <guid>20230811_4427</guid>
       <description><![CDATA[<p>This command helped to fix an issue with spontaneous headphones disconnection on macOS Ventura. Disconnections were repeating every minute or so.</p>
-<div class="highlight"><pre class="highlight shell"><code><span class="nb">sudo </span>pkill coreaudiod
-</code></pre></div>]]></description>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl">sudo pkill coreaudiod
+</span></span></code></pre>]]></description>
     </item>
     
     <item>
@@ -688,17 +584,13 @@ up     20230802210508  Update users table
       <link>https://notes.musayev.com/20230811_4426/git-push-tags</link>
       <guid>20230811_4426</guid>
       <description><![CDATA[<p><code>git push</code> does not push tags by default. You need to explicitly specify a tag name to push like it was a branch:</p>
-<div class="highlight"><pre class="highlight shell"><code>git tag <span class="nt">-a</span> TAG_NAME <span class="nt">-m</span> <span class="s2">"Optional tag message"</span>
-git push origin TAG_NAME
-</code></pre></div>
-<p>Pushing all tags (may cause a mess):</p>
-<div class="highlight"><pre class="highlight shell"><code>git push <span class="nt">--dry-run</span> <span class="nt">--tags</span> origin
-</code></pre></div>
-<p>Preview tags push with dry run:</p>
-<div class="highlight"><pre class="highlight shell"><code>git push <span class="nt">--dry-run</span> <span class="nt">--tags</span> origin
-</code></pre></div>
-<p>References:</p>
-
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl">git tag -a TAG_NAME -m <span class="s2">&#34;Optional tag message&#34;</span>
+</span></span><span class="line"><span class="cl">git push origin TAG_NAME
+</span></span></code></pre><p>Pushing all tags (may cause a mess):</p>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl">git push --dry-run --tags origin
+</span></span></code></pre><p>Preview tags push with dry run:</p>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl">git push --dry-run --tags origin
+</span></span></code></pre><p>References:</p>
 <ul>
 <li><a href="https://git-scm.com/book/en/v2/Git-Basics-Tagging">Git Basics - Tagging</a></li>
 </ul>
@@ -709,24 +601,16 @@ git push origin TAG_NAME
       <title>Starting a new git branch in the past</title>
       <link>https://notes.musayev.com/20230810_4418/starting-git-branch-in-the-past</link>
       <guid>20230810_4418</guid>
-      <description><![CDATA[<p>Imagine you started working on a new feature and realized you didn&#39;t start a new branch, so all your recent commits accidentally went to <code>main</code>. I do this all the time.</p>
-
-<p>If you didn&#39;t push your working branch to the upstream, there is an easy fix.</p>
-
+      <description><![CDATA[<p>Imagine you started working on a new feature and realized you didn't start a new branch, so all your recent commits accidentally went to <code>main</code>. I do this all the time.</p>
+<p>If you didn't push your working branch to the upstream, there is an easy fix.</p>
 <p>First, create a new feature branch from the <code>HEAD</code>:</p>
-<div class="highlight"><pre class="highlight shell"><code>git checkout <span class="nt">-b</span> new-branch-name
-</code></pre></div>
-<p>Then move your integration branch to the past (assuming the branch name is <code>main</code>, and you want to start <code>new-branch-name</code> 3 commits ago from the <code>HEAD</code>):</p>
-<div class="highlight"><pre class="highlight shell"><code>git branch <span class="nt">-f</span> main HEAD~3
-</code></pre></div>
-<p><code>HEAD~3</code> means &quot;third last commit from the HEAD&quot; (if <code>HEAD</code> is your current checked-out commit, HEAD~1 is the previous one, etc.).</p>
-
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl">git checkout -b new-branch-name
+</span></span></code></pre><p>Then move your integration branch to the past (assuming the branch name is <code>main</code>, and you want to start <code>new-branch-name</code> 3 commits ago from the <code>HEAD</code>):</p>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl">git branch -f main HEAD~3
+</span></span></code></pre><p><code>HEAD~3</code> means &quot;third last commit from the HEAD&quot; (if <code>HEAD</code> is your current checked-out commit, HEAD~1 is the previous one, etc.).</p>
 <p>The alternative syntax for this example is <code>HEAD~~~</code>. It can be easier to type unless you must go too deep into the past.</p>
-
-<p>It becomes more tricky if you merge something in the recent commit history. Git provides a <code>^</code> (caret) shortcut for ancestry reference in the case of multiple parent revisions. But I&#39;d prefer ordinary commit ids. It is not as easy to mess up compared to caret syntax.</p>
-
+<p>It becomes more tricky if you merge something in the recent commit history. Git provides a <code>^</code> (caret) shortcut for ancestry reference in the case of multiple parent revisions. But I'd prefer ordinary commit ids. It is not as easy to mess up compared to caret syntax.</p>
 <p>References:</p>
-
 <ul>
 <li><a href="https://git-scm.com/book/en/v2/Git-Tools-Revision-Selection">Git Tools - Revision Selection</a></li>
 </ul>
@@ -738,13 +622,10 @@ git push origin TAG_NAME
       <link>https://notes.musayev.com/20230809_4414/reapplying-rails-db-migration</link>
       <guid>20230809_4414</guid>
       <description><![CDATA[<p>It is a quite often situation when an issue in new DB migration becomes apparent immediately after you just executed <code>db:migrate</code>.</p>
-
 <p>Before the migration finds its way to the integration branch, fixing it in place is okay. It is much better than creating more follow-up migrations turning some trivial DB table creation into an unreadable mess.</p>
-
 <p>Here is a bash oneliner to re-apply the last migration. It will revert one most recent migration and then execute <code>db:migrate</code> again for development and test environments:</p>
-<div class="highlight"><pre class="highlight shell"><code>rails db:rollback db:migrate <span class="o">&amp;&amp;</span> <span class="nv">RAILS_ENV</span><span class="o">=</span><span class="nb">test </span>rails db:rollback db:migrate
-</code></pre></div>
-<p>It can live in <code>bin/reapply_last_migration</code> and occasionally save you a minute.</p>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl">rails db:rollback db:migrate <span class="o">&amp;&amp;</span> <span class="nv">RAILS_ENV</span><span class="o">=</span><span class="nb">test</span> rails db:rollback db:migrate
+</span></span></code></pre><p>It can live in <code>bin/reapply_last_migration</code> and occasionally save you a minute.</p>
 ]]></description>
     </item>
     
@@ -752,11 +633,10 @@ git push origin TAG_NAME
       <title>Why not to write things on the internet</title>
       <link>https://notes.musayev.com/20230808_4403/why-not-to-write</link>
       <guid>20230808_4403</guid>
-      <description><![CDATA[<p>Okay, let&#39;s delve into a thoughtful exploration of why one might consider refraining from online authorship. Here are some reasons not to write on the web:</p>
-
+      <description><![CDATA[<p>Okay, let's delve into a thoughtful exploration of why one might consider refraining from online authorship. Here are some reasons not to write on the web:</p>
 <ul>
 <li>Over time, your writing will become outdated, just like your knowledge and opinions. It will start looking irrelevant and useless even to yourself.</li>
-<li>Writing likely won&#39;t bring you immediate rewards, especially if you don&#39;t already have an established following. And let&#39;s be honest. If you&#39;re considering reasons <em>not</em> to start, you probably don&#39;t have an audience yet.</li>
+<li>Writing likely won't bring you immediate rewards, especially if you don't already have an established following. And let's be honest. If you're considering reasons <em>not</em> to start, you probably don't have an audience yet.</li>
 <li>Someone with more expertise might read your post and make fun of you.</li>
 <li>Once you understand a topic well enough, writing about it will seem like a waste of time. You might think that most people who need the information already have it or that there are already good resources for learning about it, so why bother adding your take?</li>
 </ul>
@@ -775,139 +655,130 @@ git push origin TAG_NAME
       <title>Downloading CleanShot images with Ruby</title>
       <link>https://notes.musayev.com/20230806_4387/downloading-cleanshot-images-with-ruby</link>
       <guid>20230806_4387</guid>
-      <description><![CDATA[<p>In my opinion <a href="https://cleanshot.com/">CleanShot</a> is one of the best screenshot tools for macOS by 2023. I&#39;m using it pretty much every day.</p>
-
-<p>I&#39;m going to integrate CleanShot with my <a href="https://notes.musayev.com/">notes</a> publication script to embed screenshots to Markdown pages.</p>
-
+      <description><![CDATA[<p>In my opinion <a href="https://cleanshot.com/">CleanShot</a> is one of the best screenshot tools for macOS by 2023. I'm using it pretty much every day.</p>
+<p>I'm going to integrate CleanShot with my <a href="https://notes.musayev.com/">notes</a> publication script to embed screenshots to Markdown pages.</p>
 <p>My desired workflow is to plug CleanShot short URL into my notes using <a href="https://spec.commonmark.org/0.30/#images">Markdown image markup</a>, letting a script to extract actual image URL and do further processing.</p>
-
 <p>Here is a quick example on how to download image file from CleanShot URL:</p>
-<div class="highlight"><pre class="highlight ruby"><code><span class="nb">require</span> <span class="s2">"http"</span>
-<span class="nb">require</span> <span class="s2">"cgi"</span>
-
-<span class="n">cleanshot_url</span> <span class="o">=</span> <span class="s2">"https://share.cleanshot.com/35WJDTGz"</span>
-
-<span class="c1"># Fetch direct image URL</span>
-<span class="n">direct_image_url</span> <span class="o">=</span> <span class="no">HTTP</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="s2">"</span><span class="si">#{</span><span class="n">cleanshot_url</span><span class="si">}</span><span class="s2">+"</span><span class="p">).</span><span class="nf">headers</span><span class="p">[</span><span class="s2">"Location"</span><span class="p">]</span>
-
-<span class="c1"># Extract image file name from the CleanShot query string</span>
-<span class="n">query</span> <span class="o">=</span> <span class="no">URI</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">direct_image_url</span><span class="p">).</span><span class="nf">query</span>
-<span class="n">param</span> <span class="o">=</span> <span class="no">CGI</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">query</span><span class="p">).</span><span class="nf">fetch</span><span class="p">(</span><span class="s2">"response-content-disposition"</span><span class="p">).</span><span class="nf">first</span>
-<span class="n">file_name</span> <span class="o">=</span> <span class="no">CGI</span><span class="p">.</span><span class="nf">unescape</span><span class="p">(</span><span class="n">param</span><span class="p">.</span><span class="nf">split</span><span class="p">(</span><span class="s2">"="</span><span class="p">,</span> <span class="mi">2</span><span class="p">).</span><span class="nf">last</span><span class="p">)</span>
-
-<span class="c1"># Download the image to a file</span>
-<span class="n">image_contents</span> <span class="o">=</span> <span class="no">HTTP</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="n">direct_image_url</span><span class="p">).</span><span class="nf">body</span><span class="p">.</span><span class="nf">to_s</span>
-<span class="no">File</span><span class="p">.</span><span class="nf">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s2">"wb"</span><span class="p">)</span> <span class="p">{</span> <span class="n">_1</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="n">image_contents</span><span class="p">)</span> <span class="p">}</span>
-</code></pre></div>
-<p>(Yes, it is possible to avoid third party dependency here by using Ruby&#39;s native <code>Net::HTTP</code> instead of the <code>http</code> gem, but I don&#39;t enjoy pain.)</p>
-
-<p>Let&#39;s add some errors handling and refactor it into a service class:</p>
-<div class="highlight"><pre class="highlight ruby"><code><span class="nb">require</span> <span class="s2">"http"</span>
-<span class="nb">require</span> <span class="s2">"cgi"</span>
-
-<span class="k">class</span> <span class="nc">CleanshotDownloader</span>
-  <span class="nb">attr_reader</span> <span class="ss">:cleanshot_url</span>
-
-  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">cleanshot_url</span><span class="p">,</span> <span class="ss">file_name: </span><span class="kp">nil</span><span class="p">)</span>
-    <span class="vi">@cleanshot_url</span> <span class="o">=</span> <span class="n">cleanshot_url</span>
-    <span class="vi">@file_name</span> <span class="o">=</span> <span class="n">file_name</span>
-  <span class="k">end</span>
-
-  <span class="k">def</span> <span class="nf">download</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="no">HTTP</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="n">direct_image_url</span><span class="p">)</span>
-    <span class="k">raise</span> <span class="s2">"error downloading image"</span> <span class="k">unless</span> <span class="n">response</span><span class="p">.</span><span class="nf">status</span><span class="p">.</span><span class="nf">success?</span>
-    <span class="no">File</span><span class="p">.</span><span class="nf">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s2">"wb"</span><span class="p">)</span> <span class="p">{</span> <span class="n">_1</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="nf">body</span><span class="p">.</span><span class="nf">to_s</span><span class="p">)</span> <span class="p">}</span>
-    <span class="n">file_name</span>
-  <span class="k">end</span>
-
-  <span class="kp">private</span>
-
-  <span class="k">def</span> <span class="nf">direct_image_url</span>
-    <span class="vi">@direct_image_url</span> <span class="o">||=</span> <span class="k">begin</span>
-      <span class="n">response</span> <span class="o">=</span> <span class="no">HTTP</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="s2">"</span><span class="si">#{</span><span class="n">cleanshot_url</span><span class="si">}</span><span class="s2">+"</span><span class="p">)</span>
-      <span class="k">raise</span> <span class="s2">"error getting image URL"</span> <span class="k">unless</span> <span class="n">response</span><span class="p">.</span><span class="nf">status</span><span class="p">.</span><span class="nf">redirect?</span>
-      <span class="n">response</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="s2">"Location"</span><span class="p">]</span>
-    <span class="k">end</span>
-  <span class="k">end</span>
-
-  <span class="k">def</span> <span class="nf">file_name</span>
-    <span class="vi">@file_name</span> <span class="o">||=</span> <span class="k">begin</span>
-      <span class="n">query</span> <span class="o">=</span> <span class="no">URI</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">direct_image_url</span><span class="p">).</span><span class="nf">query</span>
-      <span class="n">param</span> <span class="o">=</span> <span class="no">CGI</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">query</span><span class="p">).</span><span class="nf">fetch</span><span class="p">(</span><span class="s2">"response-content-disposition"</span><span class="p">).</span><span class="nf">first</span>
-      <span class="no">CGI</span><span class="p">.</span><span class="nf">unescape</span><span class="p">(</span><span class="n">param</span><span class="p">.</span><span class="nf">split</span><span class="p">(</span><span class="s2">"="</span><span class="p">,</span> <span class="mi">2</span><span class="p">).</span><span class="nf">last</span><span class="p">)</span>
-    <span class="k">end</span>
-  <span class="k">end</span>
-<span class="k">end</span>
-</code></pre></div>
-<p>Usage example:</p>
-<div class="highlight"><pre class="highlight ruby"><code><span class="no">CleanshotDownloader</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s2">"https://share.cleanshot.com/35WJDTGz"</span><span class="p">).</span><span class="nf">download</span>
-<span class="c1"># =&gt; "CleanShot 2023-08-06 at 15.27.35.jpeg"</span>
-</code></pre></div>
-<p>And a spec with fancy <a href="https://rubygems.org/gems/webmock">WebMock</a> stubs:</p>
-<div class="highlight"><pre class="highlight ruby"><code><span class="no">RSpec</span><span class="p">.</span><span class="nf">describe</span> <span class="no">CleanshotDownloader</span> <span class="k">do</span>
-  <span class="n">subject</span><span class="p">(</span><span class="ss">:service_call</span><span class="p">)</span> <span class="p">{</span> <span class="n">described_class</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">cleanshot_url</span><span class="p">).</span><span class="nf">download</span> <span class="p">}</span>
-
-  <span class="n">let</span><span class="p">(</span><span class="ss">:cleanshot_url</span><span class="p">)</span> <span class="p">{</span> <span class="s2">"https://share.cleanshot.com/80085"</span> <span class="p">}</span>
-
-  <span class="n">let</span><span class="p">(</span><span class="ss">:direct_image_url</span><span class="p">)</span> <span class="k">do</span>
-    <span class="s2">"https://media.cleanshot.cloud/media/1334/itkYgfyMGKeaUT.jpeg?"</span> <span class="p">\</span>
-    <span class="s2">"response-content-disposition=attachment%3Bfilename%3DCleanShot"</span> <span class="p">\</span>
-    <span class="s2">"%25202023-08-06%2520at%252015.27.35.jpeg&amp;Expires=1691367016"</span>
-  <span class="k">end</span>
-
-  <span class="n">let</span><span class="p">(</span><span class="ss">:image_contents</span><span class="p">)</span> <span class="p">{</span> <span class="n">file_fixture</span><span class="p">(</span><span class="s2">"banana.jpg"</span><span class="p">).</span><span class="nf">read</span> <span class="p">}</span>
-
-  <span class="n">context</span> <span class="s2">"with explicit file name"</span> <span class="k">do</span>
-    <span class="n">subject</span><span class="p">(</span><span class="ss">:service_call</span><span class="p">)</span> <span class="p">{</span> <span class="n">described_class</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">cleanshot_url</span><span class="p">,</span> <span class="ss">file_name: </span><span class="n">file_name</span><span class="p">).</span><span class="nf">download</span> <span class="p">}</span>
-
-    <span class="n">let</span><span class="p">(</span><span class="ss">:file_name</span><span class="p">)</span> <span class="p">{</span> <span class="no">Tempfile</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">described_class</span><span class="p">.</span><span class="nf">name</span><span class="p">)</span> <span class="p">}</span>
-
-    <span class="n">before</span> <span class="k">do</span>
-      <span class="n">stub_cleanshot_url</span><span class="p">.</span><span class="nf">to_return</span><span class="p">(</span><span class="ss">status: </span><span class="mi">302</span><span class="p">,</span> <span class="ss">headers: </span><span class="p">{</span><span class="s2">"Location"</span> <span class="o">=&gt;</span> <span class="n">direct_image_url</span><span class="p">})</span>
-      <span class="n">stub_direct_image_url</span><span class="p">.</span><span class="nf">to_return</span><span class="p">(</span><span class="ss">headers: </span><span class="p">{</span><span class="s2">"Content-Type"</span> <span class="o">=&gt;</span> <span class="s2">"image/jpeg"</span><span class="p">},</span> <span class="ss">body: </span><span class="n">image_contents</span><span class="p">)</span>
-      <span class="n">service_call</span>
-    <span class="k">end</span>
-
-    <span class="n">it</span> <span class="p">{</span> <span class="n">expect</span><span class="p">(</span><span class="no">File</span><span class="p">.</span><span class="nf">read</span><span class="p">(</span><span class="n">file_name</span><span class="p">)).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="n">image_contents</span><span class="p">)</span> <span class="p">}</span>
-  <span class="k">end</span>
-
-  <span class="n">context</span> <span class="s2">"with implicit file name"</span> <span class="k">do</span>
-    <span class="n">before</span> <span class="k">do</span>
-      <span class="n">stub_cleanshot_url</span><span class="p">.</span><span class="nf">to_return</span><span class="p">(</span><span class="ss">status: </span><span class="mi">302</span><span class="p">,</span> <span class="ss">headers: </span><span class="p">{</span><span class="s2">"Location"</span> <span class="o">=&gt;</span> <span class="n">direct_image_url</span><span class="p">})</span>
-      <span class="n">stub_direct_image_url</span><span class="p">.</span><span class="nf">to_return</span><span class="p">(</span><span class="ss">headers: </span><span class="p">{</span><span class="s2">"Content-Type"</span> <span class="o">=&gt;</span> <span class="s2">"image/jpeg"</span><span class="p">},</span> <span class="ss">body: </span><span class="n">image_contents</span><span class="p">)</span>
-    <span class="k">end</span>
-
-    <span class="n">it</span> <span class="p">{</span> <span class="n">expect</span><span class="p">(</span><span class="n">service_call</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="s2">"CleanShot 2023-08-06 at 15.27.35.jpeg"</span><span class="p">)</span> <span class="p">}</span>
-  <span class="k">end</span>
-
-  <span class="n">context</span> <span class="s2">"with redirect error"</span> <span class="k">do</span>
-    <span class="n">before</span> <span class="k">do</span>
-      <span class="n">stub_cleanshot_url</span><span class="p">.</span><span class="nf">to_return</span><span class="p">(</span><span class="ss">status: </span><span class="mi">500</span><span class="p">)</span>
-    <span class="k">end</span>
-
-    <span class="n">it</span> <span class="p">{</span> <span class="n">expect</span> <span class="p">{</span> <span class="n">service_call</span> <span class="p">}.</span><span class="nf">to</span> <span class="n">raise_error</span><span class="p">(</span><span class="s2">"error getting image URL"</span><span class="p">)</span> <span class="p">}</span>
-  <span class="k">end</span>
-
-  <span class="n">context</span> <span class="s2">"with image downloading error"</span> <span class="k">do</span>
-    <span class="n">before</span> <span class="k">do</span>
-      <span class="n">stub_cleanshot_url</span><span class="p">.</span><span class="nf">to_return</span><span class="p">(</span><span class="ss">status: </span><span class="mi">302</span><span class="p">,</span> <span class="ss">headers: </span><span class="p">{</span><span class="s2">"Location"</span> <span class="o">=&gt;</span> <span class="n">direct_image_url</span><span class="p">})</span>
-      <span class="n">stub_direct_image_url</span><span class="p">.</span><span class="nf">to_return</span><span class="p">(</span><span class="ss">status: </span><span class="mi">500</span><span class="p">)</span>
-    <span class="k">end</span>
-
-    <span class="n">it</span> <span class="p">{</span> <span class="n">expect</span> <span class="p">{</span> <span class="n">service_call</span> <span class="p">}.</span><span class="nf">to</span> <span class="n">raise_error</span><span class="p">(</span><span class="s2">"error downloading image"</span><span class="p">)</span> <span class="p">}</span>
-  <span class="k">end</span>
-
-  <span class="k">def</span> <span class="nf">stub_cleanshot_url</span>
-    <span class="n">stub_request</span><span class="p">(</span><span class="ss">:get</span><span class="p">,</span> <span class="s2">"</span><span class="si">#{</span><span class="n">cleanshot_url</span><span class="si">}</span><span class="s2">+"</span><span class="p">)</span>
-  <span class="k">end</span>
-
-  <span class="k">def</span> <span class="nf">stub_direct_image_url</span>
-    <span class="n">stub_request</span><span class="p">(</span><span class="ss">:get</span><span class="p">,</span> <span class="n">direct_image_url</span><span class="p">)</span>
-  <span class="k">end</span>
-<span class="k">end</span>
-</code></pre></div>
-<p>References:</p>
-
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl"><span class="nb">require</span> <span class="s2">&#34;http&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nb">require</span> <span class="s2">&#34;cgi&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">cleanshot_url</span> <span class="o">=</span> <span class="s2">&#34;https://share.cleanshot.com/35WJDTGz&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Fetch direct image URL</span>
+</span></span><span class="line"><span class="cl"><span class="n">direct_image_url</span> <span class="o">=</span> <span class="no">HTTP</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;</span><span class="si">#{</span><span class="n">cleanshot_url</span><span class="si">}</span><span class="s2">+&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">headers</span><span class="o">[</span><span class="s2">&#34;Location&#34;</span><span class="o">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Extract image file name from the CleanShot query string</span>
+</span></span><span class="line"><span class="cl"><span class="n">query</span> <span class="o">=</span> <span class="no">URI</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">direct_image_url</span><span class="p">)</span><span class="o">.</span><span class="n">query</span>
+</span></span><span class="line"><span class="cl"><span class="n">param</span> <span class="o">=</span> <span class="no">CGI</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">query</span><span class="p">)</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="s2">&#34;response-content-disposition&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">first</span>
+</span></span><span class="line"><span class="cl"><span class="n">file_name</span> <span class="o">=</span> <span class="no">CGI</span><span class="o">.</span><span class="n">unescape</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&#34;=&#34;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">last</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Download the image to a file</span>
+</span></span><span class="line"><span class="cl"><span class="n">image_contents</span> <span class="o">=</span> <span class="no">HTTP</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">direct_image_url</span><span class="p">)</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">to_s</span>
+</span></span><span class="line"><span class="cl"><span class="no">File</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s2">&#34;wb&#34;</span><span class="p">)</span> <span class="p">{</span> <span class="n">_1</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">image_contents</span><span class="p">)</span> <span class="p">}</span>
+</span></span></code></pre><p>(Yes, it is possible to avoid third party dependency here by using Ruby's native <code>Net::HTTP</code> instead of the <code>http</code> gem, but I don't enjoy pain.)</p>
+<p>Let's add some errors handling and refactor it into a service class:</p>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl"><span class="nb">require</span> <span class="s2">&#34;http&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nb">require</span> <span class="s2">&#34;cgi&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">CleanshotDownloader</span>
+</span></span><span class="line"><span class="cl">  <span class="kp">attr_reader</span> <span class="ss">:cleanshot_url</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">cleanshot_url</span><span class="p">,</span> <span class="ss">file_name</span><span class="p">:</span> <span class="kp">nil</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="vi">@cleanshot_url</span> <span class="o">=</span> <span class="n">cleanshot_url</span>
+</span></span><span class="line"><span class="cl">    <span class="vi">@file_name</span> <span class="o">=</span> <span class="n">file_name</span>
+</span></span><span class="line"><span class="cl">  <span class="k">end</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">def</span> <span class="nf">download</span>
+</span></span><span class="line"><span class="cl">    <span class="n">response</span> <span class="o">=</span> <span class="no">HTTP</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">direct_image_url</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">raise</span> <span class="s2">&#34;error downloading image&#34;</span> <span class="k">unless</span> <span class="n">response</span><span class="o">.</span><span class="n">status</span><span class="o">.</span><span class="n">success?</span>
+</span></span><span class="line"><span class="cl">    <span class="no">File</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s2">&#34;wb&#34;</span><span class="p">)</span> <span class="p">{</span> <span class="n">_1</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">to_s</span><span class="p">)</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">file_name</span>
+</span></span><span class="line"><span class="cl">  <span class="k">end</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="kp">private</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">def</span> <span class="nf">direct_image_url</span>
+</span></span><span class="line"><span class="cl">    <span class="vi">@direct_image_url</span> <span class="o">||=</span> <span class="k">begin</span>
+</span></span><span class="line"><span class="cl">      <span class="n">response</span> <span class="o">=</span> <span class="no">HTTP</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;</span><span class="si">#{</span><span class="n">cleanshot_url</span><span class="si">}</span><span class="s2">+&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="k">raise</span> <span class="s2">&#34;error getting image URL&#34;</span> <span class="k">unless</span> <span class="n">response</span><span class="o">.</span><span class="n">status</span><span class="o">.</span><span class="n">redirect?</span>
+</span></span><span class="line"><span class="cl">      <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="o">[</span><span class="s2">&#34;Location&#34;</span><span class="o">]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">end</span>
+</span></span><span class="line"><span class="cl">  <span class="k">end</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">def</span> <span class="nf">file_name</span>
+</span></span><span class="line"><span class="cl">    <span class="vi">@file_name</span> <span class="o">||=</span> <span class="k">begin</span>
+</span></span><span class="line"><span class="cl">      <span class="n">query</span> <span class="o">=</span> <span class="no">URI</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">direct_image_url</span><span class="p">)</span><span class="o">.</span><span class="n">query</span>
+</span></span><span class="line"><span class="cl">      <span class="n">param</span> <span class="o">=</span> <span class="no">CGI</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">query</span><span class="p">)</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="s2">&#34;response-content-disposition&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">first</span>
+</span></span><span class="line"><span class="cl">      <span class="no">CGI</span><span class="o">.</span><span class="n">unescape</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&#34;=&#34;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">last</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">end</span>
+</span></span><span class="line"><span class="cl">  <span class="k">end</span>
+</span></span><span class="line"><span class="cl"><span class="k">end</span>
+</span></span></code></pre><p>Usage example:</p>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl"><span class="no">CleanshotDownloader</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&#34;https://share.cleanshot.com/35WJDTGz&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">download</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># =&gt; &#34;CleanShot 2023-08-06 at 15.27.35.jpeg&#34;</span>
+</span></span></code></pre><p>And a spec with fancy <a href="https://rubygems.org/gems/webmock">WebMock</a> stubs:</p>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl"><span class="no">RSpec</span><span class="o">.</span><span class="n">describe</span> <span class="no">CleanshotDownloader</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">  <span class="n">subject</span><span class="p">(</span><span class="ss">:service_call</span><span class="p">)</span> <span class="p">{</span> <span class="n">described_class</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">cleanshot_url</span><span class="p">)</span><span class="o">.</span><span class="n">download</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="n">let</span><span class="p">(</span><span class="ss">:cleanshot_url</span><span class="p">)</span> <span class="p">{</span> <span class="s2">&#34;https://share.cleanshot.com/80085&#34;</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="n">let</span><span class="p">(</span><span class="ss">:direct_image_url</span><span class="p">)</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;https://media.cleanshot.cloud/media/1334/itkYgfyMGKeaUT.jpeg?&#34;</span> <span class="p">\</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;response-content-disposition=attachment%3Bfilename%3DCleanShot&#34;</span> <span class="p">\</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;%25202023-08-06%2520at%252015.27.35.jpeg&amp;Expires=1691367016&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">end</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="n">let</span><span class="p">(</span><span class="ss">:image_contents</span><span class="p">)</span> <span class="p">{</span> <span class="n">file_fixture</span><span class="p">(</span><span class="s2">&#34;banana.jpg&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="n">context</span> <span class="s2">&#34;with explicit file name&#34;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">    <span class="n">subject</span><span class="p">(</span><span class="ss">:service_call</span><span class="p">)</span> <span class="p">{</span> <span class="n">described_class</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">cleanshot_url</span><span class="p">,</span> <span class="ss">file_name</span><span class="p">:</span> <span class="n">file_name</span><span class="p">)</span><span class="o">.</span><span class="n">download</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">let</span><span class="p">(</span><span class="ss">:file_name</span><span class="p">)</span> <span class="p">{</span> <span class="no">Tempfile</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">described_class</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">before</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">      <span class="n">stub_cleanshot_url</span><span class="o">.</span><span class="n">to_return</span><span class="p">(</span><span class="ss">status</span><span class="p">:</span> <span class="mi">302</span><span class="p">,</span> <span class="ss">headers</span><span class="p">:</span> <span class="p">{</span><span class="s2">&#34;Location&#34;</span> <span class="o">=&gt;</span> <span class="n">direct_image_url</span><span class="p">})</span>
+</span></span><span class="line"><span class="cl">      <span class="n">stub_direct_image_url</span><span class="o">.</span><span class="n">to_return</span><span class="p">(</span><span class="ss">headers</span><span class="p">:</span> <span class="p">{</span><span class="s2">&#34;Content-Type&#34;</span> <span class="o">=&gt;</span> <span class="s2">&#34;image/jpeg&#34;</span><span class="p">},</span> <span class="ss">body</span><span class="p">:</span> <span class="n">image_contents</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="n">service_call</span>
+</span></span><span class="line"><span class="cl">    <span class="k">end</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">it</span> <span class="p">{</span> <span class="n">expect</span><span class="p">(</span><span class="no">File</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">file_name</span><span class="p">))</span><span class="o">.</span><span class="n">to</span> <span class="n">eq</span><span class="p">(</span><span class="n">image_contents</span><span class="p">)</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="k">end</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="n">context</span> <span class="s2">&#34;with implicit file name&#34;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">    <span class="n">before</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">      <span class="n">stub_cleanshot_url</span><span class="o">.</span><span class="n">to_return</span><span class="p">(</span><span class="ss">status</span><span class="p">:</span> <span class="mi">302</span><span class="p">,</span> <span class="ss">headers</span><span class="p">:</span> <span class="p">{</span><span class="s2">&#34;Location&#34;</span> <span class="o">=&gt;</span> <span class="n">direct_image_url</span><span class="p">})</span>
+</span></span><span class="line"><span class="cl">      <span class="n">stub_direct_image_url</span><span class="o">.</span><span class="n">to_return</span><span class="p">(</span><span class="ss">headers</span><span class="p">:</span> <span class="p">{</span><span class="s2">&#34;Content-Type&#34;</span> <span class="o">=&gt;</span> <span class="s2">&#34;image/jpeg&#34;</span><span class="p">},</span> <span class="ss">body</span><span class="p">:</span> <span class="n">image_contents</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">end</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">it</span> <span class="p">{</span> <span class="n">expect</span><span class="p">(</span><span class="n">service_call</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">eq</span><span class="p">(</span><span class="s2">&#34;CleanShot 2023-08-06 at 15.27.35.jpeg&#34;</span><span class="p">)</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="k">end</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="n">context</span> <span class="s2">&#34;with redirect error&#34;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">    <span class="n">before</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">      <span class="n">stub_cleanshot_url</span><span class="o">.</span><span class="n">to_return</span><span class="p">(</span><span class="ss">status</span><span class="p">:</span> <span class="mi">500</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">end</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">it</span> <span class="p">{</span> <span class="n">expect</span> <span class="p">{</span> <span class="n">service_call</span> <span class="p">}</span><span class="o">.</span><span class="n">to</span> <span class="n">raise_error</span><span class="p">(</span><span class="s2">&#34;error getting image URL&#34;</span><span class="p">)</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="k">end</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="n">context</span> <span class="s2">&#34;with image downloading error&#34;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">    <span class="n">before</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">      <span class="n">stub_cleanshot_url</span><span class="o">.</span><span class="n">to_return</span><span class="p">(</span><span class="ss">status</span><span class="p">:</span> <span class="mi">302</span><span class="p">,</span> <span class="ss">headers</span><span class="p">:</span> <span class="p">{</span><span class="s2">&#34;Location&#34;</span> <span class="o">=&gt;</span> <span class="n">direct_image_url</span><span class="p">})</span>
+</span></span><span class="line"><span class="cl">      <span class="n">stub_direct_image_url</span><span class="o">.</span><span class="n">to_return</span><span class="p">(</span><span class="ss">status</span><span class="p">:</span> <span class="mi">500</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">end</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">it</span> <span class="p">{</span> <span class="n">expect</span> <span class="p">{</span> <span class="n">service_call</span> <span class="p">}</span><span class="o">.</span><span class="n">to</span> <span class="n">raise_error</span><span class="p">(</span><span class="s2">&#34;error downloading image&#34;</span><span class="p">)</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="k">end</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">def</span> <span class="nf">stub_cleanshot_url</span>
+</span></span><span class="line"><span class="cl">    <span class="n">stub_request</span><span class="p">(</span><span class="ss">:get</span><span class="p">,</span> <span class="s2">&#34;</span><span class="si">#{</span><span class="n">cleanshot_url</span><span class="si">}</span><span class="s2">+&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="k">end</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">def</span> <span class="nf">stub_direct_image_url</span>
+</span></span><span class="line"><span class="cl">    <span class="n">stub_request</span><span class="p">(</span><span class="ss">:get</span><span class="p">,</span> <span class="n">direct_image_url</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="k">end</span>
+</span></span><span class="line"><span class="cl"><span class="k">end</span>
+</span></span></code></pre><p>References:</p>
 <ul>
 <li>CleanShot: <a href="https://cleanshot.com">https://cleanshot.com</a></li>
 <li>Markdown reference (CommonMark): <a href="https://commonmark.org/help/">https://commonmark.org/help/</a></li>
@@ -920,18 +791,14 @@ git push origin TAG_NAME
       <link>https://notes.musayev.com/20230806_4381/macos-finder-recents-filter</link>
       <guid>20230806_4381</guid>
       <description><![CDATA[<p><a href="https://apps.apple.com/us/app/arc-app-location-activity/id1063151918">Arc</a> generates a lot of JSON files remaining visible in the &quot;Recents&quot; folder in Finder, making it less usable.</p>
-
 <p>It is possible to filter out specified paths to reduce noise in the Recents:</p>
-
 <ol>
 <li>Open System Settings → Siri &amp; Spotlight → Spotlight Privacy...</li>
 <li>Add <code>~/Library/Mobile Documents/com~apple~CloudDocs/Arc App</code> to the Privacy list.</li>
 <li>Click Done.</li>
 </ol>
-
-<p>(I&#39;ve added <code>~/Library/Mobile Documents/</code> since in my opinion, this folder is an ephemeral files dumpster that does not contain anything valuable in general.)</p>
-
-<p><img src="e28f897f968246dbbd45c25aabc3fbf8.jpg" alt="" title=""></p>
+<p>(I've added <code>~/Library/Mobile Documents/</code> since in my opinion, this folder is an ephemeral files dumpster that does not contain anything valuable in general.)</p>
+<p><img src="e28f897f968246dbbd45c25aabc3fbf8.jpg" alt=""></p>
 ]]></description>
     </item>
     
@@ -940,17 +807,14 @@ git push origin TAG_NAME
       <link>https://notes.musayev.com/20230806_4380/bash-kill-process-by-port</link>
       <guid>20230806_4380</guid>
       <description><![CDATA[<p>This command lists process ids listening on a specified port:</p>
-<div class="highlight"><pre class="highlight shell"><code>lsof <span class="nt">-t</span> <span class="nt">-i</span>:PORT_NUMBER
-</code></pre></div>
-<p>You can use it to kill processes:</p>
-<div class="highlight"><pre class="highlight shell"><code><span class="nb">kill</span> <span class="nt">-9</span> <span class="o">(</span>lsof <span class="nt">-t</span> <span class="nt">-i</span>:PORT_NUMBER<span class="o">)</span>
-</code></pre></div>
-<p>Here is a Bash function making this command easier to use:</p>
-<div class="highlight"><pre class="highlight shell"><code>killport<span class="o">()</span> <span class="o">{</span> <span class="nb">kill</span> <span class="nt">-9</span> <span class="si">$(</span>lsof <span class="nt">-t</span> <span class="nt">-i</span>:<span class="nv">$1</span><span class="si">)</span> <span class="o">}</span>
-</code></pre></div>
-<p>Usage example:</p>
-<div class="highlight"><pre class="highlight shell"><code>killport 3000
-</code></pre></div>]]></description>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl">lsof -t -i:PORT_NUMBER
+</span></span></code></pre><p>You can use it to kill processes:</p>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl"><span class="nb">kill</span> -9 <span class="o">(</span>lsof -t -i:PORT_NUMBER<span class="o">)</span>
+</span></span></code></pre><p>Here is a Bash function making this command easier to use:</p>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl">killport<span class="o">()</span> <span class="o">{</span> <span class="nb">kill</span> -9 <span class="k">$(</span>lsof -t -i:<span class="nv">$1</span><span class="k">)</span> <span class="o">}</span>
+</span></span></code></pre><p>Usage example:</p>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl">killport <span class="m">3000</span>
+</span></span></code></pre>]]></description>
     </item>
     
     <item>
@@ -958,20 +822,16 @@ git push origin TAG_NAME
       <link>https://notes.musayev.com/20230802_4369/rails-order-by-array-position</link>
       <guid>20230802_4369</guid>
       <description><![CDATA[<p>ay, there is an <code>Account</code> model with <code>state</code> string attribute having <code>enabled</code>, <code>suspended</code> or <code>disabled</code> value.</p>
-
 <p>You can use PostgreSQL <code>array_position</code> function to specify the required sorting order like so:</p>
-<div class="highlight"><pre class="highlight sql"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">accounts</span> <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">array_position</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="s1">'enabled'</span><span class="p">,</span> <span class="s1">'suspended'</span><span class="p">,</span> <span class="s1">'disabled'</span><span class="p">],</span> <span class="n">accounts</span><span class="p">.</span><span class="k">state</span><span class="p">)</span>
-</code></pre></div>
-<p>The same query in Rails:</p>
-<div class="highlight"><pre class="highlight ruby"><code><span class="no">Account</span><span class="p">.</span><span class="nf">order</span><span class="p">(</span><span class="no">Arel</span><span class="p">.</span><span class="nf">sql</span><span class="p">(</span><span class="s2">"array_position(ARRAY['enabled' 'suspended', 'disabled'], state::text)"</span><span class="p">))</span>
-
-<span class="no">Account</span><span class="p">.</span><span class="nf">pluck</span><span class="p">(</span><span class="ss">:state</span><span class="p">).</span><span class="nf">tally</span>
-<span class="c1"># =&gt; {"enabled"=&gt;45, "disabled"=&gt;21, "suspended"=&gt;5}</span>
-
-<span class="no">Account</span><span class="p">.</span><span class="nf">order</span><span class="p">(</span><span class="no">Arel</span><span class="p">.</span><span class="nf">sql</span><span class="p">(</span><span class="s2">"array_position(ARRAY['disabled', 'suspended'], state::text)"</span><span class="p">)).</span><span class="nf">pluck</span><span class="p">(</span><span class="ss">:state</span><span class="p">)</span>
-</code></pre></div>
-<p>References:</p>
-
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">accounts</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">array_position</span><span class="p">(</span><span class="nb">array</span><span class="p">[</span><span class="s1">&#39;enabled&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;suspended&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;disabled&#39;</span><span class="p">],</span><span class="w"> </span><span class="n">accounts</span><span class="p">.</span><span class="k">state</span><span class="p">)</span><span class="w">
+</span></span></span></code></pre><p>The same query in Rails:</p>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl"><span class="no">Account</span><span class="o">.</span><span class="n">order</span><span class="p">(</span><span class="no">Arel</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&#34;array_position(ARRAY[&#39;enabled&#39; &#39;suspended&#39;, &#39;disabled&#39;], state::text)&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="no">Account</span><span class="o">.</span><span class="n">pluck</span><span class="p">(</span><span class="ss">:state</span><span class="p">)</span><span class="o">.</span><span class="n">tally</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># =&gt; {&#34;enabled&#34;=&gt;45, &#34;disabled&#34;=&gt;21, &#34;suspended&#34;=&gt;5}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="no">Account</span><span class="o">.</span><span class="n">order</span><span class="p">(</span><span class="no">Arel</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&#34;array_position(ARRAY[&#39;disabled&#39;, &#39;suspended&#39;], state::text)&#34;</span><span class="p">))</span><span class="o">.</span><span class="n">pluck</span><span class="p">(</span><span class="ss">:state</span><span class="p">)</span>
+</span></span></code></pre><p>References:</p>
 <ul>
 <li><a href="https://pgpedia.info/a/array_position.html"><code>array_position()</code></a></li>
 </ul>
@@ -983,11 +843,8 @@ git push origin TAG_NAME
       <link>https://notes.musayev.com/20230730_4361/345-method</link>
       <guid>20230730_4361</guid>
       <description><![CDATA[<p>&quot;3-4-5 method&quot; is a way to ensure a right angle without using a reference square:</p>
-
-<p><img src="6c53cf1f2916480f9574471f64a7640b.jpg" alt="" title=""></p>
-
+<p><img src="6c53cf1f2916480f9574471f64a7640b.jpg" alt=""></p>
 <p>References:</p>
-
 <ul>
 <li><a href="https://www.fao.org/3/R7021E/r7021e05.htm">Irrigation Water Management: Training Manual No. 2 - Elements of Topographic Surveying</a></li>
 </ul>
@@ -999,15 +856,12 @@ git push origin TAG_NAME
       <link>https://notes.musayev.com/20230725_4324/updating-ruby-with-asdf</link>
       <guid>20230725_4324</guid>
       <description><![CDATA[<p>Assuming, it is macOS, and <code>asdf</code> was installed with Homebrew.</p>
-<div class="highlight"><pre class="highlight shell"><code>brew update
-asdf plugin update ruby
-asdf <span class="nb">install </span>ruby 3.2.2
-</code></pre></div>
-<p>In case <code>asdf</code> was installed manually, use this instead of the brew commend to update to the lates stable release:</p>
-<div class="highlight"><pre class="highlight shell"><code>asdf update
-</code></pre></div>
-<p>References:</p>
-
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl">brew update
+</span></span><span class="line"><span class="cl">asdf plugin update ruby
+</span></span><span class="line"><span class="cl">asdf install ruby 3.2.2
+</span></span></code></pre><p>In case <code>asdf</code> was installed manually, use this instead of the brew commend to update to the lates stable release:</p>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl">asdf update
+</span></span></code></pre><p>References:</p>
 <ul>
 <li><a href="https://asdf-vm.com/"><code>asdf</code></a></li>
 </ul>
@@ -1019,42 +873,37 @@ asdf <span class="nb">install </span>ruby 3.2.2
       <link>https://notes.musayev.com/20230723_4310/preserving-ruby-exception-backtrace</link>
       <guid>20230723_4310</guid>
       <description><![CDATA[<p>In this example raising a <code>CustomError</code> hides the original error backtrace.</p>
-<div class="highlight"><pre class="highlight ruby"><code><span class="no">CustomError</span> <span class="o">=</span> <span class="no">Class</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="no">StandardError</span><span class="p">)</span>
-
-<span class="k">def</span> <span class="nf">raise_error</span>
-  <span class="k">raise</span> <span class="no">StandardError</span><span class="p">,</span> <span class="s2">"Original error"</span> <span class="c1"># line 4</span>
-<span class="k">end</span>
-
-<span class="k">def</span> <span class="nf">call_the_error_raiser</span>
-  <span class="n">raise_error</span> <span class="c1"># line 8</span>
-<span class="k">rescue</span> <span class="o">=&gt;</span> <span class="n">e</span>
-  <span class="k">raise</span> <span class="no">CustomError</span><span class="p">,</span> <span class="s2">"Error message"</span>
-<span class="k">end</span>
-
-<span class="k">begin</span>
-  <span class="n">call_the_error_raiser</span> <span class="c1"># line 14</span>
-<span class="k">rescue</span> <span class="no">StandardError</span> <span class="o">=&gt;</span> <span class="n">e</span>
-  <span class="nb">puts</span> <span class="n">e</span><span class="p">.</span><span class="nf">inspect</span>
-  <span class="nb">puts</span> <span class="n">e</span><span class="p">.</span><span class="nf">backtrace</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
-<span class="k">end</span>
-</code></pre></div>
-<p>Output (the cause of the original error is lost):</p>
-<div class="highlight"><pre class="highlight plaintext"><code>#&lt;CustomError: Error message&gt;
-preserve_error_backtrace.rb:10:in `rescue in call_the_error_raiser'
-preserve_error_backtrace.rb:7:in `call_the_error_raiser'
-preserve_error_backtrace.rb:14:in `&lt;main&gt;'
-</code></pre></div>
-<p>You can still access the &quot;Original error&quot; backtrace via <a href="https://ruby-doc.org/3.2.2/Exception.html#method-i-cause"><code>Exception#cause</code></a>, but it may be better to preserve the original while raising the custom error, instead of generating a new non-helpful backtrace:</p>
-<div class="highlight"><pre class="highlight ruby"><code><span class="k">raise</span> <span class="no">CustomError</span><span class="p">,</span> <span class="s2">"Error message"</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="nf">backtrace</span>
-</code></pre></div>
-<p>Output (the cause of the original error is on the first line):</p>
-<div class="highlight"><pre class="highlight plaintext"><code>#&lt;CustomError: Error message&gt;
-preserve_error_backtrace.rb:4:in `raise_error' ← The cause of the error
-preserve_error_backtrace.rb:8:in `call_the_error_raiser'
-preserve_error_backtrace.rb:14:in `&lt;main&gt;'
-</code></pre></div>
-<p>References:</p>
-
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl"><span class="no">CustomError</span> <span class="o">=</span> <span class="no">Class</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="no">StandardError</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">raise_error</span>
+</span></span><span class="line"><span class="cl">  <span class="k">raise</span> <span class="no">StandardError</span><span class="p">,</span> <span class="s2">&#34;Original error&#34;</span> <span class="c1"># line 4</span>
+</span></span><span class="line"><span class="cl"><span class="k">end</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">call_the_error_raiser</span>
+</span></span><span class="line"><span class="cl">  <span class="n">raise_error</span> <span class="c1"># line 8</span>
+</span></span><span class="line"><span class="cl"><span class="k">rescue</span> <span class="o">=&gt;</span> <span class="n">e</span>
+</span></span><span class="line"><span class="cl">  <span class="k">raise</span> <span class="no">CustomError</span><span class="p">,</span> <span class="s2">&#34;Error message&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">end</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">begin</span>
+</span></span><span class="line"><span class="cl">  <span class="n">call_the_error_raiser</span> <span class="c1"># line 14</span>
+</span></span><span class="line"><span class="cl"><span class="k">rescue</span> <span class="no">StandardError</span> <span class="o">=&gt;</span> <span class="n">e</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">puts</span> <span class="n">e</span><span class="o">.</span><span class="n">inspect</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">puts</span> <span class="n">e</span><span class="o">.</span><span class="n">backtrace</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">end</span>
+</span></span></code></pre><p>Output (the cause of the original error is lost):</p>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl">#&lt;CustomError: Error message&gt;
+</span></span><span class="line"><span class="cl">preserve_error_backtrace.rb:10:in `rescue in call_the_error_raiser&#39;
+</span></span><span class="line"><span class="cl">preserve_error_backtrace.rb:7:in `call_the_error_raiser&#39;
+</span></span><span class="line"><span class="cl">preserve_error_backtrace.rb:14:in `&lt;main&gt;&#39;
+</span></span></code></pre><p>You can still access the &quot;Original error&quot; backtrace via <a href="https://ruby-doc.org/3.2.2/Exception.html#method-i-cause"><code>Exception#cause</code></a>, but it may be better to preserve the original while raising the custom error, instead of generating a new non-helpful backtrace:</p>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl"><span class="k">raise</span> <span class="no">CustomError</span><span class="p">,</span> <span class="s2">&#34;Error message&#34;</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">backtrace</span>
+</span></span></code></pre><p>Output (the cause of the original error is on the first line):</p>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl">#&lt;CustomError: Error message&gt;
+</span></span><span class="line"><span class="cl">preserve_error_backtrace.rb:4:in `raise_error&#39; ← The cause of the error
+</span></span><span class="line"><span class="cl">preserve_error_backtrace.rb:8:in `call_the_error_raiser&#39;
+</span></span><span class="line"><span class="cl">preserve_error_backtrace.rb:14:in `&lt;main&gt;&#39;
+</span></span></code></pre><p>References:</p>
 <ul>
 <li><a href="https://www.honeybadger.io/blog/nested-errors-in-ruby-with-exception-cause/">Nested errors in Ruby with Exception#cause</a> at Honeybadger blog</li>
 <li><a href="https://ruby-doc.org/3.2.2/Exception.html#method-i-cause"><code>Exception#cause</code> docs</a></li>
@@ -1067,37 +916,29 @@ preserve_error_backtrace.rb:14:in `&lt;main&gt;'
       <link>https://notes.musayev.com/20230720_4288/honeybadger-deployment-notification</link>
       <guid>20230720_4288</guid>
       <description><![CDATA[<p>Shell command to tell Honeybadger about a new deployment:</p>
-<div class="highlight"><pre class="highlight shell"><code>curl <span class="nt">--data</span> <span class="s2">"deploy[revision]=</span><span class="si">$(</span><span class="nb">date</span> <span class="nt">-u</span> +%Y%m%d%H%M%S<span class="si">)</span><span class="s2">_</span><span class="si">$(</span>git rev-parse <span class="nt">--short</span> HEAD<span class="si">)</span><span class="s2">&amp;api_key=</span><span class="nv">$HONEYBADGER_API_KEY</span><span class="s2">"</span> <span class="s2">"https://api.honeybadger.io/v1/deploys"</span>
-</code></pre></div>
-<p>Params:</p>
-
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl">curl --data <span class="s2">&#34;deploy[revision]=</span><span class="k">$(</span>date -u +%Y%m%d%H%M%S<span class="k">)</span><span class="s2">_</span><span class="k">$(</span>git rev-parse --short HEAD<span class="k">)</span><span class="s2">&amp;api_key=</span><span class="nv">$HONEYBADGER_API_KEY</span><span class="s2">&#34;</span> <span class="s2">&#34;https://api.honeybadger.io/v1/deploys&#34;</span>
+</span></span></code></pre><p>Params:</p>
 <ul>
 <li><code>$REVISION</code> - revision id. can be an arbitrary string value. In this example revision id is based on current timestamp (presumable date and time of deployment) and head revision id for the current working copy. Example: <code>20230723092717_00a9703</code>.</li>
 <li><code>$HONEYBADGER_API_KEY</code> - Honeybadger API key.</li>
 </ul>
-
 <p>Getting Honeybadger API key:</p>
-
 <p>Project page → Settings → API keys</p>
-
-<p><img src="43688db1c5854f1a8382a311bd0dc72b.jpg" alt="" title=""></p>
-
+<p><img src="43688db1c5854f1a8382a311bd0dc72b.jpg" alt=""></p>
 <p>Ansible task:</p>
-<div class="highlight"><pre class="highlight yaml"><code><span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">clone or update sources</span>
-  <span class="na">ansible.builtin.git</span><span class="pi">:</span>
-    <span class="c1"># ...</span>
-  <span class="na">register</span><span class="pi">:</span> <span class="s">git_result</span>
-
-<span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">notify honeybadger.io about the deployment</span>
-  <span class="na">community.general.honeybadger_deployment</span><span class="pi">:</span>
-    <span class="na">token</span><span class="pi">:</span> <span class="s2">"</span><span class="s">{{lookup('env',</span><span class="nv"> </span><span class="s">'HONEYBADGER_API_KEY')}}"</span>
-    <span class="na">environment</span><span class="pi">:</span> <span class="s2">"</span><span class="s">production"</span>
-    <span class="na">user</span><span class="pi">:</span> <span class="s2">"</span><span class="s">ansible"</span>
-    <span class="na">revision</span><span class="pi">:</span> <span class="s2">"</span><span class="s">{{git_result.after}}"</span>
-    <span class="na">repo</span><span class="pi">:</span> <span class="s2">"</span><span class="s">{{git_url}}"</span>
-</code></pre></div>
-<p>References:</p>
-
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl">- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">clone or update sources</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">ansible.builtin.git</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c"># ...</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">register</span><span class="p">:</span><span class="w"> </span><span class="l">git_result</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl">- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">notify honeybadger.io about the deployment</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">community.general.honeybadger_deployment</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">token</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;{{lookup(&#39;env&#39;, &#39;HONEYBADGER_API_KEY&#39;)}}&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">environment</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;production&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">user</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;ansible&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">revision</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;{{git_result.after}}&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">repo</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;{{git_url}}&#34;</span><span class="w">
+</span></span></span></code></pre><p>References:</p>
 <ul>
 <li><a href="https://docs.honeybadger.io/api/reporting-deployments/">Honeybadger docs</a></li>
 </ul>
@@ -1108,61 +949,59 @@ preserve_error_backtrace.rb:14:in `&lt;main&gt;'
       <title>Github backup</title>
       <link>https://notes.musayev.com/20230718_4279/github-backup</link>
       <guid>20230718_4279</guid>
-      <description><![CDATA[<p>Here is a script to create local snapshots for Github repos. It&#39;s always nice to have one for good measure.</p>
-
+      <description><![CDATA[<p>Here is a script to create local snapshots for Github repos. It's always nice to have one for good measure.</p>
 <p>It requires <a href="https://github.com/josegonzalez/python-github-backup"><code>github-backup</code></a> to be installed:</p>
-<div class="highlight"><pre class="highlight shell"><code>brew <span class="nb">install </span>github-backup
-</code></pre></div><div class="highlight"><pre class="highlight shell"><code><span class="c">#!/usr/bin/env bash</span>
-
-<span class="nb">set</span> <span class="nt">-e</span> <span class="nt">-x</span>
-
-<span class="c"># Github repos will be cloned in subdirectories here</span>
-<span class="nv">GITHUB_BACKUP_PATH</span><span class="o">=</span>~/github-backup
-
-<span class="c"># Archived repo snapshots will live here</span>
-<span class="nv">ARCHIVE_PATH</span><span class="o">=</span>~/Yandex.Disk.localized/
-
-<span class="nv">CURRENT_DATE</span><span class="o">=</span><span class="si">$(</span><span class="nb">date</span> +%Y%m%d-%H%M%S<span class="si">)</span>
-
-<span class="k">function </span>backup<span class="o">()</span> <span class="o">{</span>
-  <span class="nb">echo</span> <span class="s2">"---&gt; </span><span class="nv">$1</span><span class="s2">/</span><span class="nv">$2</span><span class="s2">"</span>
-
-  github-backup <span class="se">\</span>
-    <span class="nt">--incremental</span> <span class="se">\</span>
-    <span class="nt">--repository</span> <span class="nv">$2</span> <span class="se">\</span>
-    <span class="nt">--repositories</span> <span class="se">\</span>
-    <span class="nt">--token</span> <span class="nv">$GITHUB_BACKUP_TOKEN</span> <span class="se">\</span>
-    <span class="nt">--output-directory</span> <span class="nv">$GITHUB_BACKUP_PATH</span>/<span class="nv">$1</span>/<span class="nv">$2</span> <span class="se">\</span>
-    <span class="nt">--starred</span> <span class="se">\</span>
-    <span class="nt">--followers</span> <span class="se">\</span>
-    <span class="nt">--following</span> <span class="se">\</span>
-    <span class="nt">--issues</span> <span class="se">\</span>
-    <span class="nt">--issue-comments</span> <span class="se">\</span>
-    <span class="nt">--pulls</span> <span class="se">\</span>
-    <span class="nt">--pull-comments</span> <span class="se">\</span>
-    <span class="nt">--pull-commits</span> <span class="se">\</span>
-    <span class="nt">--pull-details</span> <span class="se">\</span>
-    <span class="nt">--labels</span> <span class="se">\</span>
-    <span class="nt">--wikis</span> <span class="se">\</span>
-    <span class="nt">--gists</span> <span class="se">\</span>
-    <span class="nt">--private</span> <span class="se">\</span>
-    <span class="nt">--fork</span> <span class="se">\</span>
-    <span class="nt">--releases</span> <span class="se">\</span>
-    <span class="nv">$1</span>
-
-  <span class="nv">ARCHIVE_FILE</span><span class="o">=</span><span class="nv">$ARCHIVE_PATH</span>/<span class="nv">$CURRENT_DATE</span>/<span class="nv">$CURRENT_DATE</span>-<span class="nv">$1</span>-<span class="nv">$2</span>.tar.gz
-  <span class="nb">mkdir</span> <span class="nt">-p</span> <span class="nv">$ARCHIVE_PATH</span>/<span class="nv">$CURRENT_DATE</span>
-  <span class="nb">tar</span> <span class="nt">--verbose</span> <span class="nt">-cz</span> <span class="nt">-f</span> <span class="nv">$ARCHIVE_FILE</span> <span class="nv">$GITHUB_BACKUP_PATH</span>/<span class="nv">$1</span>/<span class="nv">$2</span>
-<span class="o">}</span>
-
-<span class="c"># Usage: backup &lt;username-or-organization&gt; &lt;repo-name&gt;</span>
-
-backup dreikanter notes
-<span class="c"># Add more repos here</span>
-</code></pre></div>
-<p>Upload backup files to the cloud with <a href="https://rclone.org/"><code>rclone</code></a>:</p>
-<div class="highlight"><pre class="highlight shell"><code>rclone <span class="nb">sync</span> <span class="nt">--verbose</span><span class="o">=</span>3 <span class="nt">--interactive</span> <span class="nv">$ARCHIVE_PATH</span> remote:github-backup
-</code></pre></div>]]></description>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl">brew install github-backup
+</span></span></code></pre><pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl"><span class="cp">#!/usr/bin/env bash
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">set</span> -e -x
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Github repos will be cloned in subdirectories here</span>
+</span></span><span class="line"><span class="cl"><span class="nv">GITHUB_BACKUP_PATH</span><span class="o">=</span>~/github-backup
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Archived repo snapshots will live here</span>
+</span></span><span class="line"><span class="cl"><span class="nv">ARCHIVE_PATH</span><span class="o">=</span>~/Yandex.Disk.localized/
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">CURRENT_DATE</span><span class="o">=</span><span class="k">$(</span>date +%Y%m%d-%H%M%S<span class="k">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">function</span> backup<span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;---&gt; </span><span class="nv">$1</span><span class="s2">/</span><span class="nv">$2</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  github-backup <span class="se">\
+</span></span></span><span class="line"><span class="cl">    --incremental <span class="se">\
+</span></span></span><span class="line"><span class="cl">    --repository <span class="nv">$2</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl">    --repositories <span class="se">\
+</span></span></span><span class="line"><span class="cl">    --token <span class="nv">$GITHUB_BACKUP_TOKEN</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl">    --output-directory <span class="nv">$GITHUB_BACKUP_PATH</span>/<span class="nv">$1</span>/<span class="nv">$2</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl">    --starred <span class="se">\
+</span></span></span><span class="line"><span class="cl">    --followers <span class="se">\
+</span></span></span><span class="line"><span class="cl">    --following <span class="se">\
+</span></span></span><span class="line"><span class="cl">    --issues <span class="se">\
+</span></span></span><span class="line"><span class="cl">    --issue-comments <span class="se">\
+</span></span></span><span class="line"><span class="cl">    --pulls <span class="se">\
+</span></span></span><span class="line"><span class="cl">    --pull-comments <span class="se">\
+</span></span></span><span class="line"><span class="cl">    --pull-commits <span class="se">\
+</span></span></span><span class="line"><span class="cl">    --pull-details <span class="se">\
+</span></span></span><span class="line"><span class="cl">    --labels <span class="se">\
+</span></span></span><span class="line"><span class="cl">    --wikis <span class="se">\
+</span></span></span><span class="line"><span class="cl">    --gists <span class="se">\
+</span></span></span><span class="line"><span class="cl">    --private <span class="se">\
+</span></span></span><span class="line"><span class="cl">    --fork <span class="se">\
+</span></span></span><span class="line"><span class="cl">    --releases <span class="se">\
+</span></span></span><span class="line"><span class="cl">    <span class="nv">$1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nv">ARCHIVE_FILE</span><span class="o">=</span><span class="nv">$ARCHIVE_PATH</span>/<span class="nv">$CURRENT_DATE</span>/<span class="nv">$CURRENT_DATE</span>-<span class="nv">$1</span>-<span class="nv">$2</span>.tar.gz
+</span></span><span class="line"><span class="cl">  mkdir -p <span class="nv">$ARCHIVE_PATH</span>/<span class="nv">$CURRENT_DATE</span>
+</span></span><span class="line"><span class="cl">  tar --verbose -cz -f <span class="nv">$ARCHIVE_FILE</span> <span class="nv">$GITHUB_BACKUP_PATH</span>/<span class="nv">$1</span>/<span class="nv">$2</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Usage: backup &lt;username-or-organization&gt; &lt;repo-name&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">backup dreikanter notes
+</span></span><span class="line"><span class="cl"><span class="c1"># Add more repos here</span>
+</span></span></code></pre><p>Upload backup files to the cloud with <a href="https://rclone.org/"><code>rclone</code></a>:</p>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl">rclone sync --verbose<span class="o">=</span><span class="m">3</span> --interactive <span class="nv">$ARCHIVE_PATH</span> remote:github-backup
+</span></span></code></pre>]]></description>
     </item>
     
     <item>
@@ -1170,16 +1009,16 @@ backup dreikanter notes
       <link>https://notes.musayev.com/20230713_4251/rspec-snippet-for-sublime-text</link>
       <guid>20230713_4251</guid>
       <description><![CDATA[<p>Sublime Text snippet to create a blank RSpec spec:</p>
-<div class="highlight"><pre class="highlight xml"><code><span class="nt">&lt;snippet&gt;</span>
-  <span class="nt">&lt;content&gt;</span><span class="cp">&lt;![CDATA[
-RSpec.describe ${1:subject_class} do
-  subject(:${2:subject_name}) { described_class }
-end
-]]&gt;</span><span class="nt">&lt;/content&gt;</span>
-  <span class="nt">&lt;tabTrigger&gt;</span>spec<span class="nt">&lt;/tabTrigger&gt;</span>
-  <span class="nt">&lt;scope&gt;</span>source.ruby<span class="nt">&lt;/scope&gt;</span>
-<span class="nt">&lt;/snippet&gt;</span>
-</code></pre></div>]]></description>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl"><span class="nt">&lt;snippet&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;content&gt;</span><span class="cp">&lt;![CDATA[
+</span></span></span><span class="line"><span class="cl"><span class="cp">RSpec.describe ${1:subject_class} do
+</span></span></span><span class="line"><span class="cl"><span class="cp">  subject(:${2:subject_name}) { described_class }
+</span></span></span><span class="line"><span class="cl"><span class="cp">end
+</span></span></span><span class="line"><span class="cl"><span class="cp">]]&gt;</span><span class="nt">&lt;/content&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;tabTrigger&gt;</span>spec<span class="nt">&lt;/tabTrigger&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;scope&gt;</span>source.ruby<span class="nt">&lt;/scope&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/snippet&gt;</span>
+</span></span></code></pre>]]></description>
     </item>
     
     <item>
@@ -1187,16 +1026,13 @@ end
       <link>https://notes.musayev.com/20230627_4185/migrating-postgresql-database-with-pg-dump</link>
       <guid>20230627_4185</guid>
       <description><![CDATA[<p>Dump and compress DB on the source server:</p>
-<div class="highlight"><pre class="highlight shell"><code>pg_dump <span class="nt">--username</span><span class="o">=</span>DB_USER <span class="nt">--format</span><span class="o">=</span>custom <span class="nt">--compress</span><span class="o">=</span>9  <span class="nt">--file</span><span class="o">=</span>DB_NAME.dump  DB_NAME
-</code></pre></div>
-<p>(To generate dump file name dynamically, use <code>--file=$(date +%Y%m%d)_DB_NAME.dump</code>. Could be helpful for backup scenarios.)</p>
-
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl">pg_dump --username<span class="o">=</span>DB_USER --format<span class="o">=</span>custom --compress<span class="o">=</span><span class="m">9</span>  --file<span class="o">=</span>DB_NAME.dump  DB_NAME
+</span></span></code></pre><p>(To generate dump file name dynamically, use <code>--file=$(date +%Y%m%d)_DB_NAME.dump</code>. Could be helpful for backup scenarios.)</p>
 <p>Download the dump to the target DB server:</p>
-<div class="highlight"><pre class="highlight shell"><code>scp <span class="nt">-i</span> ~/.ssh/PRIVATE_KEY USER@HOST:DB_NAME.dump ~/
-</code></pre></div>
-<p>Restore the dump on the new server:</p>
-<div class="highlight"><pre class="highlight shell"><code>pg_restore <span class="nt">--username</span><span class="o">=</span>DB_USER <span class="nt">--create</span> <span class="nt">--dbname</span><span class="o">=</span>DB_NAME DB_NAME.dump
-</code></pre></div>]]></description>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl">scp -i ~/.ssh/PRIVATE_KEY USER@HOST:DB_NAME.dump ~/
+</span></span></code></pre><p>Restore the dump on the new server:</p>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl">pg_restore --username<span class="o">=</span>DB_USER --create --dbname<span class="o">=</span>DB_NAME DB_NAME.dump
+</span></span></code></pre>]]></description>
     </item>
     
     <item>
@@ -1204,20 +1040,16 @@ end
       <link>https://notes.musayev.com/20230625_4177/install-chrome-headless</link>
       <guid>20230625_4177</guid>
       <description><![CDATA[<p>Install Chromium (headless Chrome) on Ubuntru</p>
-<div class="highlight"><pre class="highlight shell"><code><span class="nb">sudo </span>apt-get update
-<span class="nb">sudo </span>apt-get <span class="nb">install </span>software-properties-common
-<span class="nb">sudo </span>add-apt-repository ppa:canonical-chromium-builds/stage
-<span class="nb">sudo </span>apt-get update
-<span class="nb">sudo </span>apt-get <span class="nb">install </span>chromium-browser
-</code></pre></div>
-<p>Creating screenshot:</p>
-<div class="highlight"><pre class="highlight shell"><code>chromium-browser <span class="nt">--headless</span> <span class="nt">--hide-scrollbars</span> <span class="nt">--no-sandbox</span> <span class="nt">--window-size</span><span class="o">=</span>1280,1024 <span class="nt">--screenshot</span><span class="o">=</span>screenshot.pdf http://example.org/
-</code></pre></div>
-<p>Saving a page to PDF:</p>
-<div class="highlight"><pre class="highlight shell"><code>chromium-browser <span class="nt">--headless</span> <span class="nt">--hide-scrollbars</span> <span class="nt">--print-to-pdf</span><span class="o">=</span>page.pdf https://example.com/
-</code></pre></div>
-<p>References:</p>
-
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl">sudo apt-get update
+</span></span><span class="line"><span class="cl">sudo apt-get install software-properties-common
+</span></span><span class="line"><span class="cl">sudo add-apt-repository ppa:canonical-chromium-builds/stage
+</span></span><span class="line"><span class="cl">sudo apt-get update
+</span></span><span class="line"><span class="cl">sudo apt-get install chromium-browser
+</span></span></code></pre><p>Creating screenshot:</p>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl">chromium-browser --headless --hide-scrollbars --no-sandbox --window-size<span class="o">=</span>1280,1024 --screenshot<span class="o">=</span>screenshot.pdf http://example.org/
+</span></span></code></pre><p>Saving a page to PDF:</p>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl">chromium-browser --headless --hide-scrollbars --print-to-pdf<span class="o">=</span>page.pdf https://example.com/
+</span></span></code></pre><p>References:</p>
 <ul>
 <li><a href="https://chromium.woolyss.com/">https://chromium.woolyss.com/</a></li>
 <li><a href="https://gist.github.com/addyosmani/5336747">https://gist.github.com/addyosmani/5336747</a></li>
@@ -1232,28 +1064,22 @@ end
       <link>https://notes.musayev.com/20230625_4175/ansible-ping</link>
       <guid>20230625_4175</guid>
       <description><![CDATA[<p>A command line for the basic use case when you need to check connection for all hosts in a specified inventory file:</p>
-<div class="highlight"><pre class="highlight shell"><code>ansible all <span class="nt">--inventory</span> INVENTORY_FILE <span class="nt">--user</span> REMOTE_USER <span class="nt">--module-name</span> ping
-</code></pre></div>
-<p>Short version:</p>
-<div class="highlight"><pre class="highlight shell"><code>ansible all <span class="nt">-i</span> INVENTORY_FILE <span class="nt">-u</span> REMOTE_USER <span class="nt">-m</span> ping
-</code></pre></div>
-<p>Drop <code>--user</code> if it present in the Ansible configuration file.</p>
-
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl">ansible all --inventory INVENTORY_FILE --user REMOTE_USER --module-name ping
+</span></span></code></pre><p>Short version:</p>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl">ansible all -i INVENTORY_FILE -u REMOTE_USER -m ping
+</span></span></code></pre><p>Drop <code>--user</code> if it present in the Ansible configuration file.</p>
 <p>Example:</p>
-<div class="highlight"><pre class="highlight shell"><code>ansible all <span class="nt">-i</span> ./inventory/production <span class="nt">-m</span> ping
-</code></pre></div>
-<p>Sample output:</p>
-<div class="highlight"><pre class="highlight plaintext"><code>X.X.X.X | SUCCESS =&gt; {
-    "changed": false,
-    "ping": "pong"
-}
-Y.Y.Y.Y | SUCCESS =&gt; {
-    "changed": false,
-    "ping": "pong"
-}
-</code></pre></div>
-<p>References:</p>
-
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl">ansible all -i ./inventory/production -m ping
+</span></span></code></pre><p>Sample output:</p>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl">X.X.X.X | SUCCESS =&gt; {
+</span></span><span class="line"><span class="cl">    &#34;changed&#34;: false,
+</span></span><span class="line"><span class="cl">    &#34;ping&#34;: &#34;pong&#34;
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">Y.Y.Y.Y | SUCCESS =&gt; {
+</span></span><span class="line"><span class="cl">    &#34;changed&#34;: false,
+</span></span><span class="line"><span class="cl">    &#34;ping&#34;: &#34;pong&#34;
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre><p>References:</p>
 <ul>
 <li><a href="https://docs.ansible.com/ansible/latest/inventory_guide/intro_patterns.html#using-patterns">Using Ansible hosts pattern</a></li>
 <li><a href="https://docs.ansible.com/ansible/latest/inventory_guide/intro_inventory.html">Ansible inventory</a></li>
@@ -1267,21 +1093,14 @@ Y.Y.Y.Y | SUCCESS =&gt; {
       <link>https://notes.musayev.com/20230622_4169/rails-class-names</link>
       <guid>20230622_4169</guid>
       <description><![CDATA[<p><a href="https://www.rubydoc.info/docs/rails/ActionView%2FHelpers%2FTagHelper:class_names"><code>class_names</code></a> is a neat helper method for CSS class names.</p>
-
 <p>It merges the class names list into a string, supporting optional conditions. Very similar to the <a href="https://www.npmjs.com/package/classnames"><code>classNames</code></a> JS function.</p>
-
 <p>The example from <a href="https://github.com/rails/rails/pull/37918">the PR</a> demonstrates the way a new helper improves readability for a conditional class names generation in a view:</p>
-
 <p>Before:</p>
-<div class="highlight"><pre class="highlight html"><code><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"&lt;%= item.for_sale? ? 'active' : '' %&gt;"</span><span class="nt">&gt;</span>
-</code></pre></div>
-<p>After:</p>
-<div class="highlight"><pre class="highlight html"><code><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"&lt;%= class_names(active: item.for_sale?) %&gt;"</span><span class="nt">&gt;</span>
-</code></pre></div>
-<p><code>class_names</code> is an alias to the more generic <code>token_list</code> that must be a semantic generalization for non-CSS use cases.</p>
-
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;&lt;%= item.for_sale? ? &#39;active&#39; : &#39;&#39; %&gt;&#34;</span><span class="p">&gt;</span>
+</span></span></code></pre><p>After:</p>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;&lt;%= class_names(active: item.for_sale?) %&gt;&#34;</span><span class="p">&gt;</span>
+</span></span></code></pre><p><code>class_names</code> is an alias to the more generic <code>token_list</code> that must be a semantic generalization for non-CSS use cases.</p>
 <p>References:</p>
-
 <ul>
 <li>Rails API docs: <a href="https://api.rubyonrails.org/classes/ActionView/Helpers/TagHelper.html#method-i-class_names"><code>ActionView::Helpers::TagHelper#class_names</code></a></li>
 </ul>
@@ -1293,17 +1112,14 @@ Y.Y.Y.Y | SUCCESS =&gt; {
       <link>https://notes.musayev.com/20230620_4165/git-head-revision-id</link>
       <guid>20230620_4165</guid>
       <description><![CDATA[<p>Getting git commit id for the <code>HEAD</code> revision in a specific working directory, without changing current directory:</p>
-<div class="highlight"><pre class="highlight shell"><code>git <span class="nt">-C</span> ~/public_notes rev-parse HEAD
-</code></pre></div>
-<p>Output example:</p>
-<div class="highlight"><pre class="highlight shell"><code>bf27c74435e836ef3ef43ccc4e01d3e4fd708201
-</code></pre></div>
-<p>Short id:</p>
-<div class="highlight"><pre class="highlight shell"><code>git <span class="nt">-C</span> ~/public_notes rev-parse <span class="nt">--short</span> HEAD
-</code></pre></div>
-<p>Output example:</p>
-<div class="highlight"><pre class="highlight shell"><code>bf27c74
-</code></pre></div>]]></description>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl">git -C ~/public_notes rev-parse HEAD
+</span></span></code></pre><p>Output example:</p>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl">bf27c74435e836ef3ef43ccc4e01d3e4fd708201
+</span></span></code></pre><p>Short id:</p>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl">git -C ~/public_notes rev-parse --short HEAD
+</span></span></code></pre><p>Output example:</p>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl">bf27c74
+</span></span></code></pre>]]></description>
     </item>
     
     <item>
@@ -1318,32 +1134,25 @@ Y.Y.Y.Y | SUCCESS =&gt; {
       <title>Updating gems</title>
       <link>https://notes.musayev.com/20230618_4153/updating-gems</link>
       <guid>20230618_4153</guid>
-      <description><![CDATA[<p>I&#39;m updating gems regularly for <code>\d\d</code> years now, but it is still hard to remember related commands. Should I use <code>gem</code> or <code>bundle</code> to upgrade <code>bundle</code>? Is it &quot;update&quot; or &quot;upgrade&quot;? Bwagh!</p>
-
+      <description><![CDATA[<p>I'm updating gems regularly for <code>\d\d</code> years now, but it is still hard to remember related commands. Should I use <code>gem</code> or <code>bundle</code> to upgrade <code>bundle</code>? Is it &quot;update&quot; or &quot;upgrade&quot;? Bwagh!</p>
 <p><strong>Updating Bundler:</strong></p>
-<div class="highlight"><pre class="highlight shell"><code>bundle update <span class="nt">--bundler</span>
-</code></pre></div>
-<p>Note:</p>
-
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl">bundle update --bundler
+</span></span></code></pre><p>Note:</p>
 <ul>
 <li><code>Gemfile.lock</code> may lock Bundler version with <code>BUNDLED WITH</code> value.</li>
 <li><code>Gemfile.lock</code> may cause an alternative bundler version installation during <code>bundle install</code>.</li>
 </ul>
-
 <p>Update system gems:</p>
-<div class="highlight"><pre class="highlight shell"><code>gem update <span class="nt">--system</span>
-</code></pre></div>
-<p>Getting gem paths and other environment variables:</p>
-<div class="highlight"><pre class="highlight shell"><code>gem <span class="nb">env</span>
-</code></pre></div>
-<p>Updating rbenv with Homenrew:</p>
-<div class="highlight"><pre class="highlight shell"><code>brew update
-brew upgrade rbenv
-</code></pre></div>
-<p>Installing new Ruby version with rbenv:</p>
-<div class="highlight"><pre class="highlight shell"><code>rbenv <span class="nb">install </span>3.2.2
-bundle <span class="nb">install</span>
-</code></pre></div>]]></description>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl">gem update --system
+</span></span></code></pre><p>Getting gem paths and other environment variables:</p>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl">gem env
+</span></span></code></pre><p>Updating rbenv with Homenrew:</p>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl">brew update
+</span></span><span class="line"><span class="cl">brew upgrade rbenv
+</span></span></code></pre><p>Installing new Ruby version with rbenv:</p>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl">rbenv install 3.2.2
+</span></span><span class="line"><span class="cl">bundle install
+</span></span></code></pre>]]></description>
     </item>
     
     <item>
@@ -1351,14 +1160,12 @@ bundle <span class="nb">install</span>
       <link>https://notes.musayev.com/20230526_4105/publishing-notes</link>
       <guid>20230526_4105</guid>
       <description><![CDATA[<p>Knowing that others can read your notes is enough to</p>
-
 <ul>
 <li>make your writing more thoughtful,</li>
 <li>motivate fact checking and adding references,</li>
 <li>get deeper understanding of the subject,</li>
 <li>and proofread everything thoroughly.</li>
 </ul>
-
 <p>If you make your knowledge public, you learn better. This alone is a sufficient reason for the personal notes publication.</p>
 ]]></description>
     </item>
@@ -1368,9 +1175,9 @@ bundle <span class="nb">install</span>
       <link>https://notes.musayev.com/20230130_3961/rails-devise-manula-password-change</link>
       <guid>20230130_3961</guid>
       <description><![CDATA[<p>Changing password for a user does not require a manual update for the related fields.</p>
-<div class="highlight"><pre class="highlight ruby"><code><span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">user</span><span class="p">.</span><span class="nf">update!</span><span class="p">(</span><span class="ss">password: </span><span class="s2">"new password"</span><span class="p">)</span>
-</code></pre></div>]]></description>
+<pre class="not-prose chroma rounded-sm px-4 py-3 text-base leading-normal overflow-x-auto" class="chroma"><code><span class="line"><span class="cl"><span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">user</span><span class="o">.</span><span class="n">update!</span><span class="p">(</span><span class="ss">password</span><span class="p">:</span> <span class="s2">&#34;new password&#34;</span><span class="p">)</span>
+</span></span></code></pre>]]></description>
     </item>
     
   </channel>
