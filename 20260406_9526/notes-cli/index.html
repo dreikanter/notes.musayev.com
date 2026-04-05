@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="author" content="Alex Musayev">
   <meta name="description" content="" />
-  <title>Process Smells in AI-Assisted Workflows - Alex Musayev on Code</title>
+  <title>A command-line tool for a plain-text note archive - Alex Musayev on Code</title>
   
-    <link rel="canonical" href="https://notes.musayev.com/20260329_9444/publishing-notes">
+    <link rel="canonical" href="https://notes.musayev.com/20260406_9526/notes-cli">
   
   <link rel="alternate" type="application/rss+xml" title="Alex Musayev on Code" href="https://notes.musayev.com/feed.xml">
   <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIiB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCI+CiAgPGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iNDgiIGZpbGw9IiM0YTkwZTIiLz4KICA8cGF0aCBkPSJNMjUgNTAgTDc1IDUwIE03NSA1MCBMNTcgMzIgTTc1IDUwIEw1NyA2OCIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBmaWxsPSJub25lIi8+Cjwvc3ZnPg==">
@@ -94,115 +94,26 @@
       <a href="/">Alex Musayev on Code</a>
     </nav>
     <main>
-      <h1 class="!my-8 !leading-tight"><a href="/20260329_9444/publishing-notes" class="no-underline">Process Smells in AI-Assisted Workflows</a></h1>
+      <h1 class="!my-8 !leading-tight"><a href="/20260406_9526/notes-cli" class="no-underline">A command-line tool for a plain-text note archive</a></h1>
 
-<p><strong>Specification:</strong></p>
+<p>I've been keeping a plain-text note archive for years — markdown files in date-stamped folders, synced via Dropbox, nothing fancy. It works. But as I started leaning more into automated workflows and AI assistants, I needed a proper interface to the archive — something scriptable, pipeable, and fast.</p>
+<p>So I built <a href="https://github.com/dreikanter/notescli">Notes CLI</a>: a small Go tool that sits on top of the file store and gives it structure without changing the format.</p>
+<p>Every note is still just a markdown file (<code>2026/04/20260405_9522.md</code>). No database, no proprietary format. The CLI handles creation, lookup, filtering, search, and append — all from the terminal or a script.</p>
+<p>The scope is deliberately small:</p>
 <ul>
-<li>You keep correcting AI mid-task instead of front-loading intent
-<ul>
-<li>Specs are undercooked</li>
+<li><strong>Capture</strong> — get text into a file quickly (<code>echo &quot;...&quot; | notes new</code>)</li>
+<li><strong>Retrieve</strong> — find it again by ID, type, tag, or full-text search</li>
+<li><strong>Integrate</strong> — pipe notes into other tools, scripts, and AI agents</li>
 </ul>
-</li>
-<li>You accept &quot;close enough&quot; output and manually patch it
-<ul>
-<li>Acceptance criteria are vague</li>
-</ul>
-</li>
-<li>You can't tell if output is correct without running it
-<ul>
-<li>Lost architectural grip on the area</li>
-</ul>
-</li>
-</ul>
-<p><strong>Context Management:</strong></p>
-<ul>
-<li>You re-explain the same project context across sessions
-<ul>
-<li>Missing a persistent briefing doc</li>
-</ul>
-</li>
-<li>You forget where a parallel thread left off
-<ul>
-<li>No re-entry protocol</li>
-</ul>
-</li>
-<li>You hold task state in your head instead of externalizing it
-<ul>
-<li>Doesn't scale past ~3 threads</li>
-</ul>
-</li>
-</ul>
-<p><strong>Delegation:</strong></p>
-<ul>
-<li>You do a task manually because &quot;it's faster than explaining it to AI&quot;
-<ul>
-<li>Avoiding the spec investment (fine if one-off, smell if recurring)</li>
-</ul>
-</li>
-<li>You micromanage AI output token-by-token instead of reviewing at the outcome level
-<ul>
-<li>Haven't let go of the maker identity</li>
-</ul>
-</li>
-<li>You can't walk away from a running agent session
-<ul>
-<li>Trust/verification pipeline isn't set up</li>
-</ul>
-</li>
-</ul>
-<p><strong>Verification:</strong></p>
-<ul>
-<li>You approve AI PRs faster than you'd approve a junior's
-<ul>
-<li>Calibration drift</li>
-</ul>
-</li>
-<li>You review diffs line-by-line when you should be checking behavior
-<ul>
-<li>Wrong verification level</li>
-</ul>
-</li>
-<li>You skip testing because &quot;it looked right&quot;
-<ul>
-<li>False fluency problem</li>
-</ul>
-</li>
-</ul>
-<p><strong>Prioritization:</strong></p>
-<ul>
-<li>You start new AI tasks before verifying completed ones
-<ul>
-<li>Generation is more fun than review</li>
-</ul>
-</li>
-<li>You optimize tooling instead of shipping
-<ul>
-<li>Meta-work trap</li>
-</ul>
-</li>
-<li>You can't articulate what you're blocked on
-<ul>
-<li>Planning debt</li>
-</ul>
-</li>
-</ul>
-<p><strong>Energy:</strong></p>
-<ul>
-<li>You feel busy but can't point to what you shipped
-<ul>
-<li>Motion vs. progress</li>
-</ul>
-</li>
-<li>You're fatigued from reading, not writing
-<ul>
-<li>Verification exhaustion (needs different recovery than creative fatigue)</li>
-</ul>
-</li>
-</ul>
+<p>This is the part that matters most to me now: integration. The CLI is how my AI coding assistant reads and writes notes, generates reports, and pulls context from the archive. It's the glue between a dumb file store and the smart tools that consume it.</p>
+<p>Think Obsidian or Logseq, but stripped down to just the storage layer and a terminal-friendly interface. The files are yours; the CLI is optional convenience.</p>
+<p><a href="https://github.com/dreikanter/notescli">github.com/dreikanter/notescli</a></p>
 
 
 <div class="not-prose flex flex-row flex-wrap items-baseline gap-2 text-slate-400" style="margin-top:3rem">
-  <time datetime="2026-03-29">29 March 2026</time><span>&middot;</span>
+  <time datetime="2026-04-06">6 April 2026</time><span>&middot;</span>
+  <a href="/tags/projects" class="border rounded-md py-0 px-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">projects</a>
+  <a href="/tags/cli" class="border rounded-md py-0 px-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">cli</a>
   <a href="/tags/notes" class="border rounded-md py-0 px-2 no-underline font-normal bg-slate-100 !text-slate-800 border-slate-200">notes</a>
 </div>
 
@@ -212,8 +123,13 @@
   <ul>
     
       <li>
-        <a href="/20260406_9526/notes-cli">A command-line tool for a plain-text note archive</a>
-        <small class="text-slate-400"><time datetime="2026-04-06">2026/04/06</time></small>
+        <a href="/20260329_9444/publishing-notes">Process Smells in AI-Assisted Workflows</a>
+        <small class="text-slate-400"><time datetime="2026-03-29">2026/03/29</time></small>
+      </li>
+    
+      <li>
+        <a href="/20250902_8066/til">A command-line TIL (Today I Learned) script</a>
+        <small class="text-slate-400"><time datetime="2025-09-02">2025/09/02</time></small>
       </li>
     
       <li>

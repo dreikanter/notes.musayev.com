@@ -7,6 +7,25 @@
     <description></description>
     
     <item>
+      <title>A command-line tool for a plain-text note archive</title>
+      <link>https://notes.musayev.com/20260406_9526/notes-cli</link>
+      <guid>20260406_9526</guid>
+      <description><![CDATA[<p>I've been keeping a plain-text note archive for years — markdown files in date-stamped folders, synced via Dropbox, nothing fancy. It works. But as I started leaning more into automated workflows and AI assistants, I needed a proper interface to the archive — something scriptable, pipeable, and fast.</p>
+<p>So I built <a href="https://github.com/dreikanter/notescli">Notes CLI</a>: a small Go tool that sits on top of the file store and gives it structure without changing the format.</p>
+<p>Every note is still just a markdown file (<code>2026/04/20260405_9522.md</code>). No database, no proprietary format. The CLI handles creation, lookup, filtering, search, and append — all from the terminal or a script.</p>
+<p>The scope is deliberately small:</p>
+<ul>
+<li><strong>Capture</strong> — get text into a file quickly (<code>echo &quot;...&quot; | notes new</code>)</li>
+<li><strong>Retrieve</strong> — find it again by ID, type, tag, or full-text search</li>
+<li><strong>Integrate</strong> — pipe notes into other tools, scripts, and AI agents</li>
+</ul>
+<p>This is the part that matters most to me now: integration. The CLI is how my AI coding assistant reads and writes notes, generates reports, and pulls context from the archive. It's the glue between a dumb file store and the smart tools that consume it.</p>
+<p>Think Obsidian or Logseq, but stripped down to just the storage layer and a terminal-friendly interface. The files are yours; the CLI is optional convenience.</p>
+<p><a href="https://github.com/dreikanter/notescli">github.com/dreikanter/notescli</a></p>
+]]></description>
+    </item>
+    
+    <item>
       <title>Process Smells in AI-Assisted Workflows</title>
       <link>https://notes.musayev.com/20260329_9444/publishing-notes</link>
       <guid>20260329_9444</guid>
